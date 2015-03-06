@@ -1,4 +1,4 @@
-package com;
+package com.renderer;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
