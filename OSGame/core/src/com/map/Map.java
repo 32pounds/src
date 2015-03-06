@@ -12,10 +12,12 @@ public class Map implements Drawable{
 	public Map(){
 
 	}
+	
 	public void
 	draw(SpriteBatch batch){
 		return;
 	}
+	
 	public boolean
 	isExpired(){
 		return false;
