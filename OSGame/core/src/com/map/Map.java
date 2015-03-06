@@ -9,15 +9,18 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Map implements Drawable{
-	public Map(){
-
+	
+        public Map()
+        {
+            char grid[][];
 	}
-	public void
-	draw(SpriteBatch batch){
-		return;
+        
+	public void draw(SpriteBatch batch)
+        {
+		for()
 	}
-	public boolean
-	isExpired(){
+        
+	public boolean isExpired(){
 		return false;
 	}
 }
