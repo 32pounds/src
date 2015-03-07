@@ -42,7 +42,7 @@ public class Map implements Drawable{
     {
         if(floor == null || wall == null || person == null) return;
         for(int y=0; y<grid.length; ++y){
-            for(int x=0; x<grid[0].length; ++x){
+            for(int x=0; x<grid[y].length; ++x){
                if(grid[y][x]==' ')
                     batch.draw(floor, x*XDIMENSION, y*YDIMENSION); 
                else if(grid[y][x]=='X')
