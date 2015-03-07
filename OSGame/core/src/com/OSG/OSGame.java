@@ -29,7 +29,7 @@ public class OSGame extends ApplicationAdapter {
 		batch.begin();
 
 		map.draw(batch);
-		batch.draw(img, 50, 50);
+		//batch.draw(img, 50, 50);
 
 		batch.end();
 	}

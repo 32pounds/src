@@ -8,9 +8,10 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 
 public class Map implements Drawable{
-	
+	//this grid is [y][x] to make parsing _much_ easier
     char grid[][];
     final int XDIMENSION=32;
     final int YDIMENSION=32;
@@ -19,34 +20,51 @@ public class Map implements Drawable{
     public Map()
     {
         FileHandle mapOne=Gdx.files.internal("levelOne.map");
-        //create the grid with the map
-        // FILL THE GRID
         
-        floor= new Texture("BeigeTile.png");
-        wall=new Texture("BlackCarpet.png");//i did black carpet as a place holder
-        person=new Texture("Thomas-north.png"); //person place holder
+        //create the grid with the map
+        grid = parseGrid(mapOne);
+        
+        try{
+            floor= new Texture("top-down/floorings/BeigeTile.png");
+            //i did black carpet as a place holder
+            wall=new Texture("top-down/floorings/BlackCarpet.png");
+            //person place holder
+            person=new Texture("top-down/humans/Thomas-north.png");
+        } catch (GdxRuntimeException e){
+            e.printStackTrace();
+        }
     }
 	public void draw(SpriteBatch batch)
-        {
-		for(int i=0; i<grid.length; ++i)
-                    for(int j=0; j<grid[0].length; ++j)
-                    {
-                       if(grid[i][j]==' ')
-                            batch.draw(floor, i*XDIMENSION, j*YDIMENSION); 
-                       else if(grid[i][j]=='x')
-                           batch.draw(wall, i*XDIMENSION, j*YDIMENSION);
-                       else if(grid[i][j]=='@')
-                           batch.draw(person, i*XDIMENSION, j*YDIMENSION);
-                    }
-	}
-        
-        public boolean isWalkable(int x, int y)
-        {
-            if(grid[x][y]==' ')
-                return true;
-            return false;
+    {
+        if(floor == null || wall == null || person == null) return;
+        for(int y=0; y<grid.length; ++y){
+            for(int x=0; x<grid[0].length; ++x){
+               if(grid[y][x]==' ')
+                    batch.draw(floor, x*XDIMENSION, y*YDIMENSION); 
+               else if(grid[y][x]=='X')
+                   batch.draw(wall, x*XDIMENSION, y*YDIMENSION);
+               else if(grid[y][x]=='@')
+                   batch.draw(person, x*XDIMENSION, y*YDIMENSION);
+            }
         }
+    }
+    public boolean isWalkable(int x, int y)
+    {
+        if(grid[y][x]==' ')
+            return true;
+        return false;
+    }
 	public boolean isExpired(){
 		return false;
 	}
+    private char[][] parseGrid(FileHandle map){
+        String[] lines = (map.readString()).split("\n");
+        int height     = lines.length;
+        char[][] tmp   = new char[height][];
+        for(int y=0; y<height; y++){
+            tmp[y] = lines[height-y-1].toCharArray();
+            System.err.println(lines[height-y-1]);
+        }
+        return tmp;
+    }
 }
