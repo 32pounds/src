@@ -15,7 +15,7 @@ public class Map implements Drawable{
     char grid[][];
     final int XDIMENSION=32;
     final int YDIMENSION=32;
-    Texture floor,wall,person;
+    Texture floor,wall,person,leftDeskEnd, middleDesk, rightEndDesk, chair;
     
     public Map()
     {
@@ -30,6 +30,10 @@ public class Map implements Drawable{
             wall=new Texture("top-down/floorings/BlackCarpet.png");
             //person place holder
             person=new Texture("top-down/humans/Thomas-north.png");
+            leftDeskEnd=new Texture("top-down/objects/WhiteDesk-end.png");
+            middleDesk=new Texture("top-down/objects/WhiteDesk-horizontal.png");
+            rightEndDesk=new Texture("top-down/objects/WhiteDesk-horizontal.png");
+            chair=new Texture("top-down/objects/ChairRed-north.png");
         } catch (GdxRuntimeException e){
             e.printStackTrace();
         }
@@ -45,6 +49,14 @@ public class Map implements Drawable{
                    batch.draw(wall, x*XDIMENSION, y*YDIMENSION);
                else if(grid[y][x]=='@')
                    batch.draw(person, x*XDIMENSION, y*YDIMENSION);
+               else if(grid[y][x]=='L')
+                   batch.draw(leftDeskEnd, x*XDIMENSION, y*YDIMENSION);
+               else if(grid[y][x]=='D')
+                   batch.draw(middleDesk, x*XDIMENSION, y*YDIMENSION);
+               else if(grid[y][x]=='R')
+                   batch.draw(rightEndDesk, x*XDIMENSION, y*YDIMENSION);
+               else if(grid[y][x]=='C')
+                   batch.draw(chair, x*XDIMENSION, y*YDIMENSION);
             }
         }
     }
