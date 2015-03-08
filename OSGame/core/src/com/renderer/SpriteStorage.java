@@ -8,6 +8,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -68,6 +69,7 @@ public class SpriteStorage {
      * Load the assets described in assets/assetsDictionary.json.
      */
     public void loadAssets() {
+
         FileHandle file = Gdx.files.internal("assetsDictionary.json");
 
         byte[] bites = file.readBytes();
@@ -79,7 +81,11 @@ public class SpriteStorage {
         JsonValue data = root.get("Data");
 
         for (JsonValue json : data) {
-            textures.put(json.get(0).asString(), new Texture(json.get(1).asString()));
+            try {
+                textures.put(json.get(0).asString(), new Texture(json.get(1).asString()));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 }
