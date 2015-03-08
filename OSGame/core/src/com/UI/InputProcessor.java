@@ -6,20 +6,16 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import com.renderer.Drawable;
+//import com.renderer.Drawable;
 import com.map.Map;
 
 
 
 public interface InputProcessor{
 
-    public boolean keyDown( int key ){
+    boolean keyDown( int key );
 
-
-    }
-
-    public touchDown( ){
-
-    }
+    boolean touchDown( );
 
 }
+
