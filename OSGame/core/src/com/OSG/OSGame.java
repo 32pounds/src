@@ -27,7 +27,13 @@ public class OSGame extends ApplicationAdapter {
 		batch.begin();
 
 		map.draw(batch);
+<<<<<<< HEAD
 
+=======
+		
+		
+		
+>>>>>>> 1f3b029bee2824a5fd2b61fab49d6778cdc11dd6
 		batch.end();
 	}
 }
