@@ -2,6 +2,9 @@ package com.OSG;
 
 import com.renderer.Drawable;
 import com.map.Map;
+import com.map.Direction;
+import com.comms.Command;
+import com.comms.MoveCmd;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
@@ -14,12 +17,14 @@ public class OSGame extends ApplicationAdapter {
 	Texture img;
 
 	Drawable map;
+	Command example;
 
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
 		img = new Texture("badlogic.jpg");
 		map = new Map();
+		example = new MoveCmd(Direction.NORTH);
 	}
 
 	@Override
