@@ -11,14 +11,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class OSGame extends ApplicationAdapter {
 	SpriteBatch batch;
-	Texture img;
 
 	Drawable map;
 
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
 		map = new Map();
 	}
 
@@ -29,8 +27,9 @@ public class OSGame extends ApplicationAdapter {
 		batch.begin();
 
 		map.draw(batch);
-		//batch.draw(img, 50, 50);
-
+		
+		
+		
 		batch.end();
 	}
 }

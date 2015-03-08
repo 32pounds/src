@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
+
 public class Map implements Drawable{
 	//this grid is [y][x] to make parsing _much_ easier
     char grid[][];
@@ -26,7 +27,7 @@ public class Map implements Drawable{
         
         try{
             floor= new Texture("top-down/floorings/BeigeTile.png");
-            //i did black carpet as a place holder
+            //I did black carpet as a place holder
             wall=new Texture("top-down/floorings/BlackCarpet.png");
             //person place holder
             person=new Texture("top-down/humans/Thomas-north.png");
