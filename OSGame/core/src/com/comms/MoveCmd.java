@@ -2,9 +2,19 @@ package com.comms;
 
 import com.comms.Command;
 import com.map.Direction;
-
+/**
+ * This represents user commands for moving in a cardinal direction
+ *
+ * @author Brett Menzies
+ */
 public class MoveCmd extends Command{
     private Direction dir;
+    /**
+     * This represents user commands for moving in a cardinal direction
+     * 
+     * @param direction     The directon the user wishes to move in
+     *                      can take value NORTH, EAST, SOUTH, or WEST
+     */
     public MoveCmd(Direction direction){
         dir = direction;
     }
