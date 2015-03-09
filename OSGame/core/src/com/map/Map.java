@@ -11,17 +11,6 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
 
-<<<<<<< HEAD
-	}
-	
-	public void
-	draw(SpriteBatch batch){
-		return;
-	}
-	
-	public boolean
-	isExpired(){
-=======
 public class Map implements Drawable{
 	//this grid is [y][x] to make parsing _much_ easier
     char grid[][];
@@ -79,7 +68,6 @@ public class Map implements Drawable{
         return false;
     }
 	public boolean isExpired(){
->>>>>>> 1f3b029bee2824a5fd2b61fab49d6778cdc11dd6
 		return false;
 	}
     private char[][] parseGrid(FileHandle map){

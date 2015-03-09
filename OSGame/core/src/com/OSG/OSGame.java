@@ -2,6 +2,7 @@ package com.OSG;
 
 import com.renderer.Drawable;
 import com.map.Map;
+import com.UI.UserInterface;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
@@ -11,13 +12,16 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class OSGame extends ApplicationAdapter {
 	SpriteBatch batch;
-
 	Drawable map;
+	UserInterface user;
+	
 
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
 		map = new Map();
+		user = new CreateUserInterface();
+		
 	}
 
 	@Override
@@ -27,13 +31,7 @@ public class OSGame extends ApplicationAdapter {
 		batch.begin();
 
 		map.draw(batch);
-<<<<<<< HEAD
 
-=======
-		
-		
-		
->>>>>>> 1f3b029bee2824a5fd2b61fab49d6778cdc11dd6
 		batch.end();
 	}
 }
