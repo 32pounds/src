@@ -7,6 +7,9 @@ import com.OSG.OSGame;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		new LwjglApplication(new OSGame(), config);
+        config.title = "32pounds is awesome";
+        config.width = 960;
+        config.height = 576;
+        new LwjglApplication(new OSGame(), config);
 	}
 }
