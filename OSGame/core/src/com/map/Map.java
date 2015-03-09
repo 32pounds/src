@@ -10,20 +10,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
-
-<<<<<<< HEAD
-	}
-	
-	public void
-	draw(SpriteBatch batch){
-		return;
-	}
-	
-	public boolean
-	isExpired(){
-=======
 public class Map implements Drawable{
-	//this grid is [y][x] to make parsing _much_ easier
+    //this grid is [y][x] to make parsing _much_ easier
     char grid[][];
     final int XDIMENSION=32;
     final int YDIMENSION=32;
@@ -38,7 +26,7 @@ public class Map implements Drawable{
         
         try{
             floor= new Texture("top-down/floorings/BeigeTile.png");
-            //I did black carpet as a place holder
+            //i did black carpet as a place holder
             wall=new Texture("top-down/floorings/BlackCarpet.png");
             //person place holder
             person=new Texture("top-down/humans/Thomas-north.png");
@@ -50,25 +38,25 @@ public class Map implements Drawable{
             e.printStackTrace();
         }
     }
-	public void draw(SpriteBatch batch)
+    public void draw(SpriteBatch batch)
     {
         if(floor == null || wall == null || person == null) return;
         for(int y=0; y<grid.length; ++y){
             for(int x=0; x<grid[y].length; ++x){
-               if(grid[y][x]==' ')
-                    batch.draw(floor, x*XDIMENSION, y*YDIMENSION); 
-               else if(grid[y][x]=='X')
-                   batch.draw(wall, x*XDIMENSION, y*YDIMENSION);
-               else if(grid[y][x]=='@')
-                   batch.draw(person, x*XDIMENSION, y*YDIMENSION);
-               else if(grid[y][x]=='L')
-                   batch.draw(leftDeskEnd, x*XDIMENSION, y*YDIMENSION);
-               else if(grid[y][x]=='D')
-                   batch.draw(middleDesk, x*XDIMENSION, y*YDIMENSION);
-               else if(grid[y][x]=='R')
-                   batch.draw(rightEndDesk, x*XDIMENSION, y*YDIMENSION);
-               else if(grid[y][x]=='C')
-                   batch.draw(chair, x*XDIMENSION, y*YDIMENSION);
+                if(grid[y][x]==' ')
+                    batch.draw(floor, x*XDIMENSION, y*YDIMENSION);
+                else if(grid[y][x]=='X')
+                    batch.draw(wall, x*XDIMENSION, y*YDIMENSION);
+                else if(grid[y][x]=='@')
+                    batch.draw(person, x*XDIMENSION, y*YDIMENSION);
+                else if(grid[y][x]=='L')
+                    batch.draw(leftDeskEnd, x*XDIMENSION, y*YDIMENSION);
+                else if(grid[y][x]=='D')
+                    batch.draw(middleDesk, x*XDIMENSION, y*YDIMENSION);
+                else if(grid[y][x]=='R')
+                    batch.draw(rightEndDesk, x*XDIMENSION, y*YDIMENSION);
+                else if(grid[y][x]=='C')
+                    batch.draw(chair, x*XDIMENSION, y*YDIMENSION);
             }
         }
     }
@@ -78,10 +66,9 @@ public class Map implements Drawable{
             return true;
         return false;
     }
-	public boolean isExpired(){
->>>>>>> Walkable_Map
-		return false;
-	}
+    public boolean isExpired(){
+        return false;
+    }
     private char[][] parseGrid(FileHandle map){
         String[] lines = (map.readString()).split("\n");
         int height     = lines.length;
