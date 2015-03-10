@@ -39,7 +39,9 @@ public class Map implements Drawable{
             e.printStackTrace();
         }
     }
-	public void draw(SpriteBatch batch)
+
+    
+    public void draw(SpriteBatch batch)
     {
         if(floor == null || wall == null || person == null) return;
         for(int y=0; y<grid.length; ++y){
@@ -61,6 +63,7 @@ public class Map implements Drawable{
             }
         }
     }
+    
     public boolean isWalkable(int x, int y)
     {
         if(grid[y][x]==' ')
