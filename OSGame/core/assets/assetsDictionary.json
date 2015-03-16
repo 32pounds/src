@@ -1,0 +1,32 @@
+{
+  "data": [
+    {
+      "code": " ",
+      "path": "top-down/floorings/BeigeTile.png"
+    },
+    {
+      "code": "X",
+      "path": "top-down/floorings/BlackCarpet.png"
+    },
+    {
+      "code": "@",
+      "path": "top-down/humans/Thomas-north.png"
+    },
+    {
+      "code": "L",
+      "path": "top-down/objects/WhiteDesk-end.png"
+    },
+    {
+      "code": "D",
+      "path": "top-down/objects/WhiteDesk-horizontal.png"
+    },
+    {
+      "code": "R",
+      "path": "top-down/objects/WhiteDesk-horizontal.png"
+    },
+    {
+      "code": "C",
+      "path": "top-down/objects/ChairRed-north.png"
+    }
+  ]
+}
