@@ -1,12 +1,17 @@
 package com.renderer;
 
-import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public interface Drawable{
-	void	draw(SpriteBatch batch);
-	boolean isExpired();
+public abstract class Drawable implements Comparable<Drawable> {
+
+    public abstract void draw(SpriteBatch batch);
+
+    public abstract int getZIndex();
+
+    public abstract boolean isExpired();
+
+    @Override
+    public int compareTo(Drawable o) {
+        return this.getZIndex() - o.getZIndex();
+    }
 }

@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.files.FileHandle;
 import com.renderer.SpriteStorage;
 
-public class Map implements Drawable{
+public class Map extends Drawable {
 	//this grid is [y][x] to make parsing _much_ easier
     char grid[][];
     final int XDIMENSION=32;
@@ -41,6 +41,12 @@ public class Map implements Drawable{
             }
         }
     }
+
+    @Override
+    public int getZIndex() {
+        return 0;
+    }
+
     public boolean isWalkable(int x, int y)
     {
         if(grid[y][x]==' ')
