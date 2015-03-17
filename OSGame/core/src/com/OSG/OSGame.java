@@ -4,10 +4,14 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.comms.InputHandler;
 import com.gameloop.GameLoop;
 import com.map.Map;
+import com.model.Debugger;
+import com.model.Player;
 import com.renderer.Drawable;
 import com.renderer.SpriteStorage;
+import com.renderer.Updatable;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -16,20 +20,33 @@ public class OSGame extends ApplicationAdapter {
     private SpriteBatch batch;
     private GameLoop thread;
     private ArrayList<Drawable> drawables;
+    private ArrayList<Updatable> updatables;
 
     @Override
     public void create() {
         drawables = new ArrayList<Drawable>();
+        updatables = new ArrayList<Updatable>();
 
         batch = new SpriteBatch();
 
         SpriteStorage.getInstance().loadAssets();
 
+        Player player = new Player();
+        drawables.add(player);
+        updatables.add(player);
+
+        if(Debugger.IsDebugging) {
+            Debugger debugger = new Debugger();
+            drawables.add(debugger);
+            updatables.add(debugger);
+        }
+
         drawables.add(new Map());
 
-        thread = new GameLoop();
+        thread = new GameLoop(updatables);
         thread.setRunning(true);
         thread.start();
+        Gdx.input.setInputProcessor(new InputHandler());
     }
 
     @Override
