@@ -24,6 +24,7 @@ public class OSGame extends ApplicationAdapter {
 
     @Override
     public void create() {
+
         drawables = new ArrayList<Drawable>();
         updatables = new ArrayList<Updatable>();
 
@@ -31,26 +32,29 @@ public class OSGame extends ApplicationAdapter {
 
         SpriteStorage.getInstance().loadAssets();
 
-        Player player = new Player();
-        drawables.add(player);
-        updatables.add(player);
-
-        if(Debugger.IsDebugging) {
+        if (Debugger.IsDebugging) {
             Debugger debugger = new Debugger();
             drawables.add(debugger);
             updatables.add(debugger);
         }
 
-        drawables.add(new Map());
+        Map map = new Map();
+        drawables.add(map);
+
+        Player player = new Player(map);
+        drawables.add(player);
+        updatables.add(player);
 
         thread = new GameLoop(updatables);
         thread.setRunning(true);
         thread.start();
+
         Gdx.input.setInputProcessor(new InputHandler());
     }
 
     @Override
     public void render() {
+        //sorting by zIndex before draw
         Collections.sort(drawables);
 
         Gdx.gl.glClearColor(0, 0, 0, 1);

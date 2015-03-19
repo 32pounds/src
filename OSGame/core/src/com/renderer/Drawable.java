@@ -12,6 +12,7 @@ public abstract class Drawable implements Comparable<Drawable> {
 
     @Override
     public int compareTo(Drawable o) {
+        
         return this.getZIndex() - o.getZIndex();
     }
 }
