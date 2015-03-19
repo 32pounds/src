@@ -12,11 +12,15 @@ import com.badlogic.gdx.utils.JsonValue;
 import java.util.HashMap;
 import java.util.Map;
 
-
+/**
+ * Manage the texture library and provide an easy way to handle them
+ */
 public class SpriteStorage {
 
+    //singleton instance
     private static SpriteStorage instance;
 
+    //texture dictionary
     private Map<String, Texture> textures;
 
     /**

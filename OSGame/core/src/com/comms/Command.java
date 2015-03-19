@@ -1,13 +1,24 @@
 package com.comms;
 
 /**
- * Created by gabrielgiovaninidesouza on 3/16/15.
+ * All action that a player can do.
  */
 public enum Command {
-
+    /**
+     * Pressed to go a tile up
+     */
     MOVE_UP,
+    /**
+     * Pressed to go a tile down
+     */
     MOVE_DOWN,
+    /**
+     * Pressed to go a tile left
+     */
     MOVE_LEFT,
+    /**
+     * Pressed to go a tile right
+     */
     MOVE_RIGTH
 
     /*

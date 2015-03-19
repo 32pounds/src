@@ -3,6 +3,9 @@ package com.comms;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 
+/**
+ * Handle the player input
+ */
 public class InputHandler implements InputProcessor {
 
     @Override

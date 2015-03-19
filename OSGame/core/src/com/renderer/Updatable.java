@@ -1,9 +1,11 @@
 package com.renderer;
 
 /**
- * Created by gabrielgiovaninidesouza on 3/16/15.
+ * This interface define a class that will be updated by the game loop
  */
 public interface Updatable {
-
+    /**
+     * this functon will be called when every loop of GameLoop
+     */
     void update();
 }

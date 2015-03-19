@@ -8,6 +8,7 @@ public class GameLoop extends Thread {
 
     private boolean running;
 
+    //list that will be updated every thread loop
     private List<Updatable> updatables;
 
     public GameLoop(List<Updatable> list) {
@@ -22,7 +23,8 @@ public class GameLoop extends Thread {
     @Override
     public void run() {
         if (running) {
-            for(Updatable updatable: updatables)
+            //updating updatable classes
+            for (Updatable updatable : updatables)
                 updatable.update();
         }
     }
