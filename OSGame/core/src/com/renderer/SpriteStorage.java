@@ -1,9 +1,6 @@
 package com.renderer;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
-import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.JsonReader;
@@ -29,23 +26,6 @@ public class SpriteStorage {
     private SpriteStorage() {
         //don't remove the private access modifier
         textures = new HashMap<String, Texture>();
-    }
-
-    /**
-     * This function is to test SpriteStorage, don't call it.
-     *
-     * @param args Arguments
-     */
-    public static void main(String[] args) {
-        LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-        ApplicationAdapter emptyGame = new ApplicationAdapter() {
-            @Override
-            public void create() {
-                super.create();
-                SpriteStorage.getInstance().loadAssets();
-            }
-        };
-        new LwjglApplication(emptyGame, config);
     }
 
     /**
