@@ -1,7 +1,8 @@
 package com.gameloop;
 
 import com.renderer.Updatable;
-
+import com.comms.Command;
+import com.comms.CommandHandler;
 import java.util.List;
 
 public class GameLoop extends Thread {
@@ -22,10 +23,14 @@ public class GameLoop extends Thread {
 
     @Override
     public void run() {
+        //this is acting as our server for now
         if (running) {
-            //updating updatable classes
-            for (Updatable updatable : updatables)
-                updatable.update();
+            Command command = CommandHandler.getInstance().remove();
+
+            //if there no command is not needed to be updated
+            if (command == null) return;
+
+            command.execute();
         }
     }
 }

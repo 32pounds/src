@@ -26,7 +26,6 @@ public class OSGame extends ApplicationAdapter {
     public void create() {
 
         drawables = new ArrayList<Drawable>();
-        updatables = new ArrayList<Updatable>();
 
         batch = new SpriteBatch();
 
@@ -35,7 +34,6 @@ public class OSGame extends ApplicationAdapter {
         if (Debugger.IsDebugging) {
             Debugger debugger = new Debugger();
             drawables.add(debugger);
-            updatables.add(debugger);
         }
 
         Map map = new Map();
@@ -43,13 +41,12 @@ public class OSGame extends ApplicationAdapter {
 
         Player player = new Player(map);
         drawables.add(player);
-        updatables.add(player);
 
         thread = new GameLoop(updatables);
         thread.setRunning(true);
         thread.start();
 
-        Gdx.input.setInputProcessor(new InputHandler());
+        Gdx.input.setInputProcessor(new InputHandler(player));
     }
 
     @Override

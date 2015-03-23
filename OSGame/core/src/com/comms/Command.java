@@ -1,40 +1,22 @@
 package com.comms;
 
 /**
- * All action that a player can do.
+ * abstract class for abstract commands representing the users actions
+ * These are intended to be constructed by the input system
+ * then tranported by the comms system before being sent to the
+ * main game logic loop to process
+ * @author Brett Menzies
  */
-public enum Command {
+public abstract class Command{
     /**
-     * Pressed to go a tile up
+     * Returns all the data necessary to describe itself in a compact format
+     * for the comms system.
+     *
+     * Eventually we might have a "claim data"
+     * method that will parse a char array and return true if this
+     * class made it. Just an idea though.
+     *
      */
-    MOVE_UP,
-    /**
-     * Pressed to go a tile down
-     */
-    MOVE_DOWN,
-    /**
-     * Pressed to go a tile left
-     */
-    MOVE_LEFT,
-    /**
-     * Pressed to go a tile right
-     */
-    MOVE_RIGTH
-
-    /*
-    These are the initial command
-    We can also add other like:
-    SHOOT,
-    TAKE_ITEM,
-    TALK,
-
-    The server decides if this commands are valid or not, and then apply them in the game state
-
-    And we can add char bind if necessary
-    MOVE_UP 'a',
-    MOVE_DOWN 'b',
-    MOVE_LEFT 'c',
-    MOVE_RIGTH 'd'
-     */
-
+    abstract public char[] getData();
+    abstract public void execute();
 }

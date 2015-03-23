@@ -4,16 +4,16 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.comms.Command;
 import com.comms.CommandHandler;
+import com.map.Direction;
 import com.map.Map;
 import com.renderer.Drawable;
 import com.renderer.SpriteStorage;
-import com.renderer.Updatable;
 
 /**
  * This function represent the player
  * <p>This class will be edited when we add the game state</p>
  */
-public class Player extends Drawable implements Updatable {
+public class Player extends Drawable {
 
     //sprite of the player
     //I am using a Sprite cuz texture doesn't have rotation
@@ -63,49 +63,33 @@ public class Player extends Drawable implements Updatable {
         return false;
     }
 
-    @Override
-    public void update() {
-
-        //this whole logic should be placed on server side
-
-        //getting command from the queue
-        //this function will be called here ultil we finish the game state,
-        //after that the position will be got on game state
-        Command command = CommandHandler.getInstance().remove();
-
-        //if there no command is not needed to be updated
-        if (command == null) return;
-
-        //obvious
-
-        switch (command) {
-            case MOVE_DOWN:
+    public void move(Direction dir) {
+        switch (dir) {
+            case SOUTH:
                 //check if the next step is a valid step
-                if (map.getCode(x, y - 1) == ' ')
+                if (map.isWalkable(x, y - 1))
                     y--;
-
                 //set a rotation toward to the step
                 sprite.setRotation(180);
                 break;
 
-            case MOVE_UP:
-                if (map.getCode(x, y + 1) == ' ')
+            case NORTH:
+                if (map.isWalkable(x, y + 1))
                     y++;
                 sprite.setRotation(0);
                 break;
 
-            case MOVE_LEFT:
-                if (map.getCode(x - 1, y) == ' ')
+            case WEST:
+                if (map.isWalkable(x - 1, y))
                     x--;
                 sprite.setRotation(90);
                 break;
 
-            case MOVE_RIGTH:
-                if (map.getCode(x + 1, y) == ' ')
+            case EAST:
+                if (map.isWalkable(x + 1, y))
                     x++;
                 sprite.setRotation(270);
                 break;
         }
-
     }
 }
