@@ -23,6 +23,7 @@ public class InputHandler implements InputProcessor {
     @Override
     public boolean keyUp(int keycode) {
         Command result = new DummyCmd();
+        boolean keyRegistered = true;
         switch (keycode) {
             case Input.Keys.UP:
                 result = new MoveCmd(actor, Direction.NORTH);
@@ -36,10 +37,12 @@ public class InputHandler implements InputProcessor {
             case Input.Keys.RIGHT:
                 result = new MoveCmd(actor, Direction.EAST);
                 break;
+            default:
+                keyRegistered = false;
         }
-        CommandHandler.getInstance().add(result);
+        if(keyRegistered) CommandHandler.getInstance().add(result);
 
-        return false;
+        return keyRegistered;
     }
 
     @Override
