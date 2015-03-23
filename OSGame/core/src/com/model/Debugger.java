@@ -30,6 +30,7 @@ public class Debugger extends Drawable implements Updatable {
 
     @Override
     public void draw(SpriteBatch batch) {
+        update();
         //Getting delta time and converting nano seconds and seconds
         double elapsedTime = (System.nanoTime() - lastTime) / 1000000000;
         //updating last time
