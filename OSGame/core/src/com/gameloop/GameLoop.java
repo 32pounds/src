@@ -4,6 +4,7 @@ import com.renderer.Updatable;
 import com.comms.Command;
 import com.comms.CommandHandler;
 import java.util.List;
+import java.lang.InterruptedException;
 
 public class GameLoop extends Thread {
 
@@ -14,6 +15,7 @@ public class GameLoop extends Thread {
 
     public GameLoop(List<Updatable> list) {
         updatables = list;
+        running = true;
     }
 
     public void setRunning(boolean running) {
@@ -24,13 +26,18 @@ public class GameLoop extends Thread {
     @Override
     public void run() {
         //this is acting as our server for now
-        if (running) {
+        while (running) {
             Command command = CommandHandler.getInstance().remove();
-
             //if there no command is not needed to be updated
-            if (command == null) return;
-
-            command.execute();
+            if (command != null) {
+                command.execute();
+            } else {            
+                try{
+                    Thread.sleep(10);
+                } catch (InterruptedException ex) {
+                    break; //break the loop if the thread is interrupted
+                }
+            }
         }
     }
 }

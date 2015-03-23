@@ -18,7 +18,7 @@ import java.util.Collections;
 public class OSGame extends ApplicationAdapter {
 
     private SpriteBatch batch;
-    private GameLoop thread;
+    private GameLoop gameLoop;
     private ArrayList<Drawable> drawables;
     private ArrayList<Updatable> updatables;
 
@@ -42,9 +42,9 @@ public class OSGame extends ApplicationAdapter {
         Player player = new Player(map);
         drawables.add(player);
 
-        thread = new GameLoop(updatables);
-        thread.setRunning(true);
-        thread.start();
+        gameLoop = new GameLoop(updatables);
+        gameLoop.setRunning(true);
+        gameLoop.start();
 
         Gdx.input.setInputProcessor(new InputHandler(player));
     }
@@ -59,7 +59,6 @@ public class OSGame extends ApplicationAdapter {
 
 
         batch.begin();
-        thread.run();
 
         for (Drawable drawable : drawables)
             drawable.draw(batch);
