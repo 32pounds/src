@@ -23,11 +23,6 @@ public class Player extends Drawable {
     private int x = 1;
     private int y = 16;
 
-    //dimension of a tile, this is used to calc the position of the player
-    private final int XDIMENSION = 32;
-    private final int YDIMENSION = 32;
-
-
     //this property is to provide a way to access map data,
     //after game state finished this property must be ripped off from here
     private Map map;
@@ -44,11 +39,19 @@ public class Player extends Drawable {
         //temporarily here
         this.map = map;
     }
+    
+    public int getXPos(){
+        return x;
+    }
+    
+    public int getYPos(){
+        return y;
+    }
 
     @Override
     public void draw(SpriteBatch batch) {
         //using bacth.draw instead of sprite.draw cuz I dont want apply every property of the sprite (like position)
-        batch.draw(sprite, x * XDIMENSION, y * YDIMENSION, sprite.getOriginX(), sprite.getOriginY(), sprite.getWidth(), sprite.getHeight(), sprite.getScaleX(), sprite.getScaleY(), sprite.getRotation());
+        batch.draw(sprite, x * Map.XDIMENSION, y * Map.YDIMENSION, sprite.getOriginX(), sprite.getOriginY(), sprite.getWidth(), sprite.getHeight(), sprite.getScaleX(), sprite.getScaleY(), sprite.getRotation());
     }
 
     @Override

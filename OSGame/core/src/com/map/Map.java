@@ -9,8 +9,8 @@ import com.renderer.SpriteStorage;
 public class Map extends Drawable {
     //this grid is [y][x] to make parsing _much_ easier
     char grid[][];
-    final int XDIMENSION = 32;
-    final int YDIMENSION = 32;
+    public static final int XDIMENSION = 32;
+    public static final int YDIMENSION = 32;
 
     public Map() {
         FileHandle mapOne = Gdx.files.internal("levelOne.map");

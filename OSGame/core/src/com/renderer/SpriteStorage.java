@@ -66,7 +66,8 @@ public class SpriteStorage {
 
         for (JsonValue json : data) {
             try {
-                textures.put(json.get(0).asString(), new Texture(json.get(1).asString()));
+                Texture found = new Texture(json.get(1).asString());
+                textures.put(json.get(0).asString(), found);
             } catch (Exception e) {
                 e.printStackTrace();
             }
