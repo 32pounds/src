@@ -13,7 +13,7 @@ public class Map extends Drawable {
     public static final int YDIMENSION = 32;
 
     public Map() {
-        FileHandle mapOne = Gdx.files.internal("levelOne.map");
+        FileHandle mapOne = Gdx.files.internal("Level_1_Big_Map.map");
 
         //create the grid with the map
         grid = parseGrid(mapOne);
