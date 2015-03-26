@@ -18,7 +18,7 @@ import java.util.Collections;
 public class OSGame extends ApplicationAdapter {
 
     private SpriteBatch batch;
-    private GameLoop thread;
+    private GameLoop gameLoop;
     private ArrayList<Drawable> drawables;
     private ArrayList<Updatable> updatables;
 
@@ -26,7 +26,6 @@ public class OSGame extends ApplicationAdapter {
     public void create() {
 
         drawables = new ArrayList<Drawable>();
-        updatables = new ArrayList<Updatable>();
 
         batch = new SpriteBatch();
 
@@ -35,7 +34,6 @@ public class OSGame extends ApplicationAdapter {
         if (Debugger.IsDebugging) {
             Debugger debugger = new Debugger();
             drawables.add(debugger);
-            updatables.add(debugger);
         }
 
         Map map = new Map();
@@ -43,13 +41,12 @@ public class OSGame extends ApplicationAdapter {
 
         Player player = new Player(map);
         drawables.add(player);
-        updatables.add(player);
 
-        thread = new GameLoop(updatables);
-        thread.setRunning(true);
-        thread.start();
+        gameLoop = new GameLoop(updatables);
+        gameLoop.setRunning(true);
+        gameLoop.start();
 
-        Gdx.input.setInputProcessor(new InputHandler());
+        Gdx.input.setInputProcessor(new InputHandler(player));
     }
 
     @Override
@@ -60,9 +57,7 @@ public class OSGame extends ApplicationAdapter {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-
         batch.begin();
-        thread.run();
 
         for (Drawable drawable : drawables)
             drawable.draw(batch);

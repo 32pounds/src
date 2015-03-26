@@ -2,11 +2,18 @@ package com.comms;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
-
+import com.map.Direction;
+import com.model.Player;
+import com.comms.*;
 /**
  * Handle the player input
  */
 public class InputHandler implements InputProcessor {
+    Player actor;
+
+    public InputHandler(Player target){
+        actor = target;
+    }
 
     @Override
     public boolean keyDown(int keycode) {
@@ -15,22 +22,27 @@ public class InputHandler implements InputProcessor {
 
     @Override
     public boolean keyUp(int keycode) {
+        Command result = new DummyCmd();
+        boolean keyRegistered = true;
         switch (keycode) {
             case Input.Keys.UP:
-                CommandHandler.getInstance().add(Command.MOVE_UP);
+                result = new MoveCmd(actor, Direction.NORTH);
                 break;
             case Input.Keys.DOWN:
-                CommandHandler.getInstance().add(Command.MOVE_DOWN);
+                result = new MoveCmd(actor, Direction.SOUTH);
                 break;
             case Input.Keys.LEFT:
-                CommandHandler.getInstance().add(Command.MOVE_LEFT);
+                result = new MoveCmd(actor, Direction.WEST);
                 break;
             case Input.Keys.RIGHT:
-                CommandHandler.getInstance().add(Command.MOVE_RIGTH);
+                result = new MoveCmd(actor, Direction.EAST);
                 break;
+            default:
+                keyRegistered = false;
         }
+        if(keyRegistered) CommandHandler.getInstance().add(result);
 
-        return false;
+        return keyRegistered;
     }
 
     @Override
