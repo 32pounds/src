@@ -13,6 +13,7 @@ import com.model.Player;
 import com.renderer.Drawable;
 import com.renderer.SpriteStorage;
 import com.renderer.Updatable;
+import com.badlogic.gdx.utils.TimeUtils;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -65,6 +66,12 @@ public class OSGame extends ApplicationAdapter {
         updateCameraPosition();
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
+        
+        double time = (double)(TimeUtils.millis()/1000d);
+        float r = .75f + .5f*((float)Math.sin(time));
+        float g = .75f + .5f*((float)Math.cos(time));
+        float b = .75f + .5f*((float)Math.sin(2*time + 1));
+        batch.setColor(r,g,b,1.0f);
 
         for (Drawable drawable : drawables)
             drawable.draw(batch);
@@ -76,6 +83,8 @@ public class OSGame extends ApplicationAdapter {
         float x = Map.XDIMENSION * localPlayer.getXPos();
         float y = Map.XDIMENSION * localPlayer.getYPos();
         camera.position.set(x, y, 0);
+        camera.rotate(.75f,0,0,1);
+        camera.zoom = ((float)(1.5d-Math.sin(((double)TimeUtils.millis())/650d)));
         camera.update();
     }
 }
