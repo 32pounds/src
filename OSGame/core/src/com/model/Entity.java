@@ -18,7 +18,7 @@ public class Entity extends Drawable{
 
     //sprite of the player
     //I am using a Sprite cuz texture doesn't have rotation
-    private Sprite sprite;
+    protected Sprite sprite;
 
     //initial position of the player
     private int x = 1;
@@ -38,6 +38,11 @@ public class Entity extends Drawable{
         sprite = new Sprite(SpriteStorage.getInstance().getTexture(img));
         //temporarily here
         this.map = map;
+    }
+    
+    public void changeSprite(String img)
+    {
+        sprite = new Sprite(SpriteStorage.getInstance().getTexture(img));
     }
 
     public int getXPos(){

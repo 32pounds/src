@@ -50,7 +50,7 @@ public class OSGame extends ApplicationAdapter {
 
         gameLoop = new GameLoop();
         //spawns a monster
-        Monster monster=new Monster(map,"M");
+        Monster monster=new Monster(map,"M", localPlayer);
         drawables.add(monster);
 
         gameLoop.setRunning(true);
