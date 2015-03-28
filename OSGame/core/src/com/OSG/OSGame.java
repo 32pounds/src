@@ -9,7 +9,7 @@ import com.comms.InputHandler;
 import com.gameloop.GameLoop;
 import com.map.Map;
 import com.model.Debugger;
-import com.model.Player;
+import com.model.Entity;
 import com.renderer.Drawable;
 import com.renderer.SpriteStorage;
 import com.renderer.Updatable;
@@ -22,7 +22,8 @@ public class OSGame extends ApplicationAdapter {
     private SpriteBatch batch;
     private GameLoop gameLoop;
     private ArrayList<Drawable> drawables;
-    private Player localPlayer;
+    private Entity localPlayer;
+    private Entity monster;
 
     @Override
     public void create() {
@@ -43,10 +44,14 @@ public class OSGame extends ApplicationAdapter {
         Map map = new Map();
         drawables.add(map);
 
-        localPlayer = new Player(map);
+        localPlayer = new Entity(map,"@");
         drawables.add(localPlayer);
 
         gameLoop = new GameLoop();
+        //spawns a monster
+        monster = new Entity(map,"M");
+        drawables.add(monster);
+
         gameLoop.setRunning(true);
         gameLoop.start();
 

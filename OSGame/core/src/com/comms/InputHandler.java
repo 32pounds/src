@@ -3,15 +3,15 @@ package com.comms;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.map.Direction;
-import com.model.Player;
+import com.model.Entity;
 import com.comms.*;
 /**
  * Handle the player input
  */
 public class InputHandler implements InputProcessor {
-    Player actor;
+    Entity actor;
 
-    public InputHandler(Player target){
+    public InputHandler(Entity target){
         actor = target;
     }
 

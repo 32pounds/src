@@ -13,7 +13,7 @@ import com.renderer.SpriteStorage;
  * This function represent the player
  * <p>This class will be edited when we add the game state</p>
  */
-public class Player extends Drawable {
+public class Entity extends Drawable {
 
     //sprite of the player
     //I am using a Sprite cuz texture doesn't have rotation
@@ -31,10 +31,10 @@ public class Player extends Drawable {
      * Provide a way to access map data, but after game state finished this property must be ripped off from here.
      * @param map Map
      */
-    public Player(Map map) {
-        //using sprite cuz Texture doesn't have rotation
-        sprite = new Sprite(SpriteStorage.getInstance().getTexture("@"));
+    public Entity(Map map, String img) {
 
+        //using sprite cuz Texture doesn't have rotation
+        sprite = new Sprite(SpriteStorage.getInstance().getTexture(img));
         //temporarily here
         this.map = map;
     }

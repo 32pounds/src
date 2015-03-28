@@ -2,7 +2,7 @@ package com.comms;
 
 import com.comms.Command;
 import com.map.Direction;
-import com.model.Player;
+import com.model.Entity;
 /**
  * This represents user commands for moving in a cardinal direction
  *
@@ -10,14 +10,14 @@ import com.model.Player;
  */
 public class MoveCmd extends Command{
     private Direction dir;
-    private Player actor;
+    private Entity actor;
     /**
      * This represents user commands for moving in a cardinal direction
      *
      * @param direction     The directon the user wishes to move in
      *                      can take value NORTH, EAST, SOUTH, or WEST
      */
-    public MoveCmd(Player target, Direction direction){
+    public MoveCmd(Entity target, Direction direction){
         dir = direction;
         actor = target;
     }

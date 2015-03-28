@@ -27,6 +27,11 @@
     {
       "code": "C",
       "path": "top-down/objects/ChairRed-north.png"
+    },
+    {
+      "code": "M",
+      "path": "top-down/mobs/Roach.png"
     }
+
   ]
 }
