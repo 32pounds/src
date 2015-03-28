@@ -10,6 +10,7 @@ import com.gameloop.GameLoop;
 import com.map.Map;
 import com.model.Debugger;
 import com.model.Entity;
+import com.model.Monster;
 import com.renderer.Drawable;
 import com.renderer.SpriteStorage;
 import com.renderer.Updatable;
@@ -23,7 +24,6 @@ public class OSGame extends ApplicationAdapter {
     private GameLoop gameLoop;
     private ArrayList<Drawable> drawables;
     private Entity localPlayer;
-    private Entity monster;
 
     @Override
     public void create() {
@@ -49,7 +49,7 @@ public class OSGame extends ApplicationAdapter {
 
         gameLoop = new GameLoop();
         //spawns a monster
-        monster = new Entity(map,"M");
+        Monster monster=new Monster(map,"M");
         drawables.add(monster);
 
         gameLoop.setRunning(true);
@@ -61,7 +61,7 @@ public class OSGame extends ApplicationAdapter {
             }
         };
 
-        gameLoop.addUpdatable(spamHello);
+        gameLoop.addUpdatable(monster);
 
         Gdx.input.setInputProcessor(new InputHandler(localPlayer));
     }
