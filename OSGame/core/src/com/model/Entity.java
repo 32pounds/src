@@ -17,20 +17,20 @@ public class Entity extends Drawable{
 
     //sprite of the player
     //I am using a Sprite cuz texture doesn't have rotation
-    private Sprite sprite;
+    protected Sprite sprite;
 
     //initial position of the player
     protected Position position;
     //this property is to provide a way to access map data,
     //after game state finished this property must be ripped off from here
-    private Map map;
+    protected Map map;
 
     /**
      * Provide a way to access map data, but after game state finished this property must be ripped off from here.
      * @param map Map
      */
     public Entity(Map map, String img) {
-        position = new Position(1,16);
+        position = new Position(1,1);
         //using sprite cuz Texture doesn't have rotation
         sprite = new Sprite(SpriteStorage.getInstance().getTexture(img));
         //temporarily here

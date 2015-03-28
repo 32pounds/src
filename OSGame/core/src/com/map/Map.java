@@ -50,10 +50,18 @@ public class Map extends Drawable {
         return grid[yIndex][xIndex];
     }
 
+    public char getCode(Position pos){
+        return grid[pos.getY()][pos.getX()];
+    }
+
     public boolean isWalkable(int x, int y) {
         if (grid[y][x] == ' ')
             return true;
         return false;
+    }
+
+    public boolean isWalkable(Position pos){
+        return (grid[pos.getY()][pos.getX()] == ' ');
     }
 
     public boolean isExpired() {
