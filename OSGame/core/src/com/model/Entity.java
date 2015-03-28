@@ -23,7 +23,7 @@ public class Entity extends Drawable{
     //initial position of the player
     private int x = 1;
     private int y = 16;
-
+    
     //this property is to provide a way to access map data,
     //after game state finished this property must be ripped off from here
     private Map map;
