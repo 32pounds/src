@@ -32,7 +32,6 @@ public class Player extends Drawable {
      * @param map Map
      */
     public Player(Map map) {
-
         //using sprite cuz Texture doesn't have rotation
         sprite = new Sprite(SpriteStorage.getInstance().getTexture("@"));
 

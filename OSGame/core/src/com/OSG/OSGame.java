@@ -22,7 +22,6 @@ public class OSGame extends ApplicationAdapter {
     private SpriteBatch batch;
     private GameLoop gameLoop;
     private ArrayList<Drawable> drawables;
-    private ArrayList<Updatable> updatables;
     private Player localPlayer;
 
     @Override
@@ -47,9 +46,17 @@ public class OSGame extends ApplicationAdapter {
         localPlayer = new Player(map);
         drawables.add(localPlayer);
 
-        gameLoop = new GameLoop(updatables);
+        gameLoop = new GameLoop();
         gameLoop.setRunning(true);
         gameLoop.start();
+
+        Updatable spamHello = new Updatable(){
+            public void update(){
+                System.out.println("Hello");
+            }
+        };
+
+        gameLoop.addUpdatable(spamHello);
 
         Gdx.input.setInputProcessor(new InputHandler(localPlayer));
     }
@@ -63,6 +70,9 @@ public class OSGame extends ApplicationAdapter {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         synchronized(localPlayer){
+            //the view is controlled by the position of local player,
+            //so we syncronize with that instance to prevent it changing
+            //during rendering
             updateCameraPosition();
             batch.setProjectionMatrix(camera.combined);
             batch.begin();
