@@ -58,18 +58,24 @@ public class Monster extends Entity implements Updatable{
             //set image and rand X/Y
             wasDead=false;
             changeSprite(alive);
+            int x,y;
+            do
+            {
+                x=randomGen.nextInt(map.getXBound());
+                y=randomGen.nextInt(map.getYBound());
+            }while(map.isWalkable(x,y)==false);
             
         }
-        if(isDead()==false)
+        else
         {
-            if(getXPos()==hunter.getXPos() && getYPos()==hunter.getYPos() && isDead()==false )
+            if(getXPos()==hunter.getXPos() && getYPos()==hunter.getYPos())
             {   
                 deathTime=TimeUtils.millis();
                 changeSprite(dead);
                 splat.play();
                 wasDead=true;
             }
-            else if( (isDead()==false) && (TimeUtils.millis()-lastUpdateTime > UPDATE_INTERVAL))
+            else if(TimeUtils.millis()-lastUpdateTime > UPDATE_INTERVAL)
             {
                 lastUpdateTime=TimeUtils.millis();
                 int dir=randomGen.nextInt(4);

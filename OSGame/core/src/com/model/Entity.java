@@ -26,7 +26,7 @@ public class Entity extends Drawable{
     
     //this property is to provide a way to access map data,
     //after game state finished this property must be ripped off from here
-    private Map map;
+    protected Map map;
 
     /**
      * Provide a way to access map data, but after game state finished this property must be ripped off from here.
