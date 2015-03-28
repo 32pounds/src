@@ -8,8 +8,7 @@ package com.model;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.utils.TimeUtils;
-import com.map.Direction;
-import com.map.Map;
+import com.map.*;
 import com.renderer.Updatable;
 import java.util.Random;
 
@@ -28,8 +27,8 @@ public class Monster extends Entity implements Updatable{
     private String alive,dead;
     private Sound splat;
     private boolean wasDead;
-    
-    public Monster(Map map, String img, Entity killer) 
+
+    public Monster(Map map, String img, Entity killer)
     {
         super(map, img);
         lastUpdateTime=0;
@@ -40,14 +39,14 @@ public class Monster extends Entity implements Updatable{
         splat= Gdx.audio.newSound(Gdx.files.internal("sounds/Squish.mp3"));
         wasDead=true;
     }
-    
+
     public boolean isDead()
     {
         if(TimeUtils.millis()-deathTime>WAIT_TIME)
             return false;
         return true;
     }
-    
+
     @Override
     public void update()
     {
@@ -64,12 +63,12 @@ public class Monster extends Entity implements Updatable{
                 x=randomGen.nextInt(map.getXBound());
                 y=randomGen.nextInt(map.getYBound());
             }while(map.isWalkable(x,y)==false);
-            
+            position = new Position(x,y);
         }
         else
         {
             if(getXPos()==hunter.getXPos() && getYPos()==hunter.getYPos())
-            {   
+            {
                 deathTime=TimeUtils.millis();
                 changeSprite(dead);
                 splat.play();
@@ -89,5 +88,5 @@ public class Monster extends Entity implements Updatable{
                     super.move(Direction.WEST);
             }
         }
-    }    
+    }
 }
