@@ -28,7 +28,7 @@ public class Monster extends Entity implements Updatable{
     private Sound splat;
     private boolean wasDead;
 
-    public Monster(Map map, String img, Entity killer)
+    public Monster(Map map, String img, Entity killer, Sound splatSound)
     {
         super(map, img);
         lastUpdateTime=0;
@@ -36,7 +36,7 @@ public class Monster extends Entity implements Updatable{
         deathTime=-WAIT_TIME;
         alive=img;
         dead="S";
-        splat= Gdx.audio.newSound(Gdx.files.internal("sounds/Squish.mp3"));
+        splat= splatSound;
         wasDead=true;
     }
 

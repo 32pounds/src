@@ -1,6 +1,8 @@
 package com.OSG;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.GL20;
@@ -10,8 +12,8 @@ import com.gameloop.GameLoop;
 import com.map.Map;
 import com.model.Debugger;
 import com.model.Entity;
-import com.model.Player;
 import com.model.Monster;
+import com.model.Player;
 import com.renderer.Drawable;
 import com.renderer.SpriteStorage;
 import com.renderer.Updatable;
@@ -51,8 +53,9 @@ public class OSGame extends ApplicationAdapter {
         gameLoop = new GameLoop();
 
         //spawns a monster (or 50)
+        Sound splat = Gdx.audio.newSound(Gdx.files.internal("sounds/Squish.mp3"));
         for(int i=0; i<100; i++){
-            Monster monster=new Monster(map,"M", localPlayer);
+            Monster monster=new Monster(map,"M", localPlayer, splat);
             gameLoop.addUpdatable(monster);
             drawables.add(monster);
         }
