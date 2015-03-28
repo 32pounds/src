@@ -4,8 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.comms.Command;
 import com.comms.CommandHandler;
-import com.map.Direction;
-import com.map.Map;
+import com.map.*;
 import com.renderer.Drawable;
 import com.renderer.SpriteStorage;
 import com.renderer.Updatable;
@@ -21,9 +20,7 @@ public class Entity extends Drawable{
     private Sprite sprite;
 
     //initial position of the player
-    private int x = 1;
-    private int y = 16;
-    
+    protected Position position;
     //this property is to provide a way to access map data,
     //after game state finished this property must be ripped off from here
     private Map map;
@@ -33,7 +30,7 @@ public class Entity extends Drawable{
      * @param map Map
      */
     public Entity(Map map, String img) {
-
+        position = new Position(1,16);
         //using sprite cuz Texture doesn't have rotation
         sprite = new Sprite(SpriteStorage.getInstance().getTexture(img));
         //temporarily here
@@ -41,15 +38,17 @@ public class Entity extends Drawable{
     }
 
     public int getXPos(){
-        return x;
+        return position.getX();
     }
 
     public int getYPos(){
-        return y;
+        return position.getY();
     }
 
     @Override
     public void draw(SpriteBatch batch) {
+        int x = getXPos();
+        int y = getYPos();
         //using bacth.draw instead of sprite.draw cuz I dont want apply every property of the sprite (like position)
         batch.draw(sprite, x * Map.XDIMENSION, y * Map.YDIMENSION, sprite.getOriginX(), sprite.getOriginY(), sprite.getWidth(), sprite.getHeight(), sprite.getScaleX(), sprite.getScaleY(), sprite.getRotation());
     }
@@ -67,6 +66,8 @@ public class Entity extends Drawable{
     }
 
     public synchronized void move(Direction dir) {
+        int x = getXPos();
+        int y = getYPos();
         switch (dir) {
             case SOUTH:
                 //check if the next step is a valid step
@@ -94,5 +95,7 @@ public class Entity extends Drawable{
                 sprite.setRotation(270);
                 break;
         }
+        position.setX(x);
+        position.setY(y);
     }
 }

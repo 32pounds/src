@@ -5,6 +5,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.renderer.Drawable;
 import com.renderer.SpriteStorage;
+import com.map.Position;
 
 public class Map extends Drawable {
     //this grid is [y][x] to make parsing _much_ easier
@@ -17,7 +18,6 @@ public class Map extends Drawable {
 
         //create the grid with the map
         grid = parseGrid(mapOne);
-
     }
 
     public void draw(SpriteBatch batch) {
@@ -58,6 +58,15 @@ public class Map extends Drawable {
 
     public boolean isExpired() {
         return false;
+    }
+
+    public Position findFirstInstance(char item){
+        for (int y = 0; y < grid.length; ++y) {
+            for (int x = 0; x < grid[y].length; ++x) {
+                if(grid[y][x]==item) return new Position(x,y);
+            }
+        }
+        return new Position(0,0);
     }
 
     private char[][] parseGrid(FileHandle map) {

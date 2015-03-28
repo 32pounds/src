@@ -10,6 +10,10 @@
     },
     {
       "code": "@",
+      "path": "top-down/floorings/BeigeTile.png"
+    },
+    {
+      "code": "Thomas",
       "path": "top-down/humans/Thomas-north.png"
     },
     {

@@ -45,7 +45,7 @@ public class OSGame extends ApplicationAdapter {
         Map map = new Map();
         drawables.add(map);
 
-        localPlayer = new Player(map,"@");
+        localPlayer = new Player(map,"Thomas");
         drawables.add(localPlayer);
 
         gameLoop = new GameLoop();
