@@ -40,7 +40,17 @@ public class Map extends Drawable {
             }
         }
     }
-
+    
+    public int getXBound()
+    {
+                return grid[0].length;
+    }
+    
+    public int getYBound()
+    {
+                return grid.length;
+    }
+    
     @Override
     public int getZIndex() {
         return 0;

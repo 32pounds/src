@@ -36,6 +36,11 @@ public class Entity extends Drawable{
         //temporarily here
         this.map = map;
     }
+    
+    public void changeSprite(String img)
+    {
+        sprite = new Sprite(SpriteStorage.getInstance().getTexture(img));
+    }
 
     public int getXPos(){
         return position.getX();

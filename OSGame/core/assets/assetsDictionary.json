@@ -35,6 +35,10 @@
     {
       "code": "M",
       "path": "top-down/mobs/Roach.png"
+    },
+    {
+      "code": "S",
+      "path": "top-down/mobs/Splat-blue.png"
     }
 
   ]
