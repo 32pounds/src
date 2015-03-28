@@ -31,11 +31,10 @@ public class Entity extends Drawable {
      * Provide a way to access map data, but after game state finished this property must be ripped off from here.
      * @param map Map
      */
-    public Entity(Map map) {
+    public Entity(Map map, String img) {
 
         //using sprite cuz Texture doesn't have rotation
-        sprite = new Sprite(SpriteStorage.getInstance().getTexture("@"));
-
+        sprite = new Sprite(SpriteStorage.getInstance().getTexture(img));
         //temporarily here
         this.map = map;
     }
