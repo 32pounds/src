@@ -31,7 +31,7 @@ public class OSGame extends ApplicationAdapter {
         float h = Gdx.graphics.getHeight();
         camera = new OrthographicCamera(w, h);
         batch = new SpriteBatch();
-        
+
         drawables = new ArrayList<Drawable>();
 
         SpriteStorage.getInstance().loadAssets();
@@ -58,20 +58,23 @@ public class OSGame extends ApplicationAdapter {
     public void render() {
         //sorting by zIndex before draw
         Collections.sort(drawables);
-        
+
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        updateCameraPosition();
-        batch.setProjectionMatrix(camera.combined);
-        batch.begin();
+        synchronized(localPlayer){
+            updateCameraPosition();
+            batch.setProjectionMatrix(camera.combined);
+            batch.begin();
 
-        for (Drawable drawable : drawables)
-            drawable.draw(batch);
+            for (Drawable drawable : drawables)
+                drawable.draw(batch);
 
-        batch.end();
+            batch.end();
+        }
+
     }
-    
+
     private void updateCameraPosition(){
         float x = Map.XDIMENSION * localPlayer.getXPos();
         float y = Map.XDIMENSION * localPlayer.getYPos();

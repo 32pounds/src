@@ -39,11 +39,11 @@ public class Player extends Drawable {
         //temporarily here
         this.map = map;
     }
-    
+
     public int getXPos(){
         return x;
     }
-    
+
     public int getYPos(){
         return y;
     }
@@ -66,7 +66,7 @@ public class Player extends Drawable {
         return false;
     }
 
-    public void move(Direction dir) {
+    public synchronized void move(Direction dir) {
         switch (dir) {
             case SOUTH:
                 //check if the next step is a valid step
