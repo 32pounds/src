@@ -3,25 +3,20 @@ package com.comms;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.map.Direction;
-import com.model.Entity;
+import com.model.Player;
 import com.comms.*;
 /**
  * Handle the player input
  */
 public class InputHandler implements InputProcessor {
-    Entity actor;
+    Player actor;
 
-    public InputHandler(Entity target){
+    public InputHandler(Player target){
         actor = target;
     }
 
     @Override
     public boolean keyDown(int keycode) {
-        return false;
-    }
-
-    @Override
-    public boolean keyUp(int keycode) {
         Command result = new DummyCmd();
         boolean keyRegistered = true;
         switch (keycode) {
@@ -36,6 +31,25 @@ public class InputHandler implements InputProcessor {
                 break;
             case Input.Keys.RIGHT:
                 result = new MoveCmd(actor, Direction.EAST);
+                break;
+            default:
+                keyRegistered = false;
+        }
+        if(keyRegistered) CommandHandler.getInstance().add(result);
+
+        return keyRegistered;
+    }
+
+    @Override
+    public boolean keyUp(int keycode) {
+        Command result = new DummyCmd();
+        boolean keyRegistered = true;
+        switch (keycode) {
+            case Input.Keys.UP:
+            case Input.Keys.DOWN:
+            case Input.Keys.LEFT:
+            case Input.Keys.RIGHT:
+                result = new StopCmd(actor);
                 break;
             default:
                 keyRegistered = false;

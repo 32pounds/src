@@ -10,6 +10,7 @@ import com.gameloop.GameLoop;
 import com.map.Map;
 import com.model.Debugger;
 import com.model.Entity;
+import com.model.Player;
 import com.renderer.Drawable;
 import com.renderer.SpriteStorage;
 import com.renderer.Updatable;
@@ -44,7 +45,7 @@ public class OSGame extends ApplicationAdapter {
         Map map = new Map();
         drawables.add(map);
 
-        localPlayer = new Entity(map,"@");
+        localPlayer = new Player(map,"@");
         drawables.add(localPlayer);
 
         gameLoop = new GameLoop();
@@ -61,9 +62,9 @@ public class OSGame extends ApplicationAdapter {
             }
         };
 
-        gameLoop.addUpdatable(spamHello);
+        gameLoop.addUpdatable((Player)localPlayer);
 
-        Gdx.input.setInputProcessor(new InputHandler(localPlayer));
+        Gdx.input.setInputProcessor(new InputHandler((Player)localPlayer));
     }
 
     @Override
