@@ -8,12 +8,13 @@ import com.map.Direction;
 import com.map.Map;
 import com.renderer.Drawable;
 import com.renderer.SpriteStorage;
+import com.renderer.Updatable;
 
 /**
  * This function represent the player
  * <p>This class will be edited when we add the game state</p>
  */
-public class Entity extends Drawable {
+public class Entity extends Drawable{
 
     //sprite of the player
     //I am using a Sprite cuz texture doesn't have rotation
