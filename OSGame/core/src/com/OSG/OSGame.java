@@ -49,9 +49,13 @@ public class OSGame extends ApplicationAdapter {
         drawables.add(localPlayer);
 
         gameLoop = new GameLoop();
-        //spawns a monster
-        Monster monster=new Monster(map,"M", localPlayer);
-        drawables.add(monster);
+
+        //spawns a monster (or 50)
+        for(int i=0; i<100; i++){
+            Monster monster=new Monster(map,"M", localPlayer);
+            gameLoop.addUpdatable(monster);
+            drawables.add(monster);
+        }
 
         gameLoop.setRunning(true);
         gameLoop.start();
@@ -63,7 +67,6 @@ public class OSGame extends ApplicationAdapter {
         };
 
         gameLoop.addUpdatable((Player)localPlayer);
-        gameLoop.addUpdatable(monster);
 
         Gdx.input.setInputProcessor(new InputHandler((Player)localPlayer));
     }

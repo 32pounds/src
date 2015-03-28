@@ -24,16 +24,19 @@ public class GameLoop extends Thread {
     }
 
     public void addUpdatable(Updatable up){
-        updatables.add(up);
+        synchronized(updatables){
+            updatables.add(up);
+        }
     }
 
     @Override
     public void run() {
         //this is acting as our server for now
         while (running) {
-
-            for (Updatable updatable : updatables)
-                updatable.update();
+            synchronized(updatables){
+                for (Updatable updatable : updatables)
+                    updatable.update();
+            }
 
             Command command = CommandHandler.getInstance().remove();
             //if there no command is not needed to be updated
