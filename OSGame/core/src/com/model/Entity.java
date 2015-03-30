@@ -1,13 +1,17 @@
 package com.model;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.comms.Command;
 import com.comms.CommandHandler;
 import com.map.*;
 import com.renderer.Drawable;
 import com.renderer.SpriteStorage;
 import com.renderer.Updatable;
+import java.util.ArrayList;
+import com.gameloop.GameLoop;
 
 /**
  * This function represent the player
@@ -24,6 +28,8 @@ public class Entity extends Drawable{
     //this property is to provide a way to access map data,
     //after game state finished this property must be ripped off from here
     protected Map map;
+    
+    GameLoop gameLoop;
 
     /**
      * Provide a way to access map data, but after game state finished this property must be ripped off from here.
@@ -69,7 +75,23 @@ public class Entity extends Drawable{
         //for now this will be false
         return false;
     }
-
+   
+    public void exit() {
+        int x = getXPos();
+        int y = getYPos();
+        
+        if (map.isUp(x, y)) {
+            map.moveUp();
+            Position mapStartPos = map.findFirstInstance('v');
+            position = mapStartPos;
+        }
+        if (map.isDown(x, y)) {
+            map.moveDown();
+            Position mapStartPos = map.findFirstInstance('^');
+            position = mapStartPos;
+        }
+    }
+    
     public synchronized void move(Direction dir) {
         int x = getXPos();
         int y = getYPos();

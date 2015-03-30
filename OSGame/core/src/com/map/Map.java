@@ -5,6 +5,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.renderer.Drawable;
 import com.renderer.SpriteStorage;
+import com.model.Entity;
 import com.map.Position;
 
 public class Map extends Drawable {
@@ -12,14 +13,27 @@ public class Map extends Drawable {
     char grid[][];
     public static final int XDIMENSION = 32;
     public static final int YDIMENSION = 32;
+    FileHandle currentMap;
 
     public Map() {
         FileHandle mapOne = Gdx.files.internal("Level_1_Big_Map.map");
-
+       
         //create the grid with the map
         grid = parseGrid(mapOne);
     }
-
+    
+    public void moveUp() {
+        FileHandle mapTwo = Gdx.files.internal("Level_2_Big_Map.map");
+        
+        grid = parseGrid(mapTwo);
+    }
+    
+    public void moveDown() {
+        FileHandle mapOne = Gdx.files.internal("Level_1_Big_Map.map");
+        
+        grid = parseGrid(mapOne);
+    }
+    
     public void draw(SpriteBatch batch) {
         for (int y = 0; y < grid.length; ++y) {
             for (int x = 0; x < grid[y].length; ++x) {
@@ -27,6 +41,10 @@ public class Map extends Drawable {
                     batch.draw(SpriteStorage.getInstance().getTexture(" "), x * XDIMENSION, y * YDIMENSION);
                 else if (grid[y][x] == 'X')
                     batch.draw(SpriteStorage.getInstance().getTexture("X"), x * XDIMENSION, y * YDIMENSION);
+                else if (grid[y][x] == '^')
+                    batch.draw(SpriteStorage.getInstance().getTexture("^"), x * XDIMENSION, y * YDIMENSION);
+                else if (grid[y][x] == 'v')
+                    batch.draw(SpriteStorage.getInstance().getTexture("v"), x * XDIMENSION, y * YDIMENSION);
                 else if (grid[y][x] == '@')
                     batch.draw(SpriteStorage.getInstance().getTexture("@"), x * XDIMENSION, y * YDIMENSION);
                 else if (grid[y][x] == 'L')
@@ -65,7 +83,7 @@ public class Map extends Drawable {
     }
 
     public boolean isWalkable(int x, int y) {
-        if (grid[y][x] == ' ')
+        if (grid[y][x] == ' ' || grid[y][x] == '^' || grid[y][x] == 'v')
             return true;
         return false;
     }
@@ -76,6 +94,26 @@ public class Map extends Drawable {
 
     public boolean isExpired() {
         return false;
+    }
+    
+    public boolean isUp(int x, int y) {
+        if (grid[y][x] == '^')
+            return true;
+        return false;
+    }
+    
+    public boolean isUp(Position pos){
+        return (grid[pos.getY()][pos.getX()] == '^');
+    }
+    
+    public boolean isDown(int x, int y) {
+        if (grid[y][x] == 'v')
+            return true;
+        return false;
+    }
+    
+    public boolean isDown(Position pos){
+        return (grid[pos.getY()][pos.getX()] == 'v');
     }
 
     public Position findFirstInstance(char item){

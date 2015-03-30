@@ -81,6 +81,7 @@ public class OSGame extends ApplicationAdapter {
 
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        Sound splat = Gdx.audio.newSound(Gdx.files.internal("sounds/Squish.mp3"));
 
         synchronized(localPlayer){
             //the view is controlled by the position of local player,
@@ -89,15 +90,17 @@ public class OSGame extends ApplicationAdapter {
             updateCameraPosition();
             batch.setProjectionMatrix(camera.combined);
             batch.begin();
-
+            
             for (Drawable drawable : drawables)
                 drawable.draw(batch);
-
+            
             batch.end();
         }
-
+        
+        localPlayer.exit();
+            
     }
-
+    
     private void updateCameraPosition(){
         float x = Map.XDIMENSION * localPlayer.getXPos();
         float y = Map.XDIMENSION * localPlayer.getYPos();
