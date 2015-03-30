@@ -5,6 +5,7 @@ import com.comms.Command;
 import com.comms.CommandHandler;
 import java.util.List;
 import java.lang.InterruptedException;
+import java.util.ArrayList;
 
 public class GameLoop extends Thread {
 
@@ -13,8 +14,8 @@ public class GameLoop extends Thread {
     //list that will be updated every thread loop
     private List<Updatable> updatables;
 
-    public GameLoop(List<Updatable> list) {
-        updatables = list;
+    public GameLoop() {
+        updatables = new ArrayList<Updatable>();
         running = true;
     }
 
@@ -22,15 +23,26 @@ public class GameLoop extends Thread {
         this.running = running;
     }
 
+    public void addUpdatable(Updatable up){
+        synchronized(updatables){
+            updatables.add(up);
+        }
+    }
+
     @Override
     public void run() {
         //this is acting as our server for now
         while (running) {
+            synchronized(updatables){
+                for (Updatable updatable : updatables)
+                    updatable.update();
+            }
+
             Command command = CommandHandler.getInstance().remove();
             //if there no command is not needed to be updated
             if (command != null) {
                 command.execute();
-            } else {            
+            } else {
                 try{
                     Thread.sleep(10);
                 } catch (InterruptedException ex) {

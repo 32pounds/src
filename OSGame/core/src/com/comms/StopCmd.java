@@ -8,8 +8,7 @@ import com.model.Player;
  *
  * @author Brett Menzies
  */
-public class MoveCmd extends Command{
-    private Direction dir;
+public class StopCmd extends Command{
     private Player actor;
     /**
      * This represents user commands for moving in a cardinal direction
@@ -17,21 +16,14 @@ public class MoveCmd extends Command{
      * @param direction     The directon the user wishes to move in
      *                      can take value NORTH, EAST, SOUTH, or WEST
      */
-    public MoveCmd(Player target, Direction direction){
-        dir = direction;
+    public StopCmd(Player target){
         actor = target;
     }
-    public Direction getDirection(){
-        return dir;
-    }
     public char[] getData(){
-        char[] out = new char[1];
-        if(dir != null){
-            out[0] = dir.toChar();
-        }
+        char[] out = new char[0];
         return out;
     }
     public void execute(){
-        actor.setMovingDir(dir);
+        actor.stopMoving();
     }
 }
