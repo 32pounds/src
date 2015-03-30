@@ -1,17 +1,13 @@
 package com.model;
 
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.TimeUtils;
 import com.comms.Command;
 import com.comms.CommandHandler;
 import com.map.*;
 import com.renderer.Drawable;
 import com.renderer.SpriteStorage;
 import com.renderer.Updatable;
-import java.util.ArrayList;
-import com.gameloop.GameLoop;
 
 /**
  * This function represent the player
@@ -29,8 +25,6 @@ public class Entity extends Drawable{
     //after game state finished this property must be ripped off from here
     protected Map map;
     
-    GameLoop gameLoop;
-
     /**
      * Provide a way to access map data, but after game state finished this property must be ripped off from here.
      * @param map Map

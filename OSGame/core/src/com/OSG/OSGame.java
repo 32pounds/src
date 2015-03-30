@@ -81,7 +81,8 @@ public class OSGame extends ApplicationAdapter {
 
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        Sound splat = Gdx.audio.newSound(Gdx.files.internal("sounds/Squish.mp3"));
+        
+        localPlayer.exit();
 
         synchronized(localPlayer){
             //the view is controlled by the position of local player,
@@ -96,8 +97,6 @@ public class OSGame extends ApplicationAdapter {
             
             batch.end();
         }
-        
-        localPlayer.exit();
             
     }
     

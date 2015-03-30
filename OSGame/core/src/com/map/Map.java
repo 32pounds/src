@@ -5,7 +5,6 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.renderer.Drawable;
 import com.renderer.SpriteStorage;
-import com.model.Entity;
 import com.map.Position;
 
 public class Map extends Drawable {
@@ -13,7 +12,6 @@ public class Map extends Drawable {
     char grid[][];
     public static final int XDIMENSION = 32;
     public static final int YDIMENSION = 32;
-    FileHandle currentMap;
 
     public Map() {
         FileHandle mapOne = Gdx.files.internal("Level_1_Big_Map.map");
