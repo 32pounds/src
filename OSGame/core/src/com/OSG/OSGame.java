@@ -10,6 +10,7 @@ import com.gameloop.GameLoop;
 import com.map.Map;
 import com.model.Debugger;
 import com.model.Player;
+import com.model.PopupMenu;
 import com.renderer.Drawable;
 import com.renderer.SpriteStorage;
 import com.renderer.Updatable;
@@ -43,6 +44,8 @@ public class OSGame extends ApplicationAdapter {
 
         Map map = new Map();
         drawables.add(map);
+
+        drawables.add(new PopupMenu());
 
         localPlayer = new Player(map);
         drawables.add(localPlayer);
