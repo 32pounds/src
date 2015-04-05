@@ -92,7 +92,7 @@ public class PopupMenu extends com.renderer.Drawable implements InputProcessor {
 
     @Override
     public int getZIndex() {
-        return Integer.MAX_VALUE-1;
+        return Integer.MAX_VALUE;
     }
 
     @Override

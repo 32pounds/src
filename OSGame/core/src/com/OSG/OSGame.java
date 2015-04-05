@@ -72,15 +72,15 @@ public class OSGame extends ApplicationAdapter {
         updateCameraPosition();
         batch.setProjectionMatrix(camera.combined);
 
-        //this is here, because when it is on batch.begin() weird things happens
-        popupMenu.draw(batch);
-
         batch.begin();
 
         for (Drawable drawable : drawables)
             drawable.draw(batch);
 
         batch.end();
+
+        //this is here, because when it is on batch.begin() weird things happens
+        popupMenu.draw(batch);
     }
     
     private void updateCameraPosition(){
