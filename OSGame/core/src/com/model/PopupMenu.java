@@ -8,54 +8,75 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Event;
+import com.badlogic.gdx.scenes.scene2d.EventListener;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.renderer.Drawable;
+import com.comms.OSInputProcessor;
 
-public class PopupMenu extends Drawable implements InputProcessor {
+public class PopupMenu extends com.renderer.Drawable implements InputProcessor {
 
-    private Table table;
     private Stage stage;
-    private boolean visible = true;
+    private boolean visible = false;
 
     public PopupMenu() {
-
         stage = new Stage();
-        Gdx.input.setInputProcessor(this);
+
+        OSInputProcessor.getInstance().addInputPorcessor(stage);
+        OSInputProcessor.getInstance().addInputPorcessor(this);
 
         Table rootTable = new Table();
-
-        rootTable.setBounds(10, -10, 250, Gdx.graphics.getHeight() - 100);
-
-        com.badlogic.gdx.scenes.scene2d.utils.Drawable draw = new TextureRegionDrawable(new TextureRegion(new Texture("menu/sky.jpg")));
-        rootTable.background(draw);
-
-        table = new Table();
-        table.debug();
-
-        Label.LabelStyle labelStyle = new Label.LabelStyle(new BitmapFont(Gdx.files.internal("font/font.fnt")), Color.BLUE);
-
         Table table = new Table();
 
-        table.add(new Label("Name: Someone", labelStyle)).left();
-        table.row();
-        table.add(new Label("Health: 100", labelStyle)).left();
-        table.row();
-        table.add(new Label("Mana: 60", labelStyle)).left();
-        table.row();
-        table.add(new Label("Int: 10", labelStyle)).left();
-        table.row();
-        table.add(new Label("Dex: 10", labelStyle)).left();
-        table.row();
-        table.add(new Label("Str: 10", labelStyle)).left();
+        if(Debugger.IsDebugging) {
+            rootTable.debug();
+            table.debug();
+        }
 
+        Drawable draw = new TextureRegionDrawable(new TextureRegion(new Texture("menu/white.png")));
+        Drawable drawButton = new TextureRegionDrawable(new TextureRegion(new Texture("menu/button.png")));
+        Label.LabelStyle labelStyle = new Label.LabelStyle(new BitmapFont(Gdx.files.internal("font/font.fnt")), Color.BLUE);
+
+        rootTable.setBounds(0, 0, 250, Gdx.graphics.getHeight());
+
+        TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
+        textButtonStyle.up = drawButton;
+        textButtonStyle.down = drawButton;
+        textButtonStyle.checked = drawButton;
+        textButtonStyle.over = drawButton;
+        textButtonStyle.font = new BitmapFont(Gdx.files.internal("menu/fonts/font.fnt"));
+
+
+        table.background(draw);
         table.setFillParent(true);
-        table.top().left().pad(10);
+        table.add(new Label("Name:", labelStyle)).left();
+        table.add(new Label("Player 1", labelStyle)).left();
+        table.row();
+        table.add(new Label("Health:", labelStyle)).left();
+        table.add(new Label("100", labelStyle)).left();
+        table.row();
+        table.add(new Label("Mana:", labelStyle)).left();
+        table.add(new Label("30", labelStyle)).left();
+        table.row();
+        table.add(new TextButton("Save",textButtonStyle)).padTop(10).colspan(2);
+        table.row();
+        table.add(new TextButton("Load",textButtonStyle)).padTop(10).colspan(2);
+        table.row();
+        TextButton textButton = new TextButton("Return",textButtonStyle);
 
+        textButton.addListener(new ClickListener() {
+            public void clicked(InputEvent event, float x, float y) {
+                visible = !visible;
+            }
+        });
+
+        table.add(textButton).padTop(10).colspan(2);
+
+        table.top().padTop(100);
 
         rootTable.addActor(table);
         stage.addActor(rootTable);
@@ -71,7 +92,7 @@ public class PopupMenu extends Drawable implements InputProcessor {
 
     @Override
     public int getZIndex() {
-        return Integer.MAX_VALUE;
+        return Integer.MAX_VALUE-1;
     }
 
     @Override
@@ -83,7 +104,6 @@ public class PopupMenu extends Drawable implements InputProcessor {
     public boolean keyDown(int keycode) {
         if (keycode == Input.Keys.ESCAPE)
             visible = !visible;
-
         return false;
     }
 
