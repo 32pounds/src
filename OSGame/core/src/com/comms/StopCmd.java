@@ -8,7 +8,7 @@ import com.model.Player;
  *
  * @author Brett Menzies
  */
-public class MoveCmd extends Command{
+public class StopCmd extends Command{
     private Direction dir;
     private Player actor;
     /**
@@ -17,12 +17,9 @@ public class MoveCmd extends Command{
      * @param direction     The directon the user wishes to move in
      *                      can take value NORTH, EAST, SOUTH, or WEST
      */
-    public MoveCmd(Player target, Direction direction){
-        dir = direction;
+    public StopCmd(Player target, Direction nulled){
         actor = target;
-    }
-    public Direction getDirection(){
-        return dir;
+        dir = nulled;
     }
     public char[] getData(){
         char[] out = new char[1];
@@ -32,6 +29,6 @@ public class MoveCmd extends Command{
         return out;
     }
     public void execute(){
-        actor.setMovingDir(dir);
+        actor.stopMoving(dir);
     }
 }

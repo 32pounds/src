@@ -2,7 +2,7 @@ package com.comms;
 
 import com.comms.Command;
 import com.map.Direction;
-import com.model.Player;
+import com.model.Entity;
 /**
  * This represents user commands for moving in a cardinal direction
  *

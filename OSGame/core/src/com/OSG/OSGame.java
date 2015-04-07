@@ -1,6 +1,8 @@
 package com.OSG;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.GL20;
@@ -9,6 +11,8 @@ import com.comms.InputHandler;
 import com.gameloop.GameLoop;
 import com.map.Map;
 import com.model.Debugger;
+import com.model.Entity;
+import com.model.Monster;
 import com.model.Player;
 import com.renderer.Drawable;
 import com.renderer.SpriteStorage;
@@ -22,8 +26,7 @@ public class OSGame extends ApplicationAdapter {
     private SpriteBatch batch;
     private GameLoop gameLoop;
     private ArrayList<Drawable> drawables;
-    private ArrayList<Updatable> updatables;
-    private Player localPlayer;
+    private Entity localPlayer;
 
     @Override
     public void create() {
@@ -31,7 +34,7 @@ public class OSGame extends ApplicationAdapter {
         float h = Gdx.graphics.getHeight();
         camera = new OrthographicCamera(w, h);
         batch = new SpriteBatch();
-        
+
         drawables = new ArrayList<Drawable>();
 
         SpriteStorage.getInstance().loadAssets();
@@ -44,34 +47,57 @@ public class OSGame extends ApplicationAdapter {
         Map map = new Map();
         drawables.add(map);
 
-        localPlayer = new Player(map);
+        localPlayer = new Player(map,"Thomas");
         drawables.add(localPlayer);
 
-        gameLoop = new GameLoop(updatables);
+        gameLoop = new GameLoop();
+
+        //spawns a monster (or 50)
+        Sound splat = Gdx.audio.newSound(Gdx.files.internal("sounds/Squish.mp3"));
+        for(int i=0; i<100; i++){
+            Monster monster=new Monster(map,"M", localPlayer, splat);
+            gameLoop.addUpdatable(monster);
+            drawables.add(monster);
+        }
+
         gameLoop.setRunning(true);
         gameLoop.start();
 
-        Gdx.input.setInputProcessor(new InputHandler(localPlayer));
+        Updatable spamHello = new Updatable(){
+            public void update(){
+                System.out.println("Hello");
+            }
+        };
+
+        gameLoop.addUpdatable((Player)localPlayer);
+
+        Gdx.input.setInputProcessor(new InputHandler((Player)localPlayer));
     }
 
     @Override
     public void render() {
         //sorting by zIndex before draw
         Collections.sort(drawables);
-        
+
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        updateCameraPosition();
-        batch.setProjectionMatrix(camera.combined);
-        batch.begin();
+        synchronized(localPlayer){
+            //the view is controlled by the position of local player,
+            //so we syncronize with that instance to prevent it changing
+            //during rendering
+            updateCameraPosition();
+            batch.setProjectionMatrix(camera.combined);
+            batch.begin();
 
-        for (Drawable drawable : drawables)
-            drawable.draw(batch);
+            for (Drawable drawable : drawables)
+                drawable.draw(batch);
 
-        batch.end();
+            batch.end();
+        }
+
     }
-    
+
     private void updateCameraPosition(){
         float x = Map.XDIMENSION * localPlayer.getXPos();
         float y = Map.XDIMENSION * localPlayer.getYPos();
