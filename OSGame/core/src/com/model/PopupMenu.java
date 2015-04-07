@@ -21,7 +21,7 @@ import com.comms.OSInputProcessor;
 public class PopupMenu extends com.renderer.Drawable implements InputProcessor {
 
     private Stage stage;
-    private boolean visible = false;
+    private boolean visible = true;
 
     public PopupMenu() {
         stage = new Stage();
@@ -41,7 +41,7 @@ public class PopupMenu extends com.renderer.Drawable implements InputProcessor {
         Drawable drawButton = new TextureRegionDrawable(new TextureRegion(new Texture("menu/button.png")));
         Label.LabelStyle labelStyle = new Label.LabelStyle(new BitmapFont(Gdx.files.internal("font/font.fnt")), Color.BLUE);
 
-        rootTable.setBounds(0, 0, 250, Gdx.graphics.getHeight());
+        rootTable.setBounds(0, -450, 170, Gdx.graphics.getHeight());
 
         TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
         textButtonStyle.up = drawButton;
@@ -62,21 +62,16 @@ public class PopupMenu extends com.renderer.Drawable implements InputProcessor {
         table.add(new Label("Mana:", labelStyle)).left();
         table.add(new Label("30", labelStyle)).left();
         table.row();
-        table.add(new TextButton("Save",textButtonStyle)).padTop(10).colspan(2);
-        table.row();
-        table.add(new TextButton("Load",textButtonStyle)).padTop(10).colspan(2);
-        table.row();
-        TextButton textButton = new TextButton("Return",textButtonStyle);
+        TextButton textButton = new TextButton("Hide HUD",textButtonStyle);
 
         textButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 visible = !visible;
             }
         });
+        table.add(textButton).colspan(2).left();
 
-        table.add(textButton).padTop(10).colspan(2);
-
-        table.top().padTop(100);
+        table.top().padTop(30).left().padLeft(30);
 
         rootTable.addActor(table);
         stage.addActor(rootTable);
