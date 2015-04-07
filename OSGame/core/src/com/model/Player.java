@@ -20,7 +20,7 @@ public class Player extends Drawable {
     private Sprite sprite;
 
     //initial position of the player
-    private int x = 1;
+    private int x = 16;
     private int y = 16;
 
     //this property is to provide a way to access map data,
@@ -39,11 +39,11 @@ public class Player extends Drawable {
         //temporarily here
         this.map = map;
     }
-    
+
     public int getXPos(){
         return x;
     }
-    
+
     public int getYPos(){
         return y;
     }
