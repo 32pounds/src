@@ -98,3 +98,62 @@ X       X       X       X      X       X      X      X      X      X      X     
 X   C   X   C   X   C   X  C   X    C  X   C  X  C   X   C  X   C  X   C  X  C   X   C  X  C  X  C X
 X LDDR  X LDDR  X LDDDR X LDR  X  LDDR X  LDR X LDR  X  LDR X LDDR X  LDR X LDR  X  LDR X LDR X LDRX
 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+
+
+
+
+
+
+
+
+SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSSSSSSSS|||||||||||||||||||||||||||||||||||||||||||||||||||SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||SSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSSSSSSSS|  LDDDR |      |    /    T             T     /   |SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS|             |                 |                  |        |         |SSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSSSSSSSS|    C   |      |    /                        /   |SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS|             |                 |                  |        |         |SSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSSSSSSSS|        |      |    /                        /   |SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS|             |                 |                  |        |         |SSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSS|||||||||        |                                    /   |||||||||||||||||||||||||||||||||||||             |                 |                  |        |         |||||||SSSSSSSSSSSSS
+SSSSSSSSSSSSSSSS|  LDDDR                     /                        /   |                |                  |             |                 |                                           |SSSSSSSSSSSSS
+SSSSSSSSSSSSSSSS|    C                  |    ////   ////////////   ////   |                |                  |             |                 |                                           |SSSSSSSSSSSSS
+SSSSSSSSSSSSSSSS|                       |                                 |                |                  |             |                 |                  |        |               |SSSSSSSSSSSSS
+SSSSSSSSS||||||||                |      |                                 |                |                  |             |                 |                  |        |               |||||||SSSSSSS
+SSSSSSSSS|    LDR                |      ||||||||   |||||||||||||   |||||||||||||    |||||||||||||    |||||||||||||||   |||||||||||||   |||||||||||||||   |||||||||        |                     |SSSSSSS
+SSSSSSSS||///  C                 |                                                                                                                                        |                     ||SSSSSS
+SSSSSSSS||///                    |                                                                                                                                        |                     ||SSSSSS
+SSSSSSSS||///                    |                                                                                                                                        |                     ||SSSSSS
+SSSSSSSSS|                       |                                        XXXXXXXXXXXXXXXXXXXXXXXX    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                                      |                     |SSSSSSS
+SSSSSSSSS|||||||||||||||   |||||||                XXXXXXXX   XXXXXXXX     X                                                        X     XXXXXXX   XXXXXX                 |||||   |||||||||||||||SSSSSSS
+SSSSSSSSSSSSSSSS|                                 X                 X     X                                                        X     X              X                                 |SSSSSSSSSSSSS
+SSSSSSSSSSSSSSSS|                                 X                 X     X                                                        X     X              X                                 |SSSSSSSSSSSSS
+SSSSSSSSSSSSSSSS|                                                   X     X            ///////////     ///////////////             X     X                                                |SSSSSSSSSSSSS
+SSSSSSSSSSSSSSSS||||||||   |||||||                                  X     X            /XXXXXXXXXX     XXXXXXXXXXXXXX/             X     X                                |||||   |||||||||SSSSSSSSSSSSS
+SSSSSSSSSSSSSSSS|                |                X                 X     X            /X                           X/             X     X              X                 |               |SSSSSSSSSSSSS
+SS|||||||||||||||         D      |                X                 X     X            /X                           X/             X     X              X                 |               ||||||||||||SS
+SS|                       TC     |                XXXXXXXX   XXXXXXXX     X            /X                           X/             X     XXXXXXX   XXXXXX                 |                          |SS
+S||///        D           D      |                                                                                                                                        |                          ||S
+S||///        TC                 |                                                                                                                                        |                          ||S
+S||///        D           D      |                                                                                                                                        |                          ||S
+SS|                       TC     |                XXXXXXXX   XXXXXXXX     X            /X                           X/             X     XXXXXXX   XXXXXX                 |                          |SS
+SS||||||||||||||          D      |                X                 X     X            /X                           X/             X     X              X                 |               ||||||||||||SS
+SSSSSSSSSSSSSSS|                 |                X                 X     X            /X                           X/             X     X              X                 |               |SSSSSSSSSSSSS
+SSSSSSSSSSSSSSS||||||||   ||||||||                                  X     X            /XXXXXXXXXXX     XXXXXXXXXXXXX/             X     X                                |||||   |||||||||SSSSSSSSSSSSS
+SSSSSSSSSSSSSSS|                                                    X     X            ////////////     //////////////             X     X                                                |SSSSSSSSSSSSS
+SSSSSSSSSSSSSSS|                                  X                 X     X                                                        X     X              X                                 |SSSSSSSSSSSSS
+SSSSSSSSSSSSSSS|                                  X                 X     X                                                        X     X              X                                 |SSSSSSSSSSSSS
+SSSSSSSSSSSSSSS|                                  XXXXXXXX   XXXXXXXX     X                                                        X     XXXXXXX   XXXXXX                                 |SSSSSSSSSSSSS
+SSSSSSSS|||||||||||||||   ||||||||                                        XXXXXXXXXXXXXXXXXXXXXXXXX     XXXXXXXXXXXXXXXXXXXXXXXXXXXX                                      |||||   |||||||||||||||SSSSSSS
+SSSSSSSS|                        |                                                                                                                                        |                     |SSSSSSS
+SSSSSSS||///                     |                                                                                                                                        |                     |XSSSSSS
+SSSSSSS||///                     |                                                                                                                                        |                     |XSSSSSS
+SSSSSSS||/// C                   |                                                                                                                                        |                     |XSSSSSS
+SSSSSSSS|   LDR                  |      ||||   ||||||||   ||||||||   |||||||||||||   ||||||||||||||   ||||||||||||||||    |||||||||||||||||||||    |||||||||||||||        |                     |SSSSSSS
+SSSSSSSS||||||||                 |      |         |          |            |                 |                 |                                                  |        |               |||||||SSSSSSS
+SSSSSSSSSSSSSSS|                 |      |         |          |            |                 |                 |                                                  |        |               |SSSSSSSSSSSSS
+SSSSSSSSSSSSSSS|   C                              |          |            |                 |                 |    ////   ///////////////////////   /////////             |               |SSSSSSSSSSSSS
+SSSSSSSSSSSSSSS| LDDDR                            |          |            |                 |                 |    /                                        /                             |SSSSSSSSSSSSS
+SSSSSSSSSSSSSSS|||||||           |      |         |          |            |||||||||||||||||||||||||||||||||||||    /                                             |                        |SSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSSSSS|           |      |         |          |            |SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS|    /                                        /    |        |         |||||||SSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSSSSS|       C   |      |         |          |            |SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS|    /                                        /    |        |         |SSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSSSSS|     LDDDR |      |         |          |            |SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS|    /         T                 T           /     |        |         |SSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSSSSS||||||||||||||||||||||||||||||||||||||||||||||||||||||SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||SSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
