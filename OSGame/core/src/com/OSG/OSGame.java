@@ -82,8 +82,6 @@ public class OSGame extends ApplicationAdapter {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         
-        localPlayer.exit();
-
         synchronized(localPlayer){
             //the view is controlled by the position of local player,
             //so we syncronize with that instance to prevent it changing

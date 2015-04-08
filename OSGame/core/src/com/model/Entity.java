@@ -69,22 +69,6 @@ public class Entity extends Drawable{
         //for now this will be false
         return false;
     }
-   
-    public void exit() {
-        int x = getXPos();
-        int y = getYPos();
-        
-        if (map.isUp(x, y)) {
-            map.moveUp();
-            Position mapStartPos = map.findFirstInstance('v');
-            position = mapStartPos;
-        }
-        if (map.isDown(x, y)) {
-            map.moveDown();
-            Position mapStartPos = map.findFirstInstance('^');
-            position = mapStartPos;
-        }
-    }
     
     public synchronized void move(Direction dir) {
         int x = getXPos();

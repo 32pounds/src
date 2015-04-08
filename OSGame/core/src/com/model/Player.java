@@ -28,6 +28,24 @@ public class Player extends Entity implements Updatable {
             if(dir != null) move(dir);
             lastUpdateTime = TimeUtils.millis();
         }
+        int x = getXPos();
+        int y = getYPos();
+        Position mapStartPos;
+        
+        if (map.isMove(x, y) != 0) {
+            if (map.isMove(x, y) == 1) {
+                mapStartPos = map.findPreviousInstance(x, y, 'v');
+                position = mapStartPos;
+                x--;
+                position.setX(x);
+            }
+            else if (map.isMove(x, y) == 2) {
+                mapStartPos = map.findNextInstance(x, y, '^');
+                position = mapStartPos;
+                x--;
+                position.setX(x);
+            }
+        }
     }
 
     public void setMovingDir(Direction direction){

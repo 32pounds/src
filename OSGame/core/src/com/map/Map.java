@@ -20,18 +20,6 @@ public class Map extends Drawable {
         grid = parseGrid(mapOne);
     }
     
-    public void moveUp() {
-        FileHandle mapTwo = Gdx.files.internal("Level_2_Big_Map.map");
-        
-        grid = parseGrid(mapTwo);
-    }
-    
-    public void moveDown() {
-        FileHandle mapOne = Gdx.files.internal("Level_1_Big_Map.map");
-        
-        grid = parseGrid(mapOne);
-    }
-    
     public void draw(SpriteBatch batch) {
         for (int y = 0; y < grid.length; ++y) {
             for (int x = 0; x < grid[y].length; ++x) {
@@ -94,29 +82,40 @@ public class Map extends Drawable {
         return false;
     }
     
-    public boolean isUp(int x, int y) {
+
+   public int isMove(int x, int y) {
         if (grid[y][x] == '^')
-            return true;
-        return false;
+            return 1;
+        else if (grid[y][x] == 'v')
+            return 2;
+        return 0;
     }
     
-    public boolean isUp(Position pos){
-        return (grid[pos.getY()][pos.getX()] == '^');
-    }
-    
-    public boolean isDown(int x, int y) {
-        if (grid[y][x] == 'v')
-            return true;
-        return false;
-    }
-    
-    public boolean isDown(Position pos){
-        return (grid[pos.getY()][pos.getX()] == 'v');
+    public boolean isMove(Position pos){
+        return (grid[pos.getY()][pos.getX()] == ' ');
     }
 
     public Position findFirstInstance(char item){
         for (int y = 0; y < grid.length; ++y) {
             for (int x = 0; x < grid[y].length; ++x) {
+                if(grid[y][x]==item) return new Position(x,y);
+            }
+        }
+        return new Position(0,0);
+    }
+    
+    public Position findNextInstance(int X, int Y, char item){
+        for (int y = Y; y < grid.length; ++y) {
+            for (int x = X; x < grid[y].length; ++x) {
+                if(grid[y][x]==item) return new Position(x,y);
+            }
+        }
+        return new Position(0,0);
+    }
+    
+        public Position findPreviousInstance(int X, int Y, char item){
+        for (int y = Y; y > 0; --y) {
+            for (int x = X; x > 0; --x) {
                 if(grid[y][x]==item) return new Position(x,y);
             }
         }
