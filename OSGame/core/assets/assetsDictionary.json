@@ -9,6 +9,14 @@
       "path": "top-down/floorings/BlackCarpet.png"
     },
     {
+      "code": "^",
+      "path": "top-down/objects/Transpad-orange.png"
+    },
+    {
+      "code": "v",
+      "path": "top-down/objects/Transpad-green.png"
+    },
+    {
       "code": "@",
       "path": "top-down/floorings/BeigeTile.png"
     },

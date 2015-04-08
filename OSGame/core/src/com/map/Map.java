@@ -15,11 +15,11 @@ public class Map extends Drawable {
 
     public Map() {
         FileHandle mapOne = Gdx.files.internal("Level_1_Big_Map.map");
-
+       
         //create the grid with the map
         grid = parseGrid(mapOne);
     }
-
+    
     public void draw(SpriteBatch batch) {
         for (int y = 0; y < grid.length; ++y) {
             for (int x = 0; x < grid[y].length; ++x) {
@@ -27,6 +27,10 @@ public class Map extends Drawable {
                     batch.draw(SpriteStorage.getInstance().getTexture(" "), x * XDIMENSION, y * YDIMENSION);
                 else if (grid[y][x] == 'X')
                     batch.draw(SpriteStorage.getInstance().getTexture("X"), x * XDIMENSION, y * YDIMENSION);
+                else if (grid[y][x] == '^')
+                    batch.draw(SpriteStorage.getInstance().getTexture("^"), x * XDIMENSION, y * YDIMENSION);
+                else if (grid[y][x] == 'v')
+                    batch.draw(SpriteStorage.getInstance().getTexture("v"), x * XDIMENSION, y * YDIMENSION);
                 else if (grid[y][x] == '@')
                     batch.draw(SpriteStorage.getInstance().getTexture("@"), x * XDIMENSION, y * YDIMENSION);
                 else if (grid[y][x] == 'L')
@@ -65,7 +69,7 @@ public class Map extends Drawable {
     }
 
     public boolean isWalkable(int x, int y) {
-        if (grid[y][x] == ' ')
+        if (grid[y][x] == ' ' || grid[y][x] == '^' || grid[y][x] == 'v')
             return true;
         return false;
     }
@@ -77,10 +81,41 @@ public class Map extends Drawable {
     public boolean isExpired() {
         return false;
     }
+    
+
+   public int isMove(int x, int y) {
+        if (grid[y][x] == '^')
+            return 1;
+        else if (grid[y][x] == 'v')
+            return 2;
+        return 0;
+    }
+    
+    public boolean isMove(Position pos){
+        return (grid[pos.getY()][pos.getX()] == ' ');
+    }
 
     public Position findFirstInstance(char item){
         for (int y = 0; y < grid.length; ++y) {
             for (int x = 0; x < grid[y].length; ++x) {
+                if(grid[y][x]==item) return new Position(x,y);
+            }
+        }
+        return new Position(0,0);
+    }
+    
+    public Position findNextInstance(int X, int Y, char item){
+        for (int y = Y; y < grid.length; ++y) {
+            for (int x = X; x < grid[y].length; ++x) {
+                if(grid[y][x]==item) return new Position(x,y);
+            }
+        }
+        return new Position(0,0);
+    }
+    
+        public Position findPreviousInstance(int X, int Y, char item){
+        for (int y = Y; y > 0; --y) {
+            for (int x = X; x > 0; --x) {
                 if(grid[y][x]==item) return new Position(x,y);
             }
         }
