@@ -36,10 +36,14 @@ public class Player extends Entity implements Updatable {
             if (map.isMove(x, y) == 1) {
                 mapStartPos = map.findPreviousInstance(x, y, 'v');
                 position = mapStartPos;
+                x = getXPos();
+                position.setX(--x);
             }
             else if (map.isMove(x, y) == 2) {
                 mapStartPos = map.findNextInstance(x, y, '^');
                 position = mapStartPos;
+                x = getXPos();
+                position.setX(--x);
             }
         }
     }
