@@ -8,12 +8,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.comms.InputHandler;
+import com.comms.OSInputProcessor;
 import com.gameloop.GameLoop;
 import com.map.Map;
 import com.model.Debugger;
 import com.model.Entity;
 import com.model.Monster;
 import com.model.Player;
+import com.model.PopupMenu;
 import com.renderer.Drawable;
 import com.renderer.SpriteStorage;
 import com.renderer.Updatable;
@@ -30,6 +32,7 @@ public class OSGame extends ApplicationAdapter {
 
     @Override
     public void create() {
+
         float w = Gdx.graphics.getWidth();
         float h = Gdx.graphics.getHeight();
         camera = new OrthographicCamera(w, h);
@@ -63,6 +66,7 @@ public class OSGame extends ApplicationAdapter {
         gameLoop.setRunning(true);
         gameLoop.start();
 
+<<<<<<< HEAD
         Updatable spamHello = new Updatable(){
             public void update(){
                 System.out.println("Hello");
@@ -72,8 +76,15 @@ public class OSGame extends ApplicationAdapter {
         gameLoop.addUpdatable((Player)localPlayer);
 
         Gdx.input.setInputProcessor(new InputHandler((Player)localPlayer));
+=======
+        popupMenu = new PopupMenu();
+
+        OSInputProcessor.getInstance().addInputPorcessor(new InputHandler(localPlayer));
+
+>>>>>>> master
     }
 
+    private PopupMenu popupMenu;
     @Override
     public void render() {
         //sorting by zIndex before draw
@@ -82,6 +93,7 @@ public class OSGame extends ApplicationAdapter {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+<<<<<<< HEAD
         synchronized(localPlayer){
             //the view is controlled by the position of local player,
             //so we syncronize with that instance to prevent it changing
@@ -89,6 +101,12 @@ public class OSGame extends ApplicationAdapter {
             updateCameraPosition();
             batch.setProjectionMatrix(camera.combined);
             batch.begin();
+=======
+        updateCameraPosition();
+        batch.setProjectionMatrix(camera.combined);
+
+        batch.begin();
+>>>>>>> master
 
             for (Drawable drawable : drawables)
                 drawable.draw(batch);
@@ -96,6 +114,13 @@ public class OSGame extends ApplicationAdapter {
             batch.end();
         }
 
+<<<<<<< HEAD
+=======
+        batch.end();
+
+        //this is here, because when it is on batch.begin() weird things happens
+        popupMenu.draw(batch);
+>>>>>>> master
     }
 
     private void updateCameraPosition(){
