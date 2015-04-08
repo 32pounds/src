@@ -47,7 +47,40 @@
     {
       "code": "S",
       "path": "top-down/mobs/Splat-blue.png"
-    }
-
+    },
+     "code": ".",
+      "path": "top-down/floorings/Flooring-white.png"
+    },
+    {
+      "code": "|",
+      "path": "top-down/floorings/SheetMetal-large.png"
+    },
+    {
+      "code": "l",
+      "path": "top-down/objects/BeigeDesk-end.png"
+    },
+    {
+      "code": "d",
+      "path": "top-down/objects/BeigeDesk-horizontal.png"
+    },
+    {
+      "code": "r",
+      "path": "top-down/objects/BeigeDesk-horizontal.png"
+    },
+    {
+      "code": "c",
+      "path": "top-down/objects/BucketChair-blue.png"
+    },
+    {
+      "code": "S",
+      "path": "top-down/space/Stars3.png"
+    },
+    { 
+      "code: "T",
+      "path": "top-down/objects/Terminal-orbital.png"
+    },
+    {
+      "code": "/",
+      "path": "top-down/floorings/CautionStripes-yellow.png"
   ]
 }
