@@ -8,12 +8,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.comms.InputHandler;
+import com.comms.OSInputProcessor;
 import com.gameloop.GameLoop;
 import com.map.Map;
 import com.model.Debugger;
 import com.model.Entity;
 import com.model.Monster;
 import com.model.Player;
+import com.model.PopupMenu;
 import com.renderer.Drawable;
 import com.renderer.SpriteStorage;
 import com.renderer.Updatable;
@@ -26,10 +28,12 @@ public class OSGame extends ApplicationAdapter {
     private SpriteBatch batch;
     private GameLoop gameLoop;
     private ArrayList<Drawable> drawables;
-    private Entity localPlayer;
+    private Player localPlayer;
+    private PopupMenu popupMenu;
 
     @Override
     public void create() {
+
         float w = Gdx.graphics.getWidth();
         float h = Gdx.graphics.getHeight();
         camera = new OrthographicCamera(w, h);
@@ -72,6 +76,10 @@ public class OSGame extends ApplicationAdapter {
         gameLoop.addUpdatable((Player)localPlayer);
 
         Gdx.input.setInputProcessor(new InputHandler((Player)localPlayer));
+        popupMenu = new PopupMenu();
+
+        OSInputProcessor.getInstance().addInputPorcessor(new InputHandler(localPlayer));
+
     }
 
     @Override
@@ -96,6 +104,9 @@ public class OSGame extends ApplicationAdapter {
             batch.end();
         }
             
+
+        //this is here, because when it is on batch.begin() weird things happens
+        popupMenu.draw(batch);
     }
     
     private void updateCameraPosition(){

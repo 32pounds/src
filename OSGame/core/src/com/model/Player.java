@@ -54,7 +54,7 @@ public class Player extends Entity implements Updatable {
         lastUpdateTime = TimeUtils.millis();
     }
 
-    public void stopMoving(){
-        dir = null;
+    public void stopMoving(Direction direction){
+        if(dir==direction) dir = null;
     }
 }

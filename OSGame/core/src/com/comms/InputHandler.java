@@ -46,10 +46,16 @@ public class InputHandler implements InputProcessor {
         boolean keyRegistered = true;
         switch (keycode) {
             case Input.Keys.UP:
+                result = new StopCmd(actor, Direction.NORTH);
+                break;
             case Input.Keys.DOWN:
+                result = new StopCmd(actor, Direction.SOUTH);
+                break;
             case Input.Keys.LEFT:
+                result = new StopCmd(actor, Direction.WEST);
+                break;
             case Input.Keys.RIGHT:
-                result = new StopCmd(actor);
+                result = new StopCmd(actor, Direction.EAST);
                 break;
             default:
                 keyRegistered = false;
