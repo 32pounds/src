@@ -67,14 +67,26 @@ public class PopupMenu extends com.renderer.Drawable implements InputProcessor {
         table.add(new TextButton("Load",textButtonStyle)).padTop(10).colspan(2);
         table.row();
         TextButton textButton = new TextButton("Return",textButtonStyle);
+        TextButton exitButton = new TextButton("Exit Game",textButtonStyle);
 
         textButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 visible = !visible;
+                
             }
         });
 
+        // Click listener for exit button, will exit whole game.
+        // So initialize click listener and get it ready to exit.
+        exitButton.addListener(new ClickListener() {
+            public void clicked(InputEvent event, float x, float y) {
+               Gdx.app.exit();
+                
+            }
+        });
         table.add(textButton).padTop(10).colspan(2);
+        table.row(); // Start new row on in-game menu table for exit button
+        table.add(exitButton).padTop(10).colspan(2);
 
         table.top().padTop(100);
 
