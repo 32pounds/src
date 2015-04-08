@@ -28,7 +28,8 @@ public class OSGame extends ApplicationAdapter {
     private SpriteBatch batch;
     private GameLoop gameLoop;
     private ArrayList<Drawable> drawables;
-    private Entity localPlayer;
+    private Player localPlayer;
+    private PopupMenu popupMenu;
 
     @Override
     public void create() {
@@ -81,7 +82,6 @@ public class OSGame extends ApplicationAdapter {
 
     }
 
-    private PopupMenu popupMenu;
     @Override
     public void render() {
         //sorting by zIndex before draw
@@ -97,17 +97,11 @@ public class OSGame extends ApplicationAdapter {
             updateCameraPosition();
             batch.setProjectionMatrix(camera.combined);
             batch.begin();
-        updateCameraPosition();
-        batch.setProjectionMatrix(camera.combined);
-
-        batch.begin();
 
             for (Drawable drawable : drawables)
                 drawable.draw(batch);
-                batch.end();
-        }
-
-        batch.end();
+            batch.end();
+       }
 
         //this is here, because when it is on batch.begin() weird things happens
         popupMenu.draw(batch);
