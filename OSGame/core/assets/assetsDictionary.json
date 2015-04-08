@@ -48,7 +48,8 @@
       "code": "S",
       "path": "top-down/mobs/Splat-blue.png"
     },
-     "code": ".",
+    {
+      "code": ".",
       "path": "top-down/floorings/Flooring-white.png"
     },
     {
@@ -82,5 +83,6 @@
     {
       "code": "/",
       "path": "top-down/floorings/CautionStripes-yellow.png"
+    }
   ]
 }
