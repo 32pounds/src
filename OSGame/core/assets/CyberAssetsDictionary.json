@@ -1,0 +1,56 @@
+{
+  "data": [
+    {
+      "code": " ",
+      "path": "top-down/cyberspace/Floor.png"
+    },
+    {
+      "code": "C",
+      "path": "top-down/cyberspace/Wall.png"
+    },
+    {
+      "code": "c",
+      "path": "top-down/cyberspace/CorruptedWall.png"
+    },
+    {
+      "code": "#",
+      "path": "top-down/cyberspace/VirusEntry.png"
+    },
+    {
+      "code": "x",
+      "path": "top-down/cyberspace/Xbox.png"
+    },
+    {
+      "code": "X",
+      "path": "top-down/cyberspace/Xboxes.png"
+    },
+    {
+      "code": "^",
+      "path": "top-down/cyberspace/Up.png"
+    },
+    {
+      "code": "v",
+      "path": "top-down/cyberspace/Down.png"
+    },
+    {
+      "code": "<",
+      "path": "top-down/cyberspace/Portal-left.png"
+    },
+    {
+      "code": ">",
+      "path": "top-down/cyberspace/Portal-right.png"
+    },
+    {
+      "code": "*",
+      "path": "top-down/cyberspace/Asterisk.png"
+    },
+    {
+      "code": "!",
+      "path": "top-down/cyberspace/Exclamation.png"
+    },
+    {
+      "code": "$",
+      "path": "top-down/cyberspace/Funds.png"
+    }
+  ]
+}
