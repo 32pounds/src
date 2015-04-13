@@ -1,6 +1,8 @@
 package com.comms;
 import com.comms.GameID;
+import com.map.Map;
 import com.model.Entity;
+import com.renderer.Drawable;
 import java.util.*;
 import java.util.concurrent.*;
 
@@ -8,17 +10,22 @@ import java.util.concurrent.*;
  * Manages the mapping of GameIDs to local references
  * @author Brett Menzies
  */
-public class IDMap{
-    private ConcurrentHashMap<GameID,Entity> map;
-    public IDMap(){
-        map = new ConcurrentHashMap<GameID,Entity>();
+public class GameState{
+    private Map gameMap;
+    private ConcurrentHashMap<GameID,Entity> idMap;
+    private List<Drawable> drawables;
+    public GameState(Map map){
+        gameMap  = map;
+        idMap    = new ConcurrentHashMap<GameID,Entity>();
+        drawables = new ArrayList<Drawable>();
+        drawables.add(map);
     }
     /**
      * Returns a reference to an Entity given its GameID
      * returns null if no reference is found
      */
     public Entity getByID(GameID id){
-        return map.get(id);
+        return idMap.get(id);
     }
     /**
      * Adds an Entity to the map and returns its unique GameID
@@ -33,19 +40,26 @@ public class IDMap{
      * Registers an Entity with the given GameID as a key
      */
     public void register(Entity obj, GameID id){
-        map.put(id, obj);
+        idMap.put(id, obj);
         obj.assignID(id);
+        drawables.add(obj);
+        Collections.sort(drawables);
     }
     /**
      * Removes the Entity with given GameID
      */
     public void remove(GameID id){
-        map.remove(id);
+        Entity removed = idMap.remove(id);
+        drawables.remove(removed);
     }
     /**
-     * returns a collection of all entries
+     * returns a list of all drawables sorted by their Z index
      */
-    public Collection<Entity> entries(){
-        return map.values();
+    public List<Drawable> drawables(){
+        return drawables;
+    }
+
+    public Map gameMap(){
+        return gameMap;
     }
 }

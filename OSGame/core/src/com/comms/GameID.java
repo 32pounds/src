@@ -26,6 +26,16 @@ public class GameID{
     public GameID(Number inputID){
         id = inputID.shortValue();
     }
+    public GameID(char inputID){
+        id = (short) inputID;
+    }
+
+    /**
+     * Used to transmit the ID over the network
+     */
+    public char toChar(){
+        return (char) id;
+    }
 
     @Override
     public boolean equals(Object obj){

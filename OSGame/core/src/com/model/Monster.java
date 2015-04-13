@@ -9,6 +9,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.map.*;
+import com.comms.*;
 import com.renderer.Updatable;
 import java.util.Random;
 
@@ -28,9 +29,9 @@ public class Monster extends Entity implements Updatable{
     private Sound splat;
     private boolean wasDead;
 
-    public Monster(Map map, String img, Entity killer, Sound splatSound)
+    public Monster(GameState state, String img, Entity killer, Sound splatSound)
     {
-        super(map, img);
+        super(state, img);
         lastUpdateTime=0;
         hunter=killer;
         deathTime=-WAIT_TIME;
@@ -50,6 +51,7 @@ public class Monster extends Entity implements Updatable{
     @Override
     public void update()
     {
+        Map map = gameState.gameMap();
         if(isDead()==true)
             return;
         else if(wasDead==true)
