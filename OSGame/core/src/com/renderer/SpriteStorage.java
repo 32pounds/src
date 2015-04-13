@@ -12,7 +12,8 @@ import java.util.Map;
 /**
  * Manage the texture library and provide an easy way to handle them
  */
-public class SpriteStorage {
+public class SpriteStorage
+{
 
     //singleton instance
     private static SpriteStorage instance;
@@ -23,7 +24,8 @@ public class SpriteStorage {
     /**
      * Private constructor, to make sure that will have only one instance of SpriteStorage.
      */
-    private SpriteStorage() {
+    private SpriteStorage()
+    {
         //don't remove the private access modifier
         textures = new HashMap<String, Texture>();
     }
@@ -33,9 +35,9 @@ public class SpriteStorage {
      *
      * @return Singleton instance.
      */
-    public static SpriteStorage getInstance() {
-        if (instance == null)
-            instance = new SpriteStorage();
+    public static SpriteStorage getInstance()
+    {
+        if (instance == null) instance = new SpriteStorage();
         return instance;
     }
 
@@ -45,14 +47,18 @@ public class SpriteStorage {
      * @param code Code from the dictionary.
      * @return Texture.
      */
-    public Texture getTexture(String code) {
-        return textures.get(code);
+    public Texture getTexture(String code)
+    {
+        if (textures.containsKey(code))
+            return textures.get(code);
+        else return null;
     }
 
     /**
      * Load the assets described in assets/assetsDictionary.json.
      */
-    public void loadAssets() {
+    public void loadAssets()
+    {
 
         FileHandle file = Gdx.files.internal("assetsDictionary.json");
 
@@ -64,11 +70,14 @@ public class SpriteStorage {
 
         JsonValue data = root.get("Data");
 
-        for (JsonValue json : data) {
-            try {
+        for (JsonValue json : data)
+        {
+            try
+            {
                 Texture found = new Texture(json.get(1).asString());
                 textures.put(json.get(0).asString(), found);
-            } catch (Exception e) {
+            } catch (Exception e)
+            {
                 e.printStackTrace();
             }
         }
