@@ -82,7 +82,6 @@ public class SpriteStorageTest
     @Test
     public void testGetTexture() throws Exception
     {
-        TextureIO
         assertNotNull(SpriteStorage.getInstance().getTexture(" "));
         assertNotNull(SpriteStorage.getInstance().getTexture("X"));
         assertNotNull(SpriteStorage.getInstance().getTexture("^"));
