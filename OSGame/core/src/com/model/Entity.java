@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.comms.Command;
 import com.comms.CommandHandler;
+import com.comms.GameID;
 import com.map.*;
 import com.renderer.Drawable;
 import com.renderer.SpriteStorage;
@@ -24,7 +25,16 @@ public class Entity extends Drawable{
     //this property is to provide a way to access map data,
     //after game state finished this property must be ripped off from here
     protected Map map;
-    
+
+    //The GameID being used to reference this entity remotely
+    private GameID id;
+    public GameID getID(){
+        return id;
+    }
+    public void assignID(GameID newID){
+        id = newID;
+    }
+
     /**
      * Provide a way to access map data, but after game state finished this property must be ripped off from here.
      * @param map Map
@@ -36,7 +46,7 @@ public class Entity extends Drawable{
         //temporarily here
         this.map = map;
     }
-    
+
     public void changeSprite(String img)
     {
         sprite = new Sprite(SpriteStorage.getInstance().getTexture(img));
@@ -69,7 +79,7 @@ public class Entity extends Drawable{
         //for now this will be false
         return false;
     }
-    
+
     public synchronized void move(Direction dir) {
         int x = getXPos();
         int y = getYPos();

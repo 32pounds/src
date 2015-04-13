@@ -2,6 +2,7 @@ package com.comms;
 /**
  * ID class that will be used by the comms system to refer to objects
  * on every client/server connected to the game universally
+ * @author Brett Menzies
  */
 public class GameID{
     private static short idGen = 0;
