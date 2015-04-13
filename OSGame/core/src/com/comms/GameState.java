@@ -52,6 +52,10 @@ public class GameState{
         Entity removed = idMap.remove(id);
         drawables.remove(removed);
     }
+
+    public Collection<Entity> entities(){
+        return idMap.values();
+    }
     /**
      * returns a list of all drawables sorted by their Z index
      */
