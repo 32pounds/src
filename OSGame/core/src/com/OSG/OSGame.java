@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.comms.InputHandler;
 import com.comms.OSInputProcessor;
+import com.comms.GameID;
+import com.comms.GameState;
 import com.gameloop.GameLoop;
 import com.map.Map;
 import com.model.Debugger;
@@ -19,77 +21,59 @@ import com.model.PopupMenu;
 import com.renderer.Drawable;
 import com.renderer.SpriteStorage;
 import com.renderer.Updatable;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.*;
 
 public class OSGame extends ApplicationAdapter {
-
+    private Debugger debugger;
+    private GameState gameState;
     private OrthographicCamera camera;
-    private SpriteBatch batch;
-    private GameLoop gameLoop;
-    private ArrayList<Drawable> drawables;
     private Player localPlayer;
     private PopupMenu popupMenu;
+    private SpriteBatch batch;
 
     @Override
     public void create() {
-
         float w = Gdx.graphics.getWidth();
         float h = Gdx.graphics.getHeight();
         camera = new OrthographicCamera(w, h);
         batch = new SpriteBatch();
-
-        drawables = new ArrayList<Drawable>();
-
         SpriteStorage.getInstance().loadAssets();
 
         if (Debugger.IsDebugging) {
-            Debugger debugger = new Debugger();
-            drawables.add(debugger);
+            debugger = new Debugger();
         }
 
-        Map map = new Map();
-        drawables.add(map);
+        gameState = new GameState(new Map());
+        GameLoop gameLoop = new GameLoop(gameState);
 
-        localPlayer = new Player(map,"Thomas");
-        drawables.add(localPlayer);
+        localPlayer = new Player(gameState,"Thomas");
+        gameLoop.addUpdatable((Player)localPlayer);
+        gameState.register(localPlayer);
 
-        gameLoop = new GameLoop();
 
         //spawns a monster (or 50)
+        //this should be done by the server, not the client
         Sound splat = Gdx.audio.newSound(Gdx.files.internal("sounds/Squish.mp3"));
         for(int i=0; i<100; i++){
-            Monster monster=new Monster(map,"M", localPlayer, splat);
+            Monster monster=new Monster(gameState,"M", localPlayer, splat);
+            gameState.register(monster);
             gameLoop.addUpdatable(monster);
-            drawables.add(monster);
         }
+
+        Gdx.input.setInputProcessor(new InputHandler(localPlayer.getID()));
+        popupMenu = new PopupMenu();
+
+        OSInputProcessor.getInstance().addInputPorcessor(new InputHandler(localPlayer.getID()));
 
         gameLoop.setRunning(true);
         gameLoop.start();
-
-        Updatable spamHello = new Updatable(){
-            public void update(){
-                System.out.println("Hello");
-            }
-        };
-
-        gameLoop.addUpdatable((Player)localPlayer);
-
-        Gdx.input.setInputProcessor(new InputHandler((Player)localPlayer));
-        popupMenu = new PopupMenu();
-
-        OSInputProcessor.getInstance().addInputPorcessor(new InputHandler(localPlayer));
-
     }
 
     @Override
     public void render() {
-        //sorting by zIndex before draw
-        Collections.sort(drawables);
-
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        
+
         synchronized(localPlayer){
             //the view is controlled by the position of local player,
             //so we syncronize with that instance to prevent it changing
@@ -97,18 +81,21 @@ public class OSGame extends ApplicationAdapter {
             updateCameraPosition();
             batch.setProjectionMatrix(camera.combined);
             batch.begin();
-            
-            for (Drawable drawable : drawables)
+
+            for (Drawable drawable : gameState.drawables())
                 drawable.draw(batch);
-            
+
+            if (Debugger.IsDebugging) {
+                debugger.draw(batch);
+            }
+
             batch.end();
         }
-            
 
         //this is here, because when it is on batch.begin() weird things happens
         popupMenu.draw(batch);
     }
-    
+
     private void updateCameraPosition(){
         float x = Map.XDIMENSION * localPlayer.getXPos();
         float y = Map.XDIMENSION * localPlayer.getYPos();

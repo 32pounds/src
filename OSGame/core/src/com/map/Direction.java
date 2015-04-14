@@ -5,9 +5,9 @@ package com.map;
  * @author Brett Menzies
  */
 public enum Direction{
-    NORTH((char) 0), 
+    NORTH((char) 0),
     EAST ((char) 1),
-    SOUTH((char) 2), 
+    SOUTH((char) 2),
     WEST ((char) 3);
     private char i;
     Direction(char val){ this.i = val; }
@@ -16,4 +16,13 @@ public enum Direction{
      * and the comm system
      */
     public char toChar(){ return i; }
+    public static Direction getByChar(char in){
+        switch(in){
+            case 0:  return NORTH;
+            case 1:  return EAST;
+            case 2:  return SOUTH;
+            case 3:  return WEST;
+            default: return NORTH;
+        }
+    }
 }
