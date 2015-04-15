@@ -1,17 +1,17 @@
-package test.com.comms; 
+package test.com.model; 
 
 import org.junit.Test; 
 import org.junit.Before; 
 import org.junit.After; 
 
 /** 
-* OSInputProcessor Tester. 
+* PopupMenu Tester. 
 * 
 * @author <Authors name> 
 * @since <pre>Apr 15, 2015</pre> 
 * @version 1.0 
 */ 
-public class OSInputProcessorTest { 
+public class PopupMenuTest { 
 
 @Before
 public void before() throws Exception { 
@@ -23,31 +23,31 @@ public void after() throws Exception {
 
 /** 
 * 
-* Method: getInstance() 
+* Method: draw(SpriteBatch batch) 
 * 
 */ 
 @Test
-public void testGetInstance() throws Exception { 
+public void testDraw() throws Exception { 
 //TODO: Test goes here... 
 } 
 
 /** 
 * 
-* Method: addInputPorcessor(InputProcessor inputProcessor) 
+* Method: getZIndex() 
 * 
 */ 
 @Test
-public void testAddInputPorcessor() throws Exception { 
+public void testGetZIndex() throws Exception { 
 //TODO: Test goes here... 
 } 
 
 /** 
 * 
-* Method: removeInputPorcessor(InputProcessor inputProcessor) 
+* Method: isExpired() 
 * 
 */ 
 @Test
-public void testRemoveInputPorcessor() throws Exception { 
+public void testIsExpired() throws Exception { 
 //TODO: Test goes here... 
 } 
 
