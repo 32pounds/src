@@ -27,9 +27,10 @@ public class OSGame extends ApplicationAdapter {
     private Debugger debugger;
     private GameState gameState;
     private OrthographicCamera camera;
-    private Player localPlayer;
+    private GameID localPlayer;
     private PopupMenu popupMenu;
     private SpriteBatch batch;
+    private GameLoop gameLoop;
 
     @Override
     public void create() {
@@ -44,26 +45,17 @@ public class OSGame extends ApplicationAdapter {
         }
 
         gameState = new GameState(new Map());
-        GameLoop gameLoop = new GameLoop(gameState);
+        gameLoop = new GameLoop();
 
-        localPlayer = new Player(gameState,"Thomas");
-        gameLoop.addUpdatable((Player)localPlayer);
-        gameState.register(localPlayer);
+        //This will be a call to comms in the future
+        localPlayer = gameLoop.requestNewPlayer();
 
+        //Sound splat = Gdx.audio.newSound(Gdx.files.internal("sounds/Squish.mp3"));
 
-        //spawns a monster (or 50)
-        //this should be done by the server, not the client
-        Sound splat = Gdx.audio.newSound(Gdx.files.internal("sounds/Squish.mp3"));
-        for(int i=0; i<100; i++){
-            Monster monster=new Monster(gameState,"M", localPlayer, splat);
-            gameState.register(monster);
-            gameLoop.addUpdatable(monster);
-        }
-
-        Gdx.input.setInputProcessor(new InputHandler(localPlayer.getID()));
+        Gdx.input.setInputProcessor(new InputHandler(localPlayer));
         popupMenu = new PopupMenu();
 
-        OSInputProcessor.getInstance().addInputPorcessor(new InputHandler(localPlayer.getID()));
+        OSInputProcessor.getInstance().addInputPorcessor(new InputHandler(localPlayer));
 
         gameLoop.setRunning(true);
         gameLoop.start();
@@ -71,10 +63,15 @@ public class OSGame extends ApplicationAdapter {
 
     @Override
     public void render() {
+        gameLoop.syncWith(gameState);
+
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        synchronized(localPlayer){
+
+        Object player = gameState.getByID(localPlayer);
+        if(player == null) player = new Object();
+        synchronized(player){
             //the view is controlled by the position of local player,
             //so we syncronize with that instance to prevent it changing
             //during rendering
@@ -97,8 +94,10 @@ public class OSGame extends ApplicationAdapter {
     }
 
     private void updateCameraPosition(){
-        float x = Map.XDIMENSION * localPlayer.getXPos();
-        float y = Map.XDIMENSION * localPlayer.getYPos();
+        Entity player = gameState.getByID(localPlayer);
+        if(player == null) return;
+        float x = Map.XDIMENSION * player.getXPos();
+        float y = Map.XDIMENSION * player.getYPos();
         camera.position.set(x, y, 0);
         camera.update();
     }

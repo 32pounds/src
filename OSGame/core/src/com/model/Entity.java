@@ -18,9 +18,16 @@ public class Entity extends Drawable{
     //I am using a Sprite cuz texture doesn't have rotation
     protected Sprite sprite;
 
+    //This will be a shorter identifier in the future
+    protected String spriteString;
+    public String getSpriteString(){
+        return spriteString;
+    }
+
     //initial position of the player
     protected Position position;
     protected GameState gameState;
+
 
     //The GameID being used to reference this entity remotely
     private GameID id;
@@ -39,6 +46,7 @@ public class Entity extends Drawable{
         position = new Position(1,1);
         //using sprite cuz Texture doesn't have rotation
         sprite = new Sprite(SpriteStorage.getInstance().getTexture(img));
+        spriteString = img;
         //temporarily here
         this.gameState = state;
     }
@@ -46,6 +54,14 @@ public class Entity extends Drawable{
     public void changeSprite(String img)
     {
         sprite = new Sprite(SpriteStorage.getInstance().getTexture(img));
+    }
+
+    public void setXPos(int x){
+        position.setX(x);
+    }
+
+    public void setYPos(int y){
+        position.setY(y);
     }
 
     public int getXPos(){
@@ -74,6 +90,14 @@ public class Entity extends Drawable{
     public boolean isExpired() {
         //for now this will be false
         return false;
+    }
+
+    public void setRotation(int rotation){
+        sprite.setRotation(rotation);
+    }
+
+    public int getRotation(){
+        return (int) sprite.getRotation();
     }
 
     public synchronized void move(Direction dir) {
