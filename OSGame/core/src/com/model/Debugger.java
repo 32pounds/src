@@ -20,7 +20,7 @@ public class Debugger extends Drawable implements Updatable {
     private double lastTime;
     private double updateElapsedTime;
 
-    public static final boolean IsDebugging = java.lang.management.ManagementFactory.getRuntimeMXBean().getInputArguments().toString().indexOf("-agentlib:jdwp") > 0;
+        public static final boolean IsDebugging = java.lang.management.ManagementFactory.getRuntimeMXBean().getInputArguments().toString().indexOf("-alib:jdwp") > 0;
 
     public Debugger() {
 
