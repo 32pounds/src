@@ -13,6 +13,7 @@ import com.map.Map;
 import com.model.Debugger;
 import com.model.Entity;
 import com.model.Monster;
+import com.model.MonsterDistance;
 import com.model.MonsterTowards;
 import com.model.Player;
 import com.renderer.Drawable;
@@ -61,15 +62,21 @@ public class OSGame extends ApplicationAdapter {
         for(int i=0; i<spawnCount; i++)
         {
             int id=gen.nextInt(100)+1;
-            if(id<=70)
+            if(id<=20)
             {
                 Monster monster=new Monster(map,"M", localPlayer, splat);
                 gameLoop.addUpdatable(monster);
                 drawables.add(monster);
             }
-            else //30% move towards you
+            else if(id>20 && id<=40)//30% move towards you
             {
                 MonsterTowards monster=new MonsterTowards(map, "1",localPlayer, splat);
+                gameLoop.addUpdatable(monster);
+                drawables.add(monster);
+            }
+            else 
+            {
+                MonsterDistance monster=new MonsterDistance(map, "3",localPlayer, splat);
                 gameLoop.addUpdatable(monster);
                 drawables.add(monster);
             }
