@@ -13,12 +13,14 @@ import com.map.Map;
 import com.model.Debugger;
 import com.model.Entity;
 import com.model.Monster;
+import com.model.MonsterTowards;
 import com.model.Player;
 import com.renderer.Drawable;
 import com.renderer.SpriteStorage;
 import com.renderer.Updatable;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
 
 public class OSGame extends ApplicationAdapter {
 
@@ -54,10 +56,23 @@ public class OSGame extends ApplicationAdapter {
 
         //spawns a monster (or 50)
         Sound splat = Gdx.audio.newSound(Gdx.files.internal("sounds/Squish.mp3"));
-        for(int i=0; i<100; i++){
-            Monster monster=new Monster(map,"M", localPlayer, splat);
-            gameLoop.addUpdatable(monster);
-            drawables.add(monster);
+        int spawnCount=1000;
+        Random gen=new Random();
+        for(int i=0; i<spawnCount; i++)
+        {
+            int id=gen.nextInt(100)+1;
+            if(id<=70)
+            {
+                Monster monster=new Monster(map,"M", localPlayer, splat);
+                gameLoop.addUpdatable(monster);
+                drawables.add(monster);
+            }
+            else //30% move towards you
+            {
+                MonsterTowards monster=new MonsterTowards(map, "1",localPlayer, splat);
+                gameLoop.addUpdatable(monster);
+                drawables.add(monster);
+            }
         }
 
         gameLoop.setRunning(true);

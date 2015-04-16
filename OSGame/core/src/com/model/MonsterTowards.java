@@ -5,53 +5,25 @@
  */
 package com.model;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.utils.TimeUtils;
-import com.map.*;
-import com.renderer.Updatable;
-import java.util.Random;
+import com.map.Direction;
+import com.map.Map;
+import com.map.Position;
 
 /**
  *
  * @author michael
  */
-public class Monster extends Entity implements Updatable{
-
-    protected long lastUpdateTime;
-    protected long UPDATE_INTERVAL=100;
-    protected long WAIT_TIME=2000;
-    protected long deathTime;
-    protected static Random randomGen= new Random();
-    protected Entity hunter;
-    protected String alive,dead;
-    protected Sound splat;
-    protected boolean wasDead;
-
-    public Monster(Map map, String img, Entity killer, Sound splatSound)
+public class MonsterTowards extends Monster
+{
+    public MonsterTowards(Map map, String img, Entity killer, Sound splatSound) 
     {
-        super(map, img);
-        lastUpdateTime=0;
-        hunter=killer;
-        deathTime=-WAIT_TIME;
-        alive=img;
-        dead="S";
-        splat= splatSound;
-        wasDead=true;
-    }
-
-    public boolean isDead()
-    {
-        if(TimeUtils.millis()-deathTime>WAIT_TIME)
-            return false;
-        return true;
+        super(map, img, killer, splatSound);
+        super.changeDeath("!");
+        UPDATE_INTERVAL=250;
     }
     
-    public void changeDeath(String img)
-    {
-        dead=img;
-    }
-
     @Override
     public void update()
     {
@@ -82,15 +54,14 @@ public class Monster extends Entity implements Updatable{
             else if(TimeUtils.millis()-lastUpdateTime > UPDATE_INTERVAL)
             {
                 lastUpdateTime=TimeUtils.millis();
-                int dir=randomGen.nextInt(4);
-                if(dir==0)
-                    super.move(Direction.SOUTH);
-                else if(dir==1)
-                    super.move(Direction.NORTH);
-                else if(dir==2)
+                if(hunter.getXPos()>getXPos())
                     super.move(Direction.EAST);
-                else
+                else if(hunter.getXPos()<getXPos())
                     super.move(Direction.WEST);
+                else if(hunter.getYPos()>getYPos())
+                    super.move(Direction.NORTH);
+                else
+                    super.move(Direction.SOUTH);
             }
         }
     }
