@@ -7,6 +7,7 @@ package com.model;
 
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.comms.GameState;
 import com.map.Direction;
 import com.map.Map;
 import com.map.Position;
@@ -17,9 +18,9 @@ import com.map.Position;
  */
 public class MonsterTowards extends Monster
 {
-    public MonsterTowards(Map map, String img, Entity killer, Sound splatSound) 
+    public MonsterTowards(GameState state, String img, Entity killer, Sound splatSound) 
     {
-        super(map, img, killer, splatSound);
+        super(state, img, killer, splatSound);
         super.changeDeath("!");
         UPDATE_INTERVAL=250;
     }
@@ -27,6 +28,7 @@ public class MonsterTowards extends Monster
     @Override
     public void update()
     {
+        Map map=gameState.gameMap();
         if(isDead()==true)
             return;
         else if(wasDead==true)

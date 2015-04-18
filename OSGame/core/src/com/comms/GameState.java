@@ -10,7 +10,8 @@ import java.util.concurrent.*;
  * Manages the mapping of GameIDs to local references
  * @author Brett Menzies
  */
-public class GameState{
+public class GameState
+{
     private Map gameMap;
     private ConcurrentHashMap<GameID,Entity> idMap;
     private List<Drawable> drawables;
