@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.comms.InputHandler;
+import com.comms.OtherHandler;
 import com.comms.OSInputProcessor;
 import com.comms.GameID;
 import com.comms.GameState;
@@ -54,6 +55,8 @@ public class OSGame extends ApplicationAdapter {
         //This will be a call to comms in the future
         localPlayer = gameLoop.requestNewPlayer();
 
+        GameID secondPlayer = gameLoop.requestNewPlayer();
+
         //Sound splat = Gdx.audio.newSound(Gdx.files.internal("sounds/Squish.mp3"));
 
         Gdx.input.setInputProcessor(new InputHandler(localPlayer));
@@ -63,6 +66,7 @@ public class OSGame extends ApplicationAdapter {
         popupMenu = new PopupMenu();
 
         OSInputProcessor.getInstance().addInputPorcessor(new InputHandler(localPlayer));
+        OSInputProcessor.getInstance().addInputPorcessor(new OtherHandler(secondPlayer));
 
         gameLoop.setRunning(true);
         gameLoop.start();
