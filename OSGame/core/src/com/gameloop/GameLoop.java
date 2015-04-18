@@ -36,8 +36,8 @@ public class GameLoop extends Thread {
     private List<Updatable> updatables;
 
     private GameState gameState;
-    
-    
+
+
     public GameLoop() {
         updatables = new ArrayList<Updatable>();
         running = true;
@@ -60,7 +60,7 @@ public class GameLoop extends Thread {
             {
                 monster=new MonsterTowards(gameState, "1",splat);
             }
-            else 
+            else
             {
                 monster= new MonsterDistance(gameState, "3",splat);
             }
@@ -96,6 +96,7 @@ public class GameLoop extends Thread {
                 remote.assignID(local.getID());
                 remoteState.register(remote, remote.getID());
             }
+            remote.changeSprite(local.getSpriteString());
             remote.setXPos(local.getXPos());
             remote.setYPos(local.getYPos());
             remote.setRotation(local.getRotation());

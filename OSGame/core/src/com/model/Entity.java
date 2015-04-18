@@ -54,6 +54,7 @@ public class Entity extends Drawable{
     public void changeSprite(String img)
     {
         sprite = new Sprite(SpriteStorage.getInstance().getTexture(img));
+        spriteString = img;
     }
 
     public void setXPos(int x){
