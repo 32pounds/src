@@ -15,13 +15,14 @@ public class GameState
 {
     private Map gameMap;
     private ConcurrentHashMap<GameID,Entity> idMap;
-    private List<Drawable> drawables;
-    public ArrayList<Player> playerList=new ArrayList<Player>();
-    
+    private List<Drawable>     drawables;//list to it can be sorted by Z-index
+    private Collection<Player> players;
+
     public GameState(Map map){
-        gameMap  = map;
-        idMap    = new ConcurrentHashMap<GameID,Entity>();
+        idMap     = new ConcurrentHashMap<GameID,Entity>();
         drawables = new ArrayList<Drawable>();
+        players   = new ArrayList<Player>();
+        gameMap   = map;
         drawables.add(map);
     }
     /**
@@ -54,7 +55,11 @@ public class GameState
      */
     public void remove(GameID id){
         Entity removed = idMap.remove(id);
+
+        //attempt to remove from drawables and players, its fine if
+        // they are not actually in there at the moment
         drawables.remove(removed);
+        players.remove(removed);
     }
 
     public Collection<Entity> entities(){
@@ -65,6 +70,18 @@ public class GameState
      */
     public List<Drawable> drawables(){
         return drawables;
+    }
+
+    public GameID addPlayer(Player player){
+        if(player.getID() == null || !idMap.containsKey(player.getID())){
+            register(player);
+        }
+        players.add(player);
+        return player.getID();
+    }
+
+    public Collection<Player> getPlayers(){
+        return players;
     }
 
     public Map gameMap(){

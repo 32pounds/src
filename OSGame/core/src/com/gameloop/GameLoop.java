@@ -71,10 +71,9 @@ public class GameLoop extends Thread {
 
     public GameID requestNewPlayer(){
         Player player = new Player(gameState,"Thomas");
-        gameState.register(player);
-        gameState.playerList.add(player);
+        GameID playerID = gameState.addPlayer(player);
         addUpdatable(player);
-        return player.getID();
+        return playerID;
     }
 
     public void setRunning(boolean running) {

@@ -57,7 +57,7 @@ public class OSGame extends ApplicationAdapter {
         //Sound splat = Gdx.audio.newSound(Gdx.files.internal("sounds/Squish.mp3"));
 
         Gdx.input.setInputProcessor(new InputHandler(localPlayer));
-  
+
 
         //Gdx.input.setInputProcessor(new InputHandler(localPlayer.getID()));
         popupMenu = new PopupMenu();
