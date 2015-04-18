@@ -7,6 +7,7 @@ package com.model;
 
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.comms.GameID;
 import com.comms.GameState;
 import com.map.Direction;
 import com.map.Map;
@@ -18,9 +19,9 @@ import com.map.Position;
  */
 public class MonsterTowards extends Monster
 {
-    public MonsterTowards(GameState state, String img, Entity killer, Sound splatSound) 
+    public MonsterTowards(GameState state, String img, Sound splatSound) 
     {
-        super(state, img, killer, splatSound);
+        super(state, img, splatSound);
         super.changeDeath("!");
         UPDATE_INTERVAL=250;
     }
@@ -29,6 +30,7 @@ public class MonsterTowards extends Monster
     public void update()
     {
         Map map=gameState.gameMap();
+        closestPlayer=getClosestPlayer();
         if(isDead()==true)
             return;
         else if(wasDead==true)
@@ -46,7 +48,7 @@ public class MonsterTowards extends Monster
         }
         else
         {
-            if(getXPos()==hunter.getXPos() && getYPos()==hunter.getYPos())
+            if(squished()==true)
             {
                 deathTime=TimeUtils.millis();
                 changeSprite(dead);
@@ -56,11 +58,13 @@ public class MonsterTowards extends Monster
             else if(TimeUtils.millis()-lastUpdateTime > UPDATE_INTERVAL)
             {
                 lastUpdateTime=TimeUtils.millis();
-                if(hunter.getXPos()>getXPos())
+                if(closestPlayer==null) 
+                    return;
+                if(closestPlayer.getXPos()>getXPos())
                     super.move(Direction.EAST);
-                else if(hunter.getXPos()<getXPos())
+                else if(closestPlayer.getXPos()<getXPos())
                     super.move(Direction.WEST);
-                else if(hunter.getYPos()>getYPos())
+                else if(closestPlayer.getYPos()>getYPos())
                     super.move(Direction.NORTH);
                 else
                     super.move(Direction.SOUTH);

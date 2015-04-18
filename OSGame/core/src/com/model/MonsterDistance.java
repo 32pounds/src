@@ -21,8 +21,8 @@ import static com.model.Monster.randomGen;
 public class MonsterDistance extends Monster
 {
 
-    public MonsterDistance(GameState state, String img, GameID killer, Sound splatSound) {
-        super(state, img, killer, splatSound);
+    public MonsterDistance(GameState state, String img, Sound splatSound) {
+        super(state, img, splatSound);
         super.changeDeath("#");
         UPDATE_INTERVAL=150;
     }
@@ -33,6 +33,7 @@ public class MonsterDistance extends Monster
     public void update()
     {
         Map map=gameState.gameMap();
+        closestPlayer=getClosestPlayer();
         if(isDead()==true)
             return;
         else if(wasDead==true)
@@ -50,7 +51,7 @@ public class MonsterDistance extends Monster
         }
         else
         {
-            if(getXPos()==hunter.getXPos() && getYPos()==hunter.getYPos())
+            if(squished()==true)
             {
                 deathTime=TimeUtils.millis();
                 changeSprite(dead);
@@ -60,11 +61,13 @@ public class MonsterDistance extends Monster
             else if(TimeUtils.millis()-lastUpdateTime > UPDATE_INTERVAL)
             {
                 lastUpdateTime=TimeUtils.millis();
-                if(hunter.getXPos()>getXPos())
+                if(closestPlayer==null) 
+                    return;
+                if(closestPlayer.getXPos()>getXPos())
                 {
                     if(map.isWalkable(getXPos()-1,getYPos())==true)
                         super.move(Direction.WEST);
-                    else if(hunter.getYPos()>getYPos()) 
+                    else if(closestPlayer.getYPos()>getYPos()) 
                     {
                         super.move(Direction.SOUTH);
                     }
@@ -73,11 +76,11 @@ public class MonsterDistance extends Monster
                         super.move(Direction.NORTH);
                     }
                 }
-                else if(hunter.getXPos()<getXPos())
+                else if(closestPlayer.getXPos()<getXPos())
                 {
                     if(map.isWalkable(getXPos()+1,getYPos())==true)
                         super.move(Direction.EAST);
-                    else if(hunter.getYPos()>getYPos()) 
+                    else if(closestPlayer.getYPos()>getYPos()) 
                     {
                         super.move(Direction.SOUTH);
                     }
@@ -86,11 +89,11 @@ public class MonsterDistance extends Monster
                         super.move(Direction.NORTH);
                     }
                 }
-                else if(hunter.getYPos()>getYPos())
+                else if(closestPlayer.getYPos()>getYPos())
                 {
                     if(map.isWalkable(getXPos(),getYPos()-1)==true)
                         super.move(Direction.SOUTH);
-                    else if(hunter.getXPos()>getXPos()) 
+                    else if(closestPlayer.getXPos()>getXPos()) 
                     {
                         super.move(Direction.WEST);
                     }
@@ -103,7 +106,7 @@ public class MonsterDistance extends Monster
                 {
                     if(map.isWalkable(getXPos(),getYPos()+1)==true)
                         super.move(Direction.NORTH);
-                    else if(hunter.getXPos()>getXPos()) 
+                    else if(closestPlayer.getXPos()>getXPos()) 
                     {
                         super.move(Direction.WEST);
                     }

@@ -2,6 +2,7 @@ package com.comms;
 import com.comms.GameID;
 import com.map.Map;
 import com.model.Entity;
+import com.model.Player;
 import com.renderer.Drawable;
 import java.util.*;
 import java.util.concurrent.*;
@@ -15,6 +16,8 @@ public class GameState
     private Map gameMap;
     private ConcurrentHashMap<GameID,Entity> idMap;
     private List<Drawable> drawables;
+    public ArrayList<Player> playerList=new ArrayList<Player>();
+    
     public GameState(Map map){
         gameMap  = map;
         idMap    = new ConcurrentHashMap<GameID,Entity>();

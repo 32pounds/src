@@ -11,6 +11,8 @@ import com.badlogic.gdx.utils.TimeUtils;
 import com.map.*;
 import com.comms.*;
 import com.renderer.Updatable;
+import static java.lang.Math.abs;
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -24,21 +26,21 @@ public class Monster extends Entity implements Updatable{
     protected static final long WAIT_TIME=2000;
     protected long deathTime;
     protected static Random randomGen= new Random();
-    protected GameID hunter;
     protected String alive,dead;
     protected Sound splat;
+    protected Player closestPlayer;
     protected boolean wasDead;
 
-    public Monster(GameState state, String img, GameID killer, Sound splatSound)
+    public Monster(GameState state, String img, Sound splatSound)
     {
         super(state, img);
         lastUpdateTime=0;
-        hunter=killer;
         deathTime=-WAIT_TIME;
         alive=img;
         dead="S";
         splat= splatSound;
         wasDead=true;
+        closestPlayer=getClosestPlayer();
     }
 
     public boolean isDead()
@@ -83,7 +85,15 @@ public class Monster extends Entity implements Updatable{
                 if(splat != null) splat.play();
                 wasDead=true;
             }
-            else */if(TimeUtils.millis()-lastUpdateTime > UPDATE_INTERVAL)
+            else */
+            if(squished()==true)
+            {
+                deathTime=TimeUtils.millis();
+                changeSprite(dead);
+                if(splat != null) splat.play();
+                wasDead=true;
+            }
+            else if(TimeUtils.millis()-lastUpdateTime > UPDATE_INTERVAL)
             {
                 lastUpdateTime=TimeUtils.millis();
                 int dir=randomGen.nextInt(4);
@@ -97,5 +107,43 @@ public class Monster extends Entity implements Updatable{
                     super.move(Direction.WEST);
             }
         }
+    }
+    public boolean squished()
+    {
+        int x,y;
+        for(int i=0; i<gameState.playerList.size(); ++i)
+        {
+            x=gameState.playerList.get(i).getXPos();
+            y=gameState.playerList.get(i).getYPos();
+            if(getXPos()==x && getYPos()==y)
+            {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    public Player getClosestPlayer()
+    {
+        Player player=null;
+        ArrayList<Integer> dist = new ArrayList<Integer>();
+        if(gameState.playerList.size()>0)
+        {   
+            player=gameState.playerList.get(0);
+            for(int i=0; i<gameState.playerList.size(); ++i)
+            {
+                dist.add(abs(gameState.playerList.get(i).getXPos()-getXPos()) + abs(gameState.playerList.get(i).getYPos()-getYPos()));
+            }
+            int num=dist.get(0);
+            for(int i=0; i<dist.size(); ++i)
+            {
+                if(num<dist.get(i).intValue())
+                {
+                    player=gameState.playerList.get(i);
+                    num=dist.get(i).intValue();
+                }
+            }
+        }
+        return player;
     }
 }

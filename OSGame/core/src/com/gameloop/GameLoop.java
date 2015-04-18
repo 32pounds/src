@@ -16,6 +16,8 @@ import com.map.Map;
 import com.model.Debugger;
 import com.model.Entity;
 import com.model.Monster;
+import com.model.MonsterDistance;
+import com.model.MonsterTowards;
 import com.model.Player;
 import com.model.PopupMenu;
 import com.renderer.Drawable;
@@ -34,7 +36,8 @@ public class GameLoop extends Thread {
     private List<Updatable> updatables;
 
     private GameState gameState;
-
+    
+    
     public GameLoop() {
         updatables = new ArrayList<Updatable>();
         running = true;
@@ -44,8 +47,23 @@ public class GameLoop extends Thread {
 
     public void initializeGameState(){
         gameState = new GameState(new Map());
+        Random rand=new Random();
+        int id;
         for(int i=0; i<100; i++){
-            Monster monster=new Monster(gameState,"M", null, null);
+            id=rand.nextInt(100)+1;
+            Monster monster;
+            //to add sound
+            Sound splat = Gdx.audio.newSound(Gdx.files.internal("sounds/Squish.mp3"));
+            if(id<=33)
+                monster=new Monster(gameState,"M",splat);
+            else if(id>=34 && id<=66)
+            {
+                monster=new MonsterTowards(gameState, "1",splat);
+            }
+            else 
+            {
+                monster= new MonsterDistance(gameState, "3",splat);
+            }
             gameState.register(monster);
             addUpdatable(monster);
         }
@@ -54,6 +72,7 @@ public class GameLoop extends Thread {
     public GameID requestNewPlayer(){
         Player player = new Player(gameState,"Thomas");
         gameState.register(player);
+        gameState.playerList.add(player);
         addUpdatable(player);
         return player.getID();
     }

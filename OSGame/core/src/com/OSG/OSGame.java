@@ -57,24 +57,9 @@ public class OSGame extends ApplicationAdapter {
         //Sound splat = Gdx.audio.newSound(Gdx.files.internal("sounds/Squish.mp3"));
 
         Gdx.input.setInputProcessor(new InputHandler(localPlayer));
-        //spawns a monster (or 50)
-        //this should be done by the server, not the client
-        Sound splat = Gdx.audio.newSound(Gdx.files.internal("sounds/Squish.mp3"));
-        Random rand=new Random();
-        for(int i=0; i<1000; i++){
-            Monster monster=null;
-            int id=rand.nextInt(100)+1;
-            if(id<=33)
-                monster=new Monster(gameState,"M", localPlayer, splat);
-            else if(id>33 && id<=66)
-                monster=new MonsterTowards(gameState, "1", localPlayer, splat);
-            else 
-                monster=new MonsterDistance(gameState, "3", localPlayer, splat);
-            gameState.register(monster);
-            gameLoop.addUpdatable(monster);
-        }
+  
 
-        Gdx.input.setInputProcessor(new InputHandler(localPlayer.getID()));
+        //Gdx.input.setInputProcessor(new InputHandler(localPlayer.getID()));
         popupMenu = new PopupMenu();
 
         OSInputProcessor.getInstance().addInputPorcessor(new InputHandler(localPlayer));
