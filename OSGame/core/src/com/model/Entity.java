@@ -2,8 +2,7 @@ package com.model;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.comms.Command;
-import com.comms.CommandHandler;
+import com.comms.*;
 import com.map.*;
 import com.renderer.Drawable;
 import com.renderer.SpriteStorage;
@@ -21,22 +20,29 @@ public class Entity extends Drawable{
 
     //initial position of the player
     protected Position position;
-    //this property is to provide a way to access map data,
-    //after game state finished this property must be ripped off from here
-    protected Map map;
+    protected GameState gameState;
+
+    //The GameID being used to reference this entity remotely
+    private GameID id;
+    public GameID getID(){
+        return id;
+    }
+    public void assignID(GameID newID){
+        id = newID;
+    }
 
     /**
      * Provide a way to access map data, but after game state finished this property must be ripped off from here.
      * @param map Map
      */
-    public Entity(Map map, String img) {
+    public Entity(GameState state, String img) {
         position = new Position(1,1);
         //using sprite cuz Texture doesn't have rotation
         sprite = new Sprite(SpriteStorage.getInstance().getTexture(img));
         //temporarily here
-        this.map = map;
+        this.gameState = state;
     }
-    
+
     public void changeSprite(String img)
     {
         sprite = new Sprite(SpriteStorage.getInstance().getTexture(img));
@@ -71,6 +77,7 @@ public class Entity extends Drawable{
     }
 
     public synchronized void move(Direction dir) {
+        Map map = gameState.gameMap();
         int x = getXPos();
         int y = getYPos();
         switch (dir) {

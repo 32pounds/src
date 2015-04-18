@@ -2,8 +2,7 @@ package com.model;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.comms.Command;
-import com.comms.CommandHandler;
+import com.comms.*;
 import com.map.*;
 import com.model.Entity;
 import com.renderer.Drawable;
@@ -16,17 +15,36 @@ public class Player extends Entity implements Updatable {
     private long lastUpdateTime;
     private Direction dir;
 
-    public Player(Map map, String texture){
-        super(map, texture);
+    public Player(GameState state, String texture){
+        super(state, texture);
         lastUpdateTime = TimeUtils.millis();
-        Position mapStartPos = map.findFirstInstance('@');
+        Position mapStartPos = gameState.gameMap().findFirstInstance('@');
         position = mapStartPos;
     }
 
     public void update(){
+        Map map = gameState.gameMap();
         if(TimeUtils.millis()-lastUpdateTime > UPDATE_INTERVAL){
             if(dir != null) move(dir);
             lastUpdateTime = TimeUtils.millis();
+        }
+        int x = getXPos();
+        int y = getYPos();
+        Position mapStartPos;
+
+        if (map.isMove(x, y) != 0) {
+            if (map.isMove(x, y) == 1) {
+                mapStartPos = map.findPreviousInstance(x, y, 'v');
+                position = mapStartPos;
+                x = getXPos();
+                position.setX(--x);
+            }
+            else if (map.isMove(x, y) == 2) {
+                mapStartPos = map.findNextInstance(x, y, '^');
+                position = mapStartPos;
+                x = getXPos();
+                position.setX(--x);
+            }
         }
     }
 
@@ -36,7 +54,7 @@ public class Player extends Entity implements Updatable {
         lastUpdateTime = TimeUtils.millis();
     }
 
-    public void stopMoving(){
-        dir = null;
+    public void stopMoving(Direction direction){
+        if(dir==direction) dir = null;
     }
 }

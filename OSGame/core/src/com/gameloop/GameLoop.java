@@ -1,8 +1,7 @@
 package com.gameloop;
 
 import com.renderer.Updatable;
-import com.comms.Command;
-import com.comms.CommandHandler;
+import com.comms.*;
 import java.util.List;
 import java.lang.InterruptedException;
 import java.util.ArrayList;
@@ -14,9 +13,13 @@ public class GameLoop extends Thread {
     //list that will be updated every thread loop
     private List<Updatable> updatables;
 
-    public GameLoop() {
+    private GameState gameState;
+
+    public GameLoop(GameState state) {
         updatables = new ArrayList<Updatable>();
         running = true;
+        //this is only temporary; the server should make its own in the future
+        gameState = state;
     }
 
     public void setRunning(boolean running) {
@@ -41,7 +44,7 @@ public class GameLoop extends Thread {
             Command command = CommandHandler.getInstance().remove();
             //if there no command is not needed to be updated
             if (command != null) {
-                command.execute();
+                command.execute(gameState);
             } else {
                 try{
                     Thread.sleep(10);

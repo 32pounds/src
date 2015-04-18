@@ -3,15 +3,15 @@ package com.comms;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.map.Direction;
-import com.model.Player;
+import com.comms.GameID;
 import com.comms.*;
 /**
  * Handle the player input
  */
 public class InputHandler implements InputProcessor {
-    Player actor;
+    GameID actor;
 
-    public InputHandler(Player target){
+    public InputHandler(GameID target){
         actor = target;
     }
 
@@ -46,10 +46,16 @@ public class InputHandler implements InputProcessor {
         boolean keyRegistered = true;
         switch (keycode) {
             case Input.Keys.UP:
+                result = new StopCmd(actor, Direction.NORTH);
+                break;
             case Input.Keys.DOWN:
+                result = new StopCmd(actor, Direction.SOUTH);
+                break;
             case Input.Keys.LEFT:
+                result = new StopCmd(actor, Direction.WEST);
+                break;
             case Input.Keys.RIGHT:
-                result = new StopCmd(actor);
+                result = new StopCmd(actor, Direction.EAST);
                 break;
             default:
                 keyRegistered = false;
