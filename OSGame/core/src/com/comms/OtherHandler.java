@@ -21,15 +21,19 @@ public class OtherHandler implements InputProcessor {
         boolean keyRegistered = true;
         switch (keycode) {
             case Input.Keys.PERIOD:
+            case Input.Keys.W:
                 result = new MoveCmd(actor, Direction.NORTH);
                 break;
             case Input.Keys.E:
+            case Input.Keys.S:
                 result = new MoveCmd(actor, Direction.SOUTH);
                 break;
             case Input.Keys.O:
+            case Input.Keys.A:
                 result = new MoveCmd(actor, Direction.WEST);
                 break;
             case Input.Keys.U:
+            case Input.Keys.D:
                 result = new MoveCmd(actor, Direction.EAST);
                 break;
             default:
@@ -46,15 +50,19 @@ public class OtherHandler implements InputProcessor {
         boolean keyRegistered = true;
         switch (keycode) {
             case Input.Keys.PERIOD:
+            case Input.Keys.W:
                 result = new StopCmd(actor, Direction.NORTH);
                 break;
             case Input.Keys.E:
+            case Input.Keys.S:
                 result = new StopCmd(actor, Direction.SOUTH);
                 break;
             case Input.Keys.O:
+            case Input.Keys.A:
                 result = new StopCmd(actor, Direction.WEST);
                 break;
             case Input.Keys.U:
+            case Input.Keys.D:
                 result = new StopCmd(actor, Direction.EAST);
                 break;
             default:
