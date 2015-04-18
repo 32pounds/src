@@ -14,6 +14,7 @@ import com.renderer.Updatable;
 import static java.lang.Math.abs;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Collection;
 
 /**
  *
@@ -49,7 +50,7 @@ public class Monster extends Entity implements Updatable{
             return false;
         return true;
     }
-    
+
     public void changeDeath(String img)
     {
         dead=img;
@@ -111,39 +112,28 @@ public class Monster extends Entity implements Updatable{
     public boolean squished()
     {
         int x,y;
-        for(int i=0; i<gameState.playerList.size(); ++i)
-        {
-            x=gameState.playerList.get(i).getXPos();
-            y=gameState.playerList.get(i).getYPos();
+        for(Player player : gameState.getPlayers()){
+            x=player.getXPos();
+            y=player.getYPos();
             if(getXPos()==x && getYPos()==y)
             {
                 return true;
             }
         }
-        
         return false;
     }
     public Player getClosestPlayer()
     {
-        Player player=null;
-        ArrayList<Integer> dist = new ArrayList<Integer>();
-        if(gameState.playerList.size()>0)
-        {   
-            player=gameState.playerList.get(0);
-            for(int i=0; i<gameState.playerList.size(); ++i)
-            {
-                dist.add(abs(gameState.playerList.get(i).getXPos()-getXPos()) + abs(gameState.playerList.get(i).getYPos()-getYPos()));
-            }
-            int num=dist.get(0);
-            for(int i=0; i<dist.size(); ++i)
-            {
-                if(num<dist.get(i).intValue())
-                {
-                    player=gameState.playerList.get(i);
-                    num=dist.get(i).intValue();
-                }
+        Collection<Player> players = gameState.getPlayers();
+        Player closest = null;
+        int minDist = Integer.MAX_VALUE;
+        for(Player player : players){
+            int dist = (abs(player.getXPos()-getXPos()) + abs(player.getYPos()-getYPos()));
+            if(dist < minDist){
+                closest = player;
+                minDist = dist;
             }
         }
-        return player;
+        return closest;
     }
 }

@@ -36,8 +36,8 @@ public class GameLoop extends Thread {
     private List<Updatable> updatables;
 
     private GameState gameState;
-    
-    
+
+
     public GameLoop() {
         updatables = new ArrayList<Updatable>();
         running = true;
@@ -60,7 +60,7 @@ public class GameLoop extends Thread {
             {
                 monster=new MonsterTowards(gameState, "1",splat);
             }
-            else 
+            else
             {
                 monster= new MonsterDistance(gameState, "3",splat);
             }
@@ -71,10 +71,9 @@ public class GameLoop extends Thread {
 
     public GameID requestNewPlayer(){
         Player player = new Player(gameState,"Thomas");
-        gameState.register(player);
-        gameState.playerList.add(player);
+        GameID playerID = gameState.addPlayer(player);
         addUpdatable(player);
-        return player.getID();
+        return playerID;
     }
 
     public void setRunning(boolean running) {
@@ -96,6 +95,7 @@ public class GameLoop extends Thread {
                 remote.assignID(local.getID());
                 remoteState.register(remote, remote.getID());
             }
+            remote.changeSprite(local.getSpriteString());
             remote.setXPos(local.getXPos());
             remote.setYPos(local.getYPos());
             remote.setRotation(local.getRotation());
