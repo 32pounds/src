@@ -19,17 +19,17 @@ import java.util.Random;
  */
 public class Monster extends Entity implements Updatable{
 
-    protected long lastUpdateTime;
-    protected long UPDATE_INTERVAL=100;
-    protected long WAIT_TIME=2000;
-    protected long deathTime;
-    protected static Random randomGen= new Random();
-    protected Entity hunter;
-    protected String alive,dead;
-    protected Sound splat;
-    protected boolean wasDead;
+    private long lastUpdateTime;
+    private static final long UPDATE_INTERVAL=100;
+    private static final long WAIT_TIME=2000;
+    private long deathTime;
+    private static Random randomGen= new Random();
+    private GameID hunter;
+    private String alive,dead;
+    private Sound splat;
+    private boolean wasDead;
 
-    public Monster(GameState state, String img, Entity killer, Sound splatSound)
+    public Monster(GameState state, String img, GameID killer, Sound splatSound)
     {
         super(state, img);
         lastUpdateTime=0;
@@ -74,14 +74,16 @@ public class Monster extends Entity implements Updatable{
         }
         else
         {
-            if(getXPos()==hunter.getXPos() && getYPos()==hunter.getYPos())
+/*            Entity killer = state.getByID(hunter);
+            if(killer == null) return;
+            if(getXPos()==killer.getXPos() && getYPos()==killer.getYPos())
             {
                 deathTime=TimeUtils.millis();
                 changeSprite(dead);
-                splat.play();
+                if(splat != null) splat.play();
                 wasDead=true;
             }
-            else if(TimeUtils.millis()-lastUpdateTime > UPDATE_INTERVAL)
+            else */if(TimeUtils.millis()-lastUpdateTime > UPDATE_INTERVAL)
             {
                 lastUpdateTime=TimeUtils.millis();
                 int dir=randomGen.nextInt(4);
