@@ -19,15 +19,15 @@ import java.util.Random;
  */
 public class Monster extends Entity implements Updatable{
 
-    private long lastUpdateTime;
-    private static final long UPDATE_INTERVAL=100;
-    private static final long WAIT_TIME=2000;
-    private long deathTime;
-    private static Random randomGen= new Random();
-    private GameID hunter;
-    private String alive,dead;
-    private Sound splat;
-    private boolean wasDead;
+    protected long lastUpdateTime;
+    protected long UPDATE_INTERVAL=100;
+    protected static final long WAIT_TIME=2000;
+    protected long deathTime;
+    protected static Random randomGen= new Random();
+    protected GameID hunter;
+    protected String alive,dead;
+    protected Sound splat;
+    protected boolean wasDead;
 
     public Monster(GameState state, String img, GameID killer, Sound splatSound)
     {

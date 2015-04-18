@@ -7,6 +7,7 @@ package com.model;
 
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.comms.GameID;
 import com.comms.GameState;
 import com.map.Direction;
 import com.map.Map;
@@ -20,7 +21,7 @@ import static com.model.Monster.randomGen;
 public class MonsterDistance extends Monster
 {
 
-    public MonsterDistance(GameState state, String img, Entity killer, Sound splatSound) {
+    public MonsterDistance(GameState state, String img, GameID killer, Sound splatSound) {
         super(state, img, killer, splatSound);
         super.changeDeath("#");
         UPDATE_INTERVAL=150;
