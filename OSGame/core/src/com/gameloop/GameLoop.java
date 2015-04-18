@@ -62,7 +62,7 @@ public class GameLoop extends Thread {
         this.running = running;
     }
 
-    public void addUpdatable(Updatable up){
+    private void addUpdatable(Updatable up){
         synchronized(updatables){
             updatables.add(up);
         }
