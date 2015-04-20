@@ -48,7 +48,7 @@ public class SpriteStorageTest
     @After
     public void after() throws Exception
     {
-
+        lwjglApplication.exit();
     }
 
     /**
