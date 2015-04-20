@@ -24,23 +24,41 @@ public class Map extends Drawable {
         for (int y = 0; y < grid.length; ++y) {
             for (int x = 0; x < grid[y].length; ++x) {
                 if (grid[y][x] == ' ')
-                    batch.draw(SpriteStorage.getInstance().getTexture(" "), x * XDIMENSION, y * YDIMENSION);
+                    batch.draw(SpriteStorage.getInstance().getTexture("BeigeTile"), x * XDIMENSION, y * YDIMENSION);
                 else if (grid[y][x] == 'X')
-                    batch.draw(SpriteStorage.getInstance().getTexture("X"), x * XDIMENSION, y * YDIMENSION);
+                    batch.draw(SpriteStorage.getInstance().getTexture("BlackCarpet"), x * XDIMENSION, y * YDIMENSION);
                 else if (grid[y][x] == '^')
-                    batch.draw(SpriteStorage.getInstance().getTexture("^"), x * XDIMENSION, y * YDIMENSION);
+                    batch.draw(SpriteStorage.getInstance().getTexture("TransportUp"), x * XDIMENSION, y * YDIMENSION);
                 else if (grid[y][x] == 'v')
-                    batch.draw(SpriteStorage.getInstance().getTexture("v"), x * XDIMENSION, y * YDIMENSION);
+                    batch.draw(SpriteStorage.getInstance().getTexture("TransportDown"), x * XDIMENSION, y * YDIMENSION);
                 else if (grid[y][x] == '@')
-                    batch.draw(SpriteStorage.getInstance().getTexture("@"), x * XDIMENSION, y * YDIMENSION);
+                    batch.draw(SpriteStorage.getInstance().getTexture("StartBeige"), x * XDIMENSION, y * YDIMENSION);
                 else if (grid[y][x] == 'L')
-                    batch.draw(SpriteStorage.getInstance().getTexture("L"), x * XDIMENSION, y * YDIMENSION);
+                    batch.draw(SpriteStorage.getInstance().getTexture("WhiteDeskL"), x * XDIMENSION, y * YDIMENSION);
                 else if (grid[y][x] == 'D')
-                    batch.draw(SpriteStorage.getInstance().getTexture("D"), x * XDIMENSION, y * YDIMENSION);
+                    batch.draw(SpriteStorage.getInstance().getTexture("WhiteDeskM"), x * XDIMENSION, y * YDIMENSION);
                 else if (grid[y][x] == 'R')
-                    batch.draw(SpriteStorage.getInstance().getTexture("R"), x * XDIMENSION, y * YDIMENSION);
+                    batch.draw(SpriteStorage.getInstance().getTexture("WhiteDeskR"), x * XDIMENSION, y * YDIMENSION);
                 else if (grid[y][x] == 'C')
-                    batch.draw(SpriteStorage.getInstance().getTexture("C"), x * XDIMENSION, y * YDIMENSION);
+                    batch.draw(SpriteStorage.getInstance().getTexture("RedChairN"), x * XDIMENSION, y * YDIMENSION);
+                else if (grid[y][x] == '.')
+                    batch.draw(SpriteStorage.getInstance().getTexture("WhiteFloor"), x * XDIMENSION, y * YDIMENSION);
+                else if (grid[y][x] == '|')
+                    batch.draw(SpriteStorage.getInstance().getTexture("SheetMetal"), x * XDIMENSION, y * YDIMENSION);
+                else if (grid[y][x] == 'l')
+                    batch.draw(SpriteStorage.getInstance().getTexture("BeigeDeskL"), x * XDIMENSION, y * YDIMENSION);
+                else if (grid[y][x] == 'd')
+                    batch.draw(SpriteStorage.getInstance().getTexture("BeigeDeskM"), x * XDIMENSION, y * YDIMENSION);
+                else if (grid[y][x] == 'r')
+                    batch.draw(SpriteStorage.getInstance().getTexture("BeigeDeskR"), x * XDIMENSION, y * YDIMENSION);
+                else if (grid[y][x] == 'c')
+                    batch.draw(SpriteStorage.getInstance().getTexture("BlueChair"), x * XDIMENSION, y * YDIMENSION);
+                else if (grid[y][x] == 's')
+                    batch.draw(SpriteStorage.getInstance().getTexture("Stars"), x * XDIMENSION, y * YDIMENSION);
+                else if (grid[y][x] == 'T')
+                    batch.draw(SpriteStorage.getInstance().getTexture("Terminal"), x * XDIMENSION, y * YDIMENSION);
+                else if (grid[y][x] == '/')
+                    batch.draw(SpriteStorage.getInstance().getTexture("CautionStripe"), x * XDIMENSION, y * YDIMENSION);
             }
         }
     }
@@ -69,7 +87,7 @@ public class Map extends Drawable {
     }
 
     public boolean isWalkable(int x, int y) {
-        if (grid[y][x] == ' ' || grid[y][x] == '^' || grid[y][x] == 'v')
+        if (grid[y][x] == ' ' || grid[y][x] == '^' || grid[y][x] == 'v' || grid[y][x] == '.')
             return true;
         return false;
     }

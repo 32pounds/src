@@ -1,23 +1,23 @@
 {
   "data": [
     {
-      "code": " ",
+      "code": "BeigeTile",
       "path": "top-down/floorings/BeigeTile.png"
     },
     {
-      "code": "X",
+      "code": "BlackCarpet",
       "path": "top-down/floorings/BlackCarpet.png"
     },
     {
-      "code": "^",
+      "code": "TransportUp",
       "path": "top-down/objects/Transpad-orange.png"
     },
     {
-      "code": "v",
+      "code": "TransportDown",
       "path": "top-down/objects/Transpad-green.png"
     },
     {
-      "code": "@",
+      "code": "StartBeige",
       "path": "top-down/floorings/BeigeTile.png"
     },
     {
@@ -25,64 +25,116 @@
       "path": "top-down/humans/Thomas-north.png"
     },
     {
-      "code": "L",
+      "code": "WhiteDeskL",
       "path": "top-down/objects/WhiteDesk-end.png"
     },
     {
-      "code": "D",
+      "code": "WhiteDeskM",
       "path": "top-down/objects/WhiteDesk-horizontal.png"
     },
     {
-      "code": "R",
+      "code": "WhiteDeskR",
       "path": "top-down/objects/WhiteDesk-horizontal.png"
     },
     {
-      "code": "C",
+      "code": "RedChairN",
       "path": "top-down/objects/ChairRed-north.png"
     },
     {
-      "code": "M",
+      "code": "Roach",
       "path": "top-down/mobs/Roach.png"
     },
     {
-      "code": "S",
+      "code": "BlueSplat",
       "path": "top-down/mobs/Splat-blue.png"
     },
     {
-      "code": ".",
+      "code": "WhiteFloor",
       "path": "top-down/floorings/Flooring-white.png"
     },
     {
-      "code": "|",
+      "code": "SheetMetal",
       "path": "top-down/floorings/SheetMetal-large.png"
     },
     {
-      "code": "l",
+      "code": "BeigeDeskL",
       "path": "top-down/objects/BeigeDesk-end.png"
     },
     {
-      "code": "d",
+      "code": "BeigeDeskM",
       "path": "top-down/objects/BeigeDesk-horizontal.png"
     },
     {
-      "code": "r",
-      "path": "top-down/objects/BeigeDesk-horizontal.png"
+      "code": "BeigeDeskR",
+      "path": "top-down/objects/BeigeDesk-end-right.png"
     },
     {
-      "code": "c",
+      "code": "BlueChair",
       "path": "top-down/objects/BucketChair-blue.png"
     },
     {
-      "code": "s",
+      "code": "Stars",
       "path": "top-down/space/Stars3.png"
     },
     { 
-      "code": "T",
+      "code": "Terminal",
       "path": "top-down/objects/Terminal-orbital.png"
     },
     {
-      "code": "/",
+      "code": "CautionStripe",
       "path": "top-down/floorings/CautionStripes-yellow.png"
+    },
+    {
+      "code": "CyberFloor",
+      "path": "top-down/cyberspace/Floor.png"
+    },
+    {
+      "code": "CyberWall",
+      "path": "top-down/cyberspace/Wall.png"
+    },
+    {
+      "code": "CorruptedWall",
+      "path": "top-down/cyberspace/CorruptedWall.png"
+    },
+    {
+      "code": "VirusEntry",
+      "path": "top-down/cyberspace/VirusEntry.png"
+    },
+    {
+      "code": "Xbox",
+      "path": "top-down/cyberspace/Xbox.png"
+    },
+    {
+      "code": "Xboxes",
+      "path": "top-down/cyberspace/Xboxes.png"
+    },
+    {
+      "code": "CyberUp",
+      "path": "top-down/cyberspace/Up.png"
+    },
+    {
+      "code": "CyberDown",
+      "path": "top-down/cyberspace/Down.png"
+    },
+    {
+      "code": "CyberLeft",
+      "path": "top-down/cyberspace/Portal-left.png"
+    },
+    {
+      "code": "CyberRight",
+      "path": "top-down/cyberspace/Portal-right.png"
+    },
+    {
+      "code": "Asterisk",
+      "path": "top-down/cyberspace/Asterisk.png"
+    },
+    {
+      "code": "Exclamation",
+      "path": "top-down/cyberspace/Exclamation.png"
+    },
+    {
+      "code": "Funds",
+      "path": "top-down/cyberspace/Funds.png"
     }
   ]
 }

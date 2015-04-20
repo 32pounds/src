@@ -55,7 +55,7 @@ public class OSGame extends ApplicationAdapter {
         //this should be done by the server, not the client
         Sound splat = Gdx.audio.newSound(Gdx.files.internal("sounds/Squish.mp3"));
         for(int i=0; i<100; i++){
-            Monster monster=new Monster(gameState,"M", localPlayer, splat);
+            Monster monster=new Monster(gameState,"Roach", localPlayer, splat);
             gameState.register(monster);
             gameLoop.addUpdatable(monster);
         }

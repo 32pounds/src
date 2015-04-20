@@ -36,7 +36,7 @@ public class Monster extends Entity implements Updatable{
         hunter=killer;
         deathTime=-WAIT_TIME;
         alive=img;
-        dead="S";
+        dead="BlueSplat";
         splat= splatSound;
         wasDead=true;
     }
