@@ -86,6 +86,8 @@ public class PopupMenu extends com.renderer.Drawable implements InputProcessor {
             }
         });
 
+        // hostButton simply launches a new serverThread.
+        // TODO: Possible bug of clicking the button more than once?
         hostButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 try{
@@ -93,8 +95,9 @@ public class PopupMenu extends com.renderer.Drawable implements InputProcessor {
                     // Multiplayer chooses to setup a server or client depending on
                     // the boolean passed in to the main class call. 'true' results
                     // in a server being created and 'false' creates a client.
-                    serverUDP = new ServerThread(5051);
-                    serverUDP.setupUDP();
+                    (new ServerThread(5051)).start();
+                    //serverUDP = new ServerThread(5051);
+                    //serverUDP.setupUDP();
         }catch(Exception e){System.out.println("COULDN'T setup server! " + e);}
     }
         });

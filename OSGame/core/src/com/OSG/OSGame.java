@@ -110,13 +110,9 @@ public class OSGame extends ApplicationAdapter {
             
             batch.end();
         }
-            
-
+        
         //this is here, because when it is on batch.begin() weird things happens
         popupMenu.draw(batch);
-
-        
-    
     }
     
     private void updateCameraPosition(){

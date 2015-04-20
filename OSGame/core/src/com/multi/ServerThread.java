@@ -13,6 +13,7 @@ public class ServerThread extends Thread{
     protected PrintWriter out = null;
     private boolean isUp;
 
+
     // Constructor will intialize port number 
     // and a command line scanner for debugging.
     // Then calle SetupHost() to begin networking.
@@ -21,8 +22,17 @@ public class ServerThread extends Thread{
         portNum = port;
         System.out.println("Creating UDP socket @:" + portNum );
         isUp = false;
+
     }
 
+    public void run(){
+        System.out.println("Hello from thread!");
+        setupUDP();
+    }
+
+    /* getServerStatus()
+        will return true if the server is up and false if the server is down.
+    */
     public boolean getServerStatus(){
         return isUp;
     }
