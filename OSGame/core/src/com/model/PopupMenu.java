@@ -94,7 +94,7 @@ public class PopupMenu extends com.renderer.Drawable implements InputProcessor {
                     // the boolean passed in to the main class call. 'true' results
                     // in a server being created and 'false' creates a client.
                     serverUDP = new ServerThread(5051);
-                    serverUDP.runUDP();
+                    serverUDP.setupUDP();
         }catch(Exception e){System.out.println("COULDN'T setup server! " + e);}
     }
         });

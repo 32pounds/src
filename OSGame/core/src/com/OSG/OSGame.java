@@ -115,9 +115,8 @@ public class OSGame extends ApplicationAdapter {
         //this is here, because when it is on batch.begin() weird things happens
         popupMenu.draw(batch);
 
-        // TODO: Move following lines into "Multiplayer" class.a
-        //serverUDP.runUDP();
-        //clientUDP.ConnectToServer();
+        
+    
     }
     
     private void updateCameraPosition(){

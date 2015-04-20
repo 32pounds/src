@@ -11,6 +11,7 @@ public class ServerThread extends Thread{
     protected DatagramSocket udpSocket = null;
     protected static BufferedReader in = null;
     protected PrintWriter out = null;
+    private boolean isUp;
 
     // Constructor will intialize port number 
     // and a command line scanner for debugging.
@@ -19,10 +20,14 @@ public class ServerThread extends Thread{
     public ServerThread( int port) throws IOException {
         portNum = port;
         System.out.println("Creating UDP socket @:" + portNum );
+        isUp = false;
     }
-   
 
-    public void runUDP() {
+    public boolean getServerStatus(){
+        return isUp;
+    }
+
+    public void setupUDP() {
             System.out.println("Creating UDP packet/socket...");
                 try {
                     udpSocket = new DatagramSocket(portNum);
@@ -49,7 +54,8 @@ public class ServerThread extends Thread{
                     System.out.println("Got packet info " + address + ":" + replyPort );
                     DatagramPacket packet = new DatagramPacket(buf, buf.length, address, replyPort);
                     udpSocket.send(packet);
-            
+                    // set isUp to true to let others know the server is running.
+                    isUp = true;
                 } catch (IOException e) {
                     e.printStackTrace();
             
@@ -58,7 +64,15 @@ public class ServerThread extends Thread{
             udpSocket.close();
         }
 
+        public void sendGameState(){
 
+        }
+
+        public void CloseServer(){
+            // close socket and let others know the server is no longer up.
+            udpSocket.close();
+            isUp = false;
+        }
     /* SetupHost will setup a server by binding to the 
      * assigned port and begin listening on that socket.
      * There is some code like the PrintWriter that will
