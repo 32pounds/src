@@ -73,7 +73,7 @@ public class GameLoop extends Thread {
         for(Entity local : localEntities){
             Entity remote = remoteState.getByID(local.getID());
             if(remote == null){
-                remote = new Entity(remoteState,local.getSpriteString());
+                remote = new Entity(remoteState,local.getImageCode());
                 remote.assignID(local.getID());
                 remoteState.register(remote, remote.getID());
             }

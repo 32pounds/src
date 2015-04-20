@@ -21,12 +21,6 @@ public class Entity extends Drawable
     //I am using a Sprite cuz texture doesn't have rotation
     protected Sprite sprite;
 
-    //This will be a shorter identifier in the future
-    protected String spriteString;
-    public String getSpriteString(){
-        return spriteString;
-    }
-
     //initial position of the player
     protected Position position;
     protected GameState gameState;
@@ -59,7 +53,6 @@ public class Entity extends Drawable
         imageCode = img;
         //using sprite cuz Texture doesn't have rotation
         sprite = new Sprite(SpriteStorage.getInstance().getTexture(img));
-        spriteString = img;
         //temporarily here
         this.gameState = state;
     }
