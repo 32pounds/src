@@ -80,7 +80,8 @@ public class PopupMenu extends com.renderer.Drawable implements InputProcessor {
                 try{
                     // start client
                     // and fire off first packet.
-                    clientUDP = new ClientThread("127.0.0.1", 5050); // Test port/address
+                    (new ClientThread("127.0.0.1", 5050)).start();
+                    //clientUDP = new ClientThread("127.0.0.1", 5050); // Test port/address
                 }catch(Exception e){System.out.println("COULDN'T setup server/client! " + e);}
                 clientButton.setText("Disconnect");
             }

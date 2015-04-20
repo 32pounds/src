@@ -12,7 +12,9 @@ public class ServerThread extends Thread{
     protected static BufferedReader in = null;
     protected PrintWriter out = null;
     private boolean isUp;
-
+    private DatagramPacket packet = null;
+    private InetAddress address = null;
+    private int replyPort;
 
     // Constructor will intialize port number 
     // and a command line scanner for debugging.
@@ -59,30 +61,41 @@ public class ServerThread extends Thread{
                     
                     System.out.println("Sending response...");
                     // send the response to the client at "address" and "port"
-                    InetAddress address = recievedPacket.getAddress();
-                    int replyPort = recievedPacket.getPort();
+                    address = recievedPacket.getAddress();
+                    replyPort = recievedPacket.getPort();
                     System.out.println("Got packet info " + address + ":" + replyPort );
-                    DatagramPacket packet = new DatagramPacket(buf, buf.length, address, replyPort);
+                    packet = new DatagramPacket(buf, buf.length, address, replyPort);
                     udpSocket.send(packet);
                     // set isUp to true to let others know the server is running.
                     isUp = true;
+
+                    try{SendGameState();}catch(Exception e){System.out.println("Couldn't time " + e);}
                 } catch (IOException e) {
                     e.printStackTrace();
-            
                 }
             
-            udpSocket.close();
-        }
+            
+    }
 
-        public void sendGameState(){
-
+    public void SendGameState() throws InterruptedException{
+        while(true){
+            try{
+            String date = new Date().toString();
+            byte[] buff = new byte[256];
+            buff = date.getBytes();
+            System.out.println("sending...");
+            packet = new DatagramPacket(buff, buff.length, address, replyPort);
+            udpSocket.send(packet);
+            sleep(1000);
+        }catch(Exception e){System.out.println("Uh oh.. " + e);}
         }
+    }
 
-        public void CloseServer(){
-            // close socket and let others know the server is no longer up.
-            udpSocket.close();
-            isUp = false;
-        }
+    public void CloseServer(){
+        // close socket and let others know the server is no longer up.
+        udpSocket.close();
+        isUp = false;
+    }
     /* SetupHost will setup a server by binding to the 
      * assigned port and begin listening on that socket.
      * There is some code like the PrintWriter that will
