@@ -33,26 +33,42 @@ public class Map extends Drawable {
                     batch.draw(SpriteStorage.getInstance().getTexture("TransportDown"), x * XDIMENSION, y * YDIMENSION);
                 else if (grid[y][x] == '@')
                     batch.draw(SpriteStorage.getInstance().getTexture("StartBeige"), x * XDIMENSION, y * YDIMENSION);
-                else if (grid[y][x] == 'L')
+                else if (grid[y][x] == 'L') {
+                    batch.draw(SpriteStorage.getInstance().getTexture("BeigeTile"), x * XDIMENSION, y * YDIMENSION);
                     batch.draw(SpriteStorage.getInstance().getTexture("WhiteDeskL"), x * XDIMENSION, y * YDIMENSION);
-                else if (grid[y][x] == 'D')
+                }
+                else if (grid[y][x] == 'D'){
+                    batch.draw(SpriteStorage.getInstance().getTexture("BeigeTile"), x * XDIMENSION, y * YDIMENSION);
                     batch.draw(SpriteStorage.getInstance().getTexture("WhiteDeskM"), x * XDIMENSION, y * YDIMENSION);
-                else if (grid[y][x] == 'R')
+                }
+                else if (grid[y][x] == 'R'){
+                    batch.draw(SpriteStorage.getInstance().getTexture("BeigeTile"), x * XDIMENSION, y * YDIMENSION);
                     batch.draw(SpriteStorage.getInstance().getTexture("WhiteDeskR"), x * XDIMENSION, y * YDIMENSION);
-                else if (grid[y][x] == 'C')
+                }
+                else if (grid[y][x] == 'C') {
+                    batch.draw(SpriteStorage.getInstance().getTexture("BeigeTile"), x * XDIMENSION, y * YDIMENSION);
                     batch.draw(SpriteStorage.getInstance().getTexture("RedChairN"), x * XDIMENSION, y * YDIMENSION);
+                }
                 else if (grid[y][x] == '.')
                     batch.draw(SpriteStorage.getInstance().getTexture("WhiteFloor"), x * XDIMENSION, y * YDIMENSION);
                 else if (grid[y][x] == '|')
                     batch.draw(SpriteStorage.getInstance().getTexture("SheetMetal"), x * XDIMENSION, y * YDIMENSION);
-                else if (grid[y][x] == 'l')
+                else if (grid[y][x] == 'l'){
+                    batch.draw(SpriteStorage.getInstance().getTexture("WhiteFloor"), x * XDIMENSION, y * YDIMENSION);
                     batch.draw(SpriteStorage.getInstance().getTexture("BeigeDeskL"), x * XDIMENSION, y * YDIMENSION);
-                else if (grid[y][x] == 'd')
+                }
+                else if (grid[y][x] == 'd'){
+                    batch.draw(SpriteStorage.getInstance().getTexture("WhiteFloor"), x * XDIMENSION, y * YDIMENSION);
                     batch.draw(SpriteStorage.getInstance().getTexture("BeigeDeskM"), x * XDIMENSION, y * YDIMENSION);
-                else if (grid[y][x] == 'r')
+                }
+                else if (grid[y][x] == 'r'){
+                    batch.draw(SpriteStorage.getInstance().getTexture("WhiteFloor"), x * XDIMENSION, y * YDIMENSION);
                     batch.draw(SpriteStorage.getInstance().getTexture("BeigeDeskR"), x * XDIMENSION, y * YDIMENSION);
-                else if (grid[y][x] == 'c')
+                }
+                else if (grid[y][x] == 'c'){
+                    batch.draw(SpriteStorage.getInstance().getTexture("WhiteFloor"), x * XDIMENSION, y * YDIMENSION);
                     batch.draw(SpriteStorage.getInstance().getTexture("BlueChair"), x * XDIMENSION, y * YDIMENSION);
+                }
                 else if (grid[y][x] == 's')
                     batch.draw(SpriteStorage.getInstance().getTexture("Stars"), x * XDIMENSION, y * YDIMENSION);
                 else if (grid[y][x] == 'T')
