@@ -1,12 +1,19 @@
-import java.net.*;
+package com.multi;
+
 import java.io.*;
-import java.util.*;
 
 
 public class Multiplayer{
 
-    public Multiplayer(){
-        // Connection code?
+	// Will start server or client depending
+	// on passed in variable.
+    public Multiplayer( boolean ServerOrClient ) throws IOException{
+        
+        if(ServerOrClient){
+        	ServerThread server = new ServerThread(5050);
+        }else{ // client stuff
+        	
+        }
     }
 
 }

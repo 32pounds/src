@@ -21,6 +21,9 @@ import com.renderer.SpriteStorage;
 import com.renderer.Updatable;
 import java.util.ArrayList;
 import java.util.Collections;
+import com.multi.*;
+import java.io.*;
+
 
 public class OSGame extends ApplicationAdapter {
 
@@ -30,9 +33,16 @@ public class OSGame extends ApplicationAdapter {
     private ArrayList<Drawable> drawables;
     private Player localPlayer;
     private PopupMenu popupMenu;
+    private ServerThread serverUDP = null;
+    private ClientThread clientUDP = null;
+    private String servAddress = null;
+    private String cliAddress = null;
 
     @Override
     public void create() {
+        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+        servAddress = "127.0.0.1";
+        cliAddress = "127.0.0.1";
 
         float w = Gdx.graphics.getWidth();
         float h = Gdx.graphics.getHeight();
@@ -80,7 +90,22 @@ public class OSGame extends ApplicationAdapter {
 
         OSInputProcessor.getInstance().addInputPorcessor(new InputHandler(localPlayer));
 
+        System.out.print("Please enter host IP: ");
+        System.out.println();
+        try{
+            // setup server.
+            // Multiplayer chooses to setup a server or client depending on
+            // the boolean passed in to the main class call. 'true' results
+            // in a server being created and 'false' creates a client.
+            
+
+            //serverUDP = new ServerThread(5051);
+            //serverUDP.runUDP();
+            //clientUDP = new ClientThread(servAddress, 5050); // Test port/address only!
+
+        }catch(Exception e){System.out.println("COULDN'T setup server/client! " + e);
     }
+    }  
 
     @Override
     public void render() {
@@ -107,6 +132,10 @@ public class OSGame extends ApplicationAdapter {
 
         //this is here, because when it is on batch.begin() weird things happens
         popupMenu.draw(batch);
+
+        // TODO: Move following lines into "Multiplayer" class.a
+        //serverUDP.runUDP();
+        //clientUDP.ConnectToServer();
     }
     
     private void updateCameraPosition(){
