@@ -46,9 +46,11 @@ project(":core") {
 
 
     dependencies {
+        compile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-controllers:$gdxVersion"
+        testCompile group: 'junit', name: 'junit', version: '4.12'
     }
 }
 
