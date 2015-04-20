@@ -11,12 +11,15 @@ public class ClientThread extends Thread{
     protected static BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
     protected PrintWriter out = null;
     private String serverAddress = "127.0.0.1";
-    
+    private DatagramSocket udpSocket = null;
 
     public ClientThread(String address, int port){
     	if (address != "127.0.0.1") serverAddress = address;
     	if( port != 5050) portNum = port;
         in = new BufferedReader(new InputStreamReader(System.in));
+        try{
+            udpSocket = new DatagramSocket(portNum);
+        }catch(Exception e){System.out.println("Couldn't create socket! " + e);}
         ConnectToServer();
     }
     
@@ -25,7 +28,7 @@ public class ClientThread extends Thread{
         try{
             // Create UDP socket.
             System.out.println("Creating socket...");
-            DatagramSocket udpSocket = new DatagramSocket(5050);
+            
  
             System.out.println("Socket created @ port: " + udpSocket.getLocalPort());
 
@@ -51,7 +54,11 @@ public class ClientThread extends Thread{
             String received = new String(packet.getData(), 0, packet.getLength());
             System.out.println("Data: " + received);
         
-            udpSocket.close();
+            
         } catch(Exception e){ System.out.println("Couldn't setup UDP client!" + e);}
+    }
+
+    public void CloseConnection(){
+        udpSocket.close();
     }
 }
