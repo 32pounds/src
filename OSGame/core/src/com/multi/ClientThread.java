@@ -1,3 +1,7 @@
+// ClientThread.java
+// Author(s): Jordan Lynn
+// TODO: void RecieveGameState() shouldn't return void. See discriptions.
+
 package com.multi;
 
 import java.net.*;
@@ -32,6 +36,11 @@ public class ClientThread extends Thread{
         ConnectToServer();
     }
 
+
+    /* ConnectToServer() will setup a UDP socket and packet
+     * and fire off the packet to a server that's give in the 
+     * arguments that are passed in.
+     */
     public void ConnectToServer(){
 
         try{
@@ -68,6 +77,14 @@ public class ClientThread extends Thread{
         } catch(Exception e){ System.out.println("Couldn't setup UDP client!" + e);}
     }
 
+    /* RecieveGameState() will continually recieve UDP packets,
+     * and print out the info
+     * 
+     * TODO: RecieveGameState() shouldn't return "void" but rather
+     * a list of entities that it gets from the udp packet, or a
+     * character array list that get's taken care of by the parser
+     * depending on how this is all gonna go.
+     */
     public void RecieveGameState() throws InterruptedException{
         try{
             while(true){
