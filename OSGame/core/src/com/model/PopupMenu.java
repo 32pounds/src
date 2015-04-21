@@ -23,8 +23,8 @@ public class PopupMenu extends com.renderer.Drawable implements InputProcessor {
 
     private Stage stage;
     private boolean visible = false;
-    private ServerThread serverUDP = null;
-    private ClientThread clientUDP = null;
+    public ServerThread serverUDP = null;
+    public ClientThread clientUDP = null;
 
     public PopupMenu() {
         stage = new Stage();

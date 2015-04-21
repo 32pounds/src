@@ -93,7 +93,7 @@ public class ClientThread extends Thread{
                 udpSocket.receive(gamePacket);
                 String got = new String(gamePacket.getData(), 0, gamePacket.getLength());
                 System.out.println("got:  " + got);
-                sleep(500);
+                sleep(1);
             }
         }catch(Exception e){System.out.println("client uh oh:  " +e);}
     }
