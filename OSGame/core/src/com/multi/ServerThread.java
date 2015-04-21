@@ -1,3 +1,7 @@
+// ServerThread.java
+// Author(s): Jordan Lynn
+// TODO: Have server keep track of multiple clients.
+
 package com.multi;
 
 import java.net.*;
@@ -39,6 +43,14 @@ public class ServerThread extends Thread{
         return isUp;
     }
 
+    /* setupUDP() will get info from a newly connected client and 
+     * store the info like port number and IP address into a variable
+     * such as "address" or "port". Once the socket and packet are
+     * created the function falls back to SendGameState() to continually
+     * send out the state.
+     * 
+     * TODO: Have setupUDP add to list of clients.
+     */
     public void setupUDP() {
             System.out.println("Creating UDP packet/socket...");
                 try {
@@ -77,6 +89,13 @@ public class ServerThread extends Thread{
             
     }
 
+    /*  SendGameState() will continually send out UDP packets,
+    *   TODO: Setup function to accept gamestate entities and
+    *   send them out. Currently I'm not sure how this'll work
+    *   but it will be as simple as calling the function:
+    *   SendGameState( EntityList list), and the render fucntion
+    *   will be able to send these out as fast as possible.
+    */
     public void SendGameState() throws InterruptedException{
         while(true){
             try{
@@ -91,11 +110,13 @@ public class ServerThread extends Thread{
         }
     }
 
+    /* CloserServer() should be called when multiplayer is over. */
     public void CloseServer(){
         // close socket and let others know the server is no longer up.
         udpSocket.close();
         isUp = false;
     }
+
     /* SetupHost will setup a server by binding to the 
      * assigned port and begin listening on that socket.
      * There is some code like the PrintWriter that will
