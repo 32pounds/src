@@ -5,36 +5,35 @@ package com.comms;
  * @author Brett Menzies
  */
 public class GameID{
-    private static short idGen = 0;
+    private static char idGen = 257;
+        //I don't want this in the ascii range
+        //because the parser probably will not handle that well
     /**
      * newID is here to generate a so far unused id in this JVM instance
      * It is separate from the constructor so that it may be synchronized to
      * prevent id duplication in multi threaded scenarios
      */
-    private static synchronized short newID(){
+    private static synchronized char newID(){
         idGen++;
         return idGen;
     }
 
-    private final short id;
+    private final char id;
     public GameID(){
         id = newID();
     }
-    public GameID(short inputID){
-        id = inputID;
-    }
     public GameID(Number inputID){
-        id = inputID.shortValue();
+        id = (char) inputID.shortValue();
     }
     public GameID(char inputID){
-        id = (short) inputID;
+        id = inputID;
     }
 
     /**
      * Used to transmit the ID over the network
      */
     public char toChar(){
-        return (char) id;
+        return id;
     }
 
     @Override
