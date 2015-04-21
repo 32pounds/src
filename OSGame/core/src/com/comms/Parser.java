@@ -19,6 +19,80 @@ public class Parser
         this.gameState = gameState;
     }
 
+
+    /**
+     * Create a string from an array of Commands and an array of Entities
+     * @param entities Entities to be parsed
+     * @param commands ommands to be parsed
+     * @return An parsed string from an array of Commands and an array of Entities
+     */
+    public String Parse(Entity[] entities, Command[] commands)
+    {
+        String result = "";
+
+        result += entities.length + ",";
+        result += commands.length + ",";
+
+        result += Parse(entities);
+        result += Parse(commands);
+
+        return result;
+    }
+
+    /**
+     * Create a string from an array of Commands
+     * @param commands Commands to be parsed
+     * @return String parsed from an array of Commands
+     */
+    public String Parse(Command[] commands)
+    {
+        String result = "";
+
+        result += commands.length + ",";
+
+        for (Command item : commands)
+        {
+            result += item.getData().length + ",";
+            for (char itemChar : item.getData())
+            {
+                result += itemChar + ",";
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Create a collection of Commands from a formatted string.
+     * @param data Formatted string.
+     * @return Collection of Commands.
+     */
+    public char[][] DeParseCommands(String data)
+    {
+        Pair<String, String> value = StepString(data);
+        data = value.getValue();
+
+        char[][] result = new char[Integer.parseInt(value.getKey())][];
+
+        for (int x = 0; x < result.length; x++)
+        {
+            value = StepString(data);
+            data = value.getValue();
+
+            result[x] = new char[Integer.parseInt(value.getKey())];
+
+            for (int i = 0; i < result[x].length; i++)
+            {
+                value = StepString(data);
+                data = value.getValue();
+                result[x][i] = value.getKey().toCharArray()[0];
+            }
+        }
+
+        return result;
+    }
+
+
     /**
      * Create string referent to a collection of Entities
      * @param entities Entities to be parsed
@@ -43,7 +117,7 @@ public class Parser
      * @param data Formatted string.
      * @return Collection of Entities.
      */
-    public Entity[] DePerse(String data)
+    public Entity[] DePerseEntities(String data)
     {
         Entity[] entities = new Entity[CountChar(data, ',') / 4];
 
