@@ -38,7 +38,7 @@ public class Monster extends Entity implements Updatable{
         lastUpdateTime=0;
         deathTime=-WAIT_TIME;
         alive=img;
-        dead="S";
+        dead="BlueSplat";
         splat= splatSound;
         wasDead=true;
         closestPlayer=getClosestPlayer();
