@@ -34,6 +34,7 @@ public class ServerThread extends Thread{
     public void run(){
         System.out.println("Hello from thread!");
         setupUDP();
+        SendString("This is a teeeessst!");
     }
 
     /* getServerStatus()
@@ -46,7 +47,7 @@ public class ServerThread extends Thread{
     /* setupUDP() will get info from a newly connected client and 
      * store the info like port number and IP address into a variable
      * such as "address" or "port". Once the socket and packet are
-     * created the function falls back to SendGameState() to continually
+     * created the function falls back to SendPacket() to continually
      * send out the state.
      * 
      * TODO: Have setupUDP add to list of clients.
@@ -81,7 +82,6 @@ public class ServerThread extends Thread{
                     // set isUp to true to let others know the server is running.
                     isUp = true;
 
-                    try{SendGameState();}catch(Exception e){System.out.println("Couldn't time " + e);}
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -89,32 +89,32 @@ public class ServerThread extends Thread{
             
     }
 
-    /*  SendGameState() will continually send out UDP packets,
+    /*  SendPacket() will continually send out UDP packets,
     *   TODO: Setup function to accept gamestate entities and
     *   send them out. Currently I'm not sure how this'll work
     *   but it will be as simple as calling the function:
-    *   SendGameState( EntityList list), and the render fucntion
+    *   SendPacket( EntityList list), and the render fucntion
     *   will be able to send these out as fast as possible.
     */
-    public void SendGameState() throws InterruptedException{
-        while(true){
-            try{
-            String date = new Date().toString();
-            byte[] buff = new byte[256];
-            buff = date.getBytes();
-            System.out.println("sending...");
-            packet = new DatagramPacket(buff, buff.length, address, replyPort);
-            udpSocket.send(packet);
-            sleep(1000);
-        }catch(Exception e){System.out.println("Uh oh.. " + e);}
-        }
+    public void SendPacket( DatagramPacket toSendPacket ) throws InterruptedException{
+        try{
+            udpSocket.send(toSendPacket);
+        }catch(Exception e){System.out.println("Sorry :( " + e);}
     }
 
-    /* CloserServer() should be called when multiplayer is over. */
-    public void CloseServer(){
-        // close socket and let others know the server is no longer up.
-        udpSocket.close();
-        isUp = false;
+    /* SendString() will take in a string, break it into bytes
+     * stuff the bytes into a packet then call SendPacket() to
+     * send off the UDP packet.
+     */
+    public void SendString( String dataToSend ){
+        try{
+            byte[] buff = new byte[1024];
+            buff = dataToSend.getBytes();
+            System.out.println("sending...");
+            packet = new DatagramPacket(buff, buff.length, address, replyPort);
+    
+            SendPacket(packet);
+        }catch(Exception e){System.out.println("Couldn't send string " + e);}
     }
 
     /* SetupHost will setup a server by binding to the 
@@ -144,6 +144,11 @@ public class ServerThread extends Thread{
         }catch(Exception e){ System.out.println("NETWORKING ERROR SERVER SIDE: " + e); }
     }
 
-    
+    /* CloserServer() should be called when multiplayer is over. */
+    public void CloseServer(){
+        // close socket and let others know the server is no longer up.
+        udpSocket.close();
+        isUp = false;
+    }
 
 }

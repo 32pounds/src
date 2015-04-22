@@ -74,6 +74,7 @@ public class ClientThread extends Thread{
         
             isUp = true;
             try{RecieveGameState();}catch(Exception e){System.out.println("uh oh client... " + e);}
+            
         } catch(Exception e){ System.out.println("Couldn't setup UDP client!" + e);}
     }
 
