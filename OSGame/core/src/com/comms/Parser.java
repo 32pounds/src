@@ -5,9 +5,16 @@ import javafx.util.Pair;
 
 /**
  * Parse Entities
+ * <p>NOTES:</p>
+ * <p>When you use Parse(Entity[]) to parse use DeParseEntity(string) to deparse</p>
+ * <p>When you use Parse(Command[]) to parse use DeParseCommand(string)to deparse</p>
+ * <p>When you use Parse(Entity[], Command[]) to parse use DeParse(string) deparse</p>
  */
 public class Parser
 {
+    /**
+     * GameState necessary to create new instances of Entities
+     */
     private GameState gameState;
 
     /**
@@ -31,7 +38,6 @@ public class Parser
         String result = "";
 
         result += entities.length + ",";
-        result += commands.length + ",";
 
         result += Parse(entities);
         result += Parse(commands);
@@ -110,6 +116,62 @@ public class Parser
             result += item.getYPos() + ",";
         }
         return result;
+    }
+
+    /**
+     * Create an array of Entities and an array of Commands from a data string
+     * @param data Data
+     * @return An array of Entities and an array of Commands
+     */
+    public Pair<Entity[], char[][]> DeParse(String data)
+    {
+        Pair<String, String> value = StepString(data);
+        data = value.getValue();
+
+        int numberOfEntities = Integer.parseInt(value.getKey());
+
+        Entity[] entities = new Entity[numberOfEntities];
+
+        for (int x = 0; x < entities.length; x++)
+        {
+            value = StepString(data);
+            data = value.getValue();
+            entities[x] = new Entity(gameState, value.getKey());
+
+            value = StepString(data);
+            data = value.getValue();
+            entities[x].assignID(new GameID(value.getKey().toCharArray()[0]));
+
+            value = StepString(data);
+            data = value.getValue();
+            entities[x].setXPos(Integer.parseInt(value.getKey()));
+
+            value = StepString(data);
+            data = value.getValue();
+            entities[x].setYPos(Integer.parseInt(value.getKey()));
+        }
+
+        value = StepString(data);
+        data = value.getValue();
+
+        char[][] result = new char[Integer.parseInt(value.getKey())][];
+
+        for (int x = 0; x < result.length; x++)
+        {
+            value = StepString(data);
+            data = value.getValue();
+
+            result[x] = new char[Integer.parseInt(value.getKey())];
+
+            for (int i = 0; i < result[x].length; i++)
+            {
+                value = StepString(data);
+                data = value.getValue();
+                result[x][i] = value.getKey().toCharArray()[0];
+            }
+        }
+
+        return new Pair<Entity[], char[][]>(entities, result);
     }
 
     /**
