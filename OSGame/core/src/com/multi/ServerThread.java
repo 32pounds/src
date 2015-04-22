@@ -4,6 +4,8 @@
 
 package com.multi;
 
+import com.multi.MessageHandler;
+
 import java.net.*;
 import java.io.*;
 import java.util.*;
@@ -19,12 +21,14 @@ public class ServerThread extends Thread{
     private DatagramPacket packet = null;
     private InetAddress address = null;
     private int replyPort;
+    private MessageHandler handler;
 
-    // Constructor will intialize port number 
+    // Constructor will intialize port number
     // and a command line scanner for debugging.
     // Then calle SetupHost() to begin networking.
     // As well setup UDP listeners.
-    public ServerThread( int port) throws IOException {
+    public ServerThread( int port, MessageHandler handler) throws IOException {
+        this.handler = handler;
         portNum = port;
         System.out.println("Creating UDP socket @:" + portNum );
         isUp = false;
@@ -34,6 +38,15 @@ public class ServerThread extends Thread{
     public void run(){
         System.out.println("Hello from thread!");
         setupUDP();
+        while(true){
+            SendString("Message from Server");
+            try{
+                RecievePacket();
+                sleep(500);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        }
     }
 
     /* getServerStatus()
@@ -43,34 +56,34 @@ public class ServerThread extends Thread{
         return isUp;
     }
 
-    /* setupUDP() will get info from a newly connected client and 
+    /* setupUDP() will get info from a newly connected client and
      * store the info like port number and IP address into a variable
      * such as "address" or "port". Once the socket and packet are
      * created the function falls back to SendPacket() to continually
      * send out the state.
-     * 
+     *
      * TODO: Have setupUDP add to list of clients.
      */
     public void setupUDP() {
             System.out.println("Creating UDP packet/socket...");
                 try {
                     udpSocket = new DatagramSocket(portNum);
-                    
+
                     byte[] buf = new byte[256];
-                
+
                     // receive request
                     DatagramPacket recievedPacket = new DatagramPacket(buf, buf.length);
                     System.out.println("Packet created!");
                     System.out.println("Waiting to receive @: " + udpSocket.getLocalAddress() + " port " + udpSocket.getLocalPort());
                     udpSocket.receive(recievedPacket);
-                    
+
                     System.out.println("Packet received!");
                     // figure out response
                     String dString = null;
                     if (in == null) dString = new Date().toString();
-                    
+
                     buf = dString.getBytes();
-                    
+
                     System.out.println("Sending response...");
                     // send the response to the client at "address" and "port"
                     address = recievedPacket.getAddress();
@@ -84,8 +97,8 @@ public class ServerThread extends Thread{
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            
-            
+
+
     }
 
     /*  SendPacket() will continually send out UDP packets,
@@ -111,21 +124,21 @@ public class ServerThread extends Thread{
             buff = dataToSend.getBytes();
             System.out.println("sending...");
             packet = new DatagramPacket(buff, buff.length, address, replyPort);
-    
+
             SendPacket(packet);
         }catch(Exception e){System.out.println("Couldn't send string " + e);}
     }
 
-    /* SetupHost will setup a server by binding to the 
+    /* SetupHost will setup a server by binding to the
      * assigned port and begin listening on that socket.
      * There is some code like the PrintWriter that will
      * allow command line messages to be sent, this is
      * non-essential and will be removed once debugging
      * of the program is finished
-     * 
+     *
      */
     private static void SetupTCP() throws SocketException{
-        // TCP setup 
+        // TCP setup
         try{
             String data = "foo";
             System.out.println("Attempting to bind to port...");
@@ -133,7 +146,7 @@ public class ServerThread extends Thread{
     	    System.out.println("Port bound! waiting for client...");
     	    Socket listeningSocket = servr.accept();
     	    System.out.println("Connection established!");
-    			
+
     	    PrintWriter out = new PrintWriter(listeningSocket.getOutputStream(), true);
     	    System.out.println("Sending data...");
     	    out.print(data);
@@ -148,7 +161,8 @@ public class ServerThread extends Thread{
             byte[] buff = new byte[1024];
             DatagramPacket clientPacket = new DatagramPacket(buff, buff.length, address, 5051);
             udpSocket.receive(clientPacket);
-
+            byte[] data = clientPacket.getData();
+            handler.process(new String(data));
         }catch(Exception e){System.out.println("server uh oh:  " +e);}
     }
 
