@@ -26,28 +26,8 @@ public void before() throws Exception {
 public void after() throws Exception {
 }
 
-/**
-*
-* Method: getData()
-*
-*/
 @Test
-public void testGetData() throws Exception {
-//TODO: Test goes here...
-}
-
-/**
-*
-* Method: execute()
-*
-*/
-@Test
-public void testExecute() throws Exception {
-//TODO: Test goes here...
-}
-
-@Test
-public void testPacketize() throws Exception {
+public void testMoveCommandPacketize() throws Exception {
     GameID testID = new GameID();
     Direction testDir = Direction.NORTH;
     Command orig = new MoveCmd(testID, testDir);
@@ -61,5 +41,21 @@ public void testPacketize() throws Exception {
     assertTrue("Direction test", mres.getDirection().equals(testDir));
     assertTrue("Actor ID test" , mres.getActorID().equals(testID));
 }
+@Test
+public void testStopCommandPacketize() throws Exception {
+    GameID testID = new GameID();
+    Direction testDir = Direction.NORTH;
+    Command orig = new StopCmd(testID, testDir);
+
+    char[] data = orig.packetize();
+
+    Command result = Command.parse(data);
+
+    assertTrue("Packetization class test", result.getClass()==orig.getClass());
+    StopCmd mres = (StopCmd) result;
+    assertTrue("Direction test", mres.getDirection().equals(testDir));
+    assertTrue("Actor ID test" , mres.getActorID().equals(testID));
+}
+
 
 }
