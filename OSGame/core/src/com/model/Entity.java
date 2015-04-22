@@ -25,6 +25,7 @@ public class Entity extends Drawable
     protected Position position;
     protected GameState gameState;
 
+
     //The GameID being used to reference this entity remotely
     private GameID id;
 
@@ -127,6 +128,14 @@ public class Entity extends Drawable
     {
         //for now this will be false
         return false;
+    }
+
+    public void setRotation(int rotation){
+        sprite.setRotation(rotation);
+    }
+
+    public int getRotation(){
+        return (int) sprite.getRotation();
     }
 
     public synchronized void move(Direction dir)

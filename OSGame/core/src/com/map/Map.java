@@ -15,11 +15,11 @@ public class Map extends Drawable {
 
     public Map() {
         FileHandle mapOne = Gdx.files.internal("Level_1_Big_Map.map");
-       
+
         //create the grid with the map
         grid = parseGrid(mapOne);
     }
-    
+
     public void draw(SpriteBatch batch) {
         for (int y = 0; y < grid.length; ++y) {
             for (int x = 0; x < grid[y].length; ++x) {
@@ -44,17 +44,17 @@ public class Map extends Drawable {
             }
         }
     }
-    
+
     public int getXBound()
     {
                 return grid[0].length;
     }
-    
+
     public int getYBound()
     {
                 return grid.length;
     }
-    
+
     @Override
     public int getZIndex() {
         return 0;
@@ -81,7 +81,7 @@ public class Map extends Drawable {
     public boolean isExpired() {
         return false;
     }
-    
+
 
    public int isMove(int x, int y) {
         if (grid[y][x] == '^')
@@ -90,7 +90,7 @@ public class Map extends Drawable {
             return 2;
         return 0;
     }
-    
+
     public boolean isMove(Position pos){
         return (grid[pos.getY()][pos.getX()] == ' ');
     }
@@ -103,7 +103,7 @@ public class Map extends Drawable {
         }
         return new Position(0,0);
     }
-    
+
     public Position findNextInstance(int X, int Y, char item){
         for (int y = Y; y < grid.length; ++y) {
             for (int x = X; x < grid[y].length; ++x) {
@@ -112,8 +112,8 @@ public class Map extends Drawable {
         }
         return new Position(0,0);
     }
-    
-        public Position findPreviousInstance(int X, int Y, char item){
+
+    public Position findPreviousInstance(int X, int Y, char item){
         for (int y = Y; y > 0; --y) {
             for (int x = X; x > 0; --x) {
                 if(grid[y][x]==item) return new Position(x,y);

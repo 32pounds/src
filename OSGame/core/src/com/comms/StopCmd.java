@@ -23,11 +23,14 @@ public class StopCmd extends Command{
         actor = target;
         dir = direction;
     }
-    public StopCmd(char[] data){
-        actor = new GameID(data[0]);
-        dir = Direction.getByChar(data[1]);
+    public StopCmd(){
+
     }
-    public char[] getData(){
+    public void execute(GameState state){
+        Player target = (Player) state.getByID(actor);
+        target.stopMoving(dir);
+    }
+    protected char[] getData(){
         char[] out = new char[2];
         if(dir != null){
             out[0] = actor.toChar();
@@ -35,8 +38,8 @@ public class StopCmd extends Command{
         }
         return out;
     }
-    public void execute(GameState state){
-        Player target = (Player) state.getByID(actor);
-        target.stopMoving(dir);
+    protected void restore(char[] data){
+        actor = new GameID(data[0]);
+        dir = Direction.getByChar(data[1]);
     }
 }
