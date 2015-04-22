@@ -74,7 +74,19 @@ public class ClientThread extends Thread{
         
             isUp = true;
             try{RecieveGameState();}catch(Exception e){System.out.println("uh oh client... " + e);}
+
         } catch(Exception e){ System.out.println("Couldn't setup UDP client!" + e);}
+    }
+
+    public void SendString( String dataToSend ){
+        try{
+            byte[] buff = new byte[1024];
+            buff = dataToSend.getBytes();
+            System.out.println("sending...");
+            packet = new DatagramPacket(buff, buff.length, address, replyPort);
+    
+            SendPacket(packet);
+        }catch(Exception e){System.out.println("Couldn't send string " + e);}
     }
 
     /* RecieveGameState() will continually recieve UDP packets,
