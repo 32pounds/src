@@ -83,6 +83,23 @@
     {
       "code": "/",
       "path": "top-down/floorings/CautionStripes-yellow.png"
+    },
+    {
+      "code": "1",
+      "path": "top-down/mobs/Roach-green.png"
+    },
+    {
+      "code": "!",
+      "path": "top-down/mobs/Splat-green.png"
+    },
+    {
+      "code": "3",
+      "path": "top-down/mobs/Roach-purple.png"
+    },
+    {
+      "code": "#",
+      "path": "top-down/mobs/Splat-purple.png"
     }
+    
   ]
 }

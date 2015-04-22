@@ -101,7 +101,7 @@ public class Parser
 
         for (Entity item : entities)
         {
-            result += item.getImageCode() + splitChar;
+            result += item.getSpriteString() + splitChar;
             result += item.getID().toChar() + splitChar;
             result += item.getXPos() + splitChar;
             result += item.getYPos() + splitChar;
