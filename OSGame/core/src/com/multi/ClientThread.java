@@ -23,9 +23,10 @@ public class ClientThread extends Thread{
     private DatagramPacket packet = null;
     public boolean isUp;
     private InetAddress servAddress = null;
-    private MessageHandler handler;
+    private MessageHandler handler; 
 
-    public ClientThread(String address, int myPort,int servPort, MessageHandler handler){
+
+    public ClientThread(String address, int myPort, int servPort, MessageHandler handler){
         this.handler = handler;
     	if (address != "127.0.0.1") serverAddress = address;
         this.myPort = myPort;
@@ -52,6 +53,9 @@ public class ClientThread extends Thread{
         }
     }
 
+    public void AddPlayer(){
+
+    }
 
     /* ConnectToServer() will setup a UDP socket and packet
      * and fire off the packet to a server that's give in the
