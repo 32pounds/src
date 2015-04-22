@@ -60,13 +60,7 @@ public class Parser
         result += commands.length + splitChar;
 
         for (Command item : commands)
-        {
-            result += item.getData().length + splitChar;
-            for (char itemChar : item.getData())
-            {
-                result += itemChar + splitChar;
-            }
-        }
+            result += new String(item.getData()) + splitChar;
 
         return result;
     }
@@ -88,16 +82,8 @@ public class Parser
             value = StepString(data);
             data = value.getValue();
 
-            char[] commandData = new char[Integer.parseInt(value.getKey())];
-
-            for (int i = 0; i < commandData.length; i++)
-            {
-                value = StepString(data);
-                data = value.getValue();
-                commandData[i] = value.getKey().toCharArray()[0];
-            }
-
-            result[x] = Command.parse(commandData);
+            String commandData = value.getKey();
+            result[x] = Command.parse(commandData.toCharArray());
         }
 
         return result;
@@ -166,16 +152,8 @@ public class Parser
             value = StepString(data);
             data = value.getValue();
 
-            char[] commandData = new char[Integer.parseInt(value.getKey())];
-
-            for (int i = 0; i < commandData.length; i++)
-            {
-                value = StepString(data);
-                data = value.getValue();
-                commandData[i] = value.getKey().toCharArray()[0];
-            }
-
-            result[x] = Command.parse(commandData);
+            String commandData = value.getKey();
+            result[x] = Command.parse(commandData.toCharArray());
         }
 
         return new Pair<Entity[], Command[]>(entities, result);

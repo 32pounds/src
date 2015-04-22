@@ -3,12 +3,12 @@ package test.com.comms;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.comms.GameID;
-import com.comms.GameState;
-import com.comms.Parser;
+import com.comms.*;
 import com.map.Map;
 import com.model.Entity;
 import static org.junit.Assert.assertEquals;
+
+import javafx.util.Pair;
 import org.junit.After;
 import org.junit.Test;
 
@@ -62,7 +62,14 @@ public class ParserTest
     @Test
     public void testParseCommands() throws Exception
     {
-//TODO: Test goes here... 
+        Command[] commands = new Command[3];
+        commands[0] = new DummyCmd();
+        commands[1] = new DummyCmd();
+        commands[2] = new DummyCmd();
+
+        String result = new Parser(new GameState(new Map())).Parse(commands);
+
+        assertEquals("3,com.comms.DummyCmd:test,com.comms.DummyCmd:test,com.comms.DummyCmd:test,", result);
     }
 
     /**
@@ -71,23 +78,13 @@ public class ParserTest
     @Test
     public void testDeParseCommands() throws Exception
     {
-        /*
-        String test = "3,3,a,b,c,2,a,c,5,a,e,r,t,3,";
+        String test = "3,com.comms.DummyCmd:test,com.comms.DummyCmd:test,com.comms.DummyCmd:test,";
+
         Command[] result = new Parser(new GameState(new Map())).DeParseCommands(test);
 
-        assertEquals('a', result[0][0]);
-        assertEquals('b', result[0][1]);
-        assertEquals('c', result[0][2]);
-
-        assertEquals('a', result[1][0]);
-        assertEquals('c', result[1][1]);
-
-        assertEquals('a', result[2][0]);
-        assertEquals('e', result[2][1]);
-        assertEquals('r', result[2][2]);
-        assertEquals('t', result[2][3]);
-        assertEquals('3', result[2][4]);
-        */
+        assertEquals("com.comms.DummyCmd:test", new String(result[0].getData()));
+        assertEquals("com.comms.DummyCmd:test", new String(result[1].getData()));
+        assertEquals("com.comms.DummyCmd:test", new String(result[2].getData()));
     }
 
     /**
@@ -167,11 +164,10 @@ public class ParserTest
     @Test
     public void testDeParse() throws Exception
     {
-        /*
-        Pair<Entity[],Command[]> pair = new Parser(new GameState(new Map())).DeParse("4,0, ,0,22,2,@,0,2,3,%,0,2,#,&,0,2,3,3,a,b,c,2,a,c,5,a,e,r,t,3,");
+        Pair<Entity[],Command[]> pair = new Parser(new GameState(new Map())).DeParse("4,0, ,0,22,2,@,0,2,3,%,0,2,#,&,0,2,3,com.comms.DummyCmd:test,com.comms.DummyCmd:test,com.comms.DummyCmd:test,");
 
         Entity[] entities = pair.getKey();
-        char[][] result = pair.getValue();
+        Command[] result = pair.getValue();
 
         assertEquals(entities[0].getImageCode(), "0");
         assertEquals(entities[0].getID().toChar(), ' ');
@@ -193,19 +189,10 @@ public class ParserTest
         assertEquals(entities[3].getYPos(), 2);
         assertEquals(entities[3].getXPos(), 0);
 
-        assertEquals('a', result[0][0]);
-        assertEquals('b', result[0][1]);
-        assertEquals('c', result[0][2]);
+        assertEquals("com.comms.DummyCmd:test", new String(result[0].getData()));
+        assertEquals("com.comms.DummyCmd:test", new String(result[1].getData()));
+        assertEquals("com.comms.DummyCmd:test", new String(result[2].getData()));
 
-        assertEquals('a', result[1][0]);
-        assertEquals('c', result[1][1]);
-
-        assertEquals('a', result[2][0]);
-        assertEquals('e', result[2][1]);
-        assertEquals('r', result[2][2]);
-        assertEquals('t', result[2][3]);
-        assertEquals('3', result[2][4]);
-        */
     }
 
     /**

@@ -15,7 +15,7 @@ public abstract class Command{
      */
     abstract public void execute(GameState state);
 
-    abstract protected char[] getData();
+    abstract public char[] getData();
     abstract protected void   restore(char[] data);
     public char[] packetize(){
         char[] data = getData();

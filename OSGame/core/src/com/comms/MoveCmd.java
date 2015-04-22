@@ -35,7 +35,7 @@ public class MoveCmd extends Command{
         Player target = (Player) state.getByID(actor);
         target.setMovingDir(dir);
     }
-    protected char[] getData(){
+    public char[] getData(){
         char[] out = new char[2];
         if(dir != null){
             out[0] = actor.toChar();
