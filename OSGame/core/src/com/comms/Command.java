@@ -25,7 +25,6 @@ public abstract class Command{
         for(int i=0; i<data.length; i++){
             resp = resp+data[i];
         }
-        System.out.println(resp);
         return resp.toCharArray();
     }
     public static Command parse(char[] input){

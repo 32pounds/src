@@ -57,12 +57,9 @@ public void testPacketize() throws Exception {
     Command result = Command.parse(data);
 
     assertTrue("Packetization class test", result.getClass()==orig.getClass());
-    System.out.println("Class type good");
     MoveCmd mres = (MoveCmd) result;
     assertTrue("Direction test", mres.getDirection().equals(testDir));
-    System.out.println("Direction good");
     assertTrue("Actor ID test" , mres.getActorID().equals(testID));
-    System.out.println("ID good");
 }
 
 }
