@@ -34,7 +34,6 @@ public class ServerThread extends Thread{
     public void run(){
         System.out.println("Hello from thread!");
         setupUDP();
-        SendString("This is a teeeessst!");
     }
 
     /* getServerStatus()
@@ -123,7 +122,7 @@ public class ServerThread extends Thread{
      * allow command line messages to be sent, this is
      * non-essential and will be removed once debugging
      * of the program is finished
-     * +Jordan
+     * 
      */
     private static void SetupTCP() throws SocketException{
         // TCP setup 
@@ -142,6 +141,15 @@ public class ServerThread extends Thread{
     	    listeningSocket.close();
     	    servr.close();
         }catch(Exception e){ System.out.println("NETWORKING ERROR SERVER SIDE: " + e); }
+    }
+
+    public void RecievePacket() throws InterruptedException{
+        try{
+            byte[] buff = new byte[1024];
+            DatagramPacket clientPacket = new DatagramPacket(buff, buff.length, address, 5051);
+            udpSocket.receive(clientPacket);
+
+        }catch(Exception e){System.out.println("server uh oh:  " +e);}
     }
 
     /* CloserServer() should be called when multiplayer is over. */
