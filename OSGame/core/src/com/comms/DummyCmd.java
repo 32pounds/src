@@ -15,8 +15,8 @@ public class DummyCmd extends Command{
     }
     public void execute(GameState state){
     }
-    protected char[] getData(){
-        return new char[0];
+    public char[] getData(){
+        return (getClass().getName()+":test").toCharArray();
     }
     protected void   restore(char[] data){
 

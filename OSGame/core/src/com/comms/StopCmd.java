@@ -30,7 +30,7 @@ public class StopCmd extends Command{
         Player target = (Player) state.getByID(actor);
         target.stopMoving(dir);
     }
-    protected char[] getData(){
+    public char[] getData(){
         char[] out = new char[2];
         if(dir != null){
             out[0] = actor.toChar();
