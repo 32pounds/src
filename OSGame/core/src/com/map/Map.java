@@ -55,6 +55,19 @@ public class Map extends Drawable {
                         batch.draw(SpriteStorage.getInstance().getTexture("BeigeTile"), x * XDIMENSION, y * YDIMENSION);
                         batch.draw(SpriteStorage.getInstance().getTexture("RedChairN"), x * XDIMENSION, y * YDIMENSION);
                         break;
+                    case 'P':
+                        batch.draw(SpriteStorage.getInstance().getTexture("BeigeTile"), x * XDIMENSION, y * YDIMENSION);
+                        batch.draw(SpriteStorage.getInstance().getTexture("LargePlant"), x * XDIMENSION, y * YDIMENSION);
+                        break;
+                    case 'W':
+                        batch.draw(SpriteStorage.getInstance().getTexture("BeigeTile"), x * XDIMENSION, y * YDIMENSION);
+                        batch.draw(SpriteStorage.getInstance().getTexture("WaterCooler"), x * XDIMENSION, y * YDIMENSION);
+                        break;
+                    case 'F':
+                        batch.draw(SpriteStorage.getInstance().getTexture("BeigeTile"), x * XDIMENSION, y * YDIMENSION);
+                        batch.draw(SpriteStorage.getInstance().getTexture("WhiteDeskM"), x * XDIMENSION, y * YDIMENSION);
+                        batch.draw(SpriteStorage.getInstance().getTexture("FilledForm"), x * XDIMENSION, y * YDIMENSION);
+                        break;
                     case '.':
                         batch.draw(SpriteStorage.getInstance().getTexture("WhiteFloor"), x * XDIMENSION, y * YDIMENSION);
                         break;

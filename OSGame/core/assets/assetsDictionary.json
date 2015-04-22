@@ -41,6 +41,18 @@
       "path": "top-down/objects/ChairRed-north.png"
     },
     {
+      "code": "LargePlant",
+      "path": "top-down/objects/LargePlant.png"
+    },
+    {
+      "code": "WaterCooler",
+      "path": "top-down/objects/WaterCooler-west.png"
+    },
+    {
+      "code": "FilledForm",
+      "path": "top-down/objects/form-filled.png"
+    },
+    {
       "code": "Roach",
       "path": "top-down/mobs/Roach.png"
     },
