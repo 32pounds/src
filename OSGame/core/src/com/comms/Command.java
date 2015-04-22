@@ -21,7 +21,11 @@ public abstract class Command{
         char[] data = getData();
         Class  subclass = this.getClass();
         String subclassName = this.getClass().getName();
-        String resp = subclassName+':'+data;
+        String resp = subclassName+':';
+        for(int i=0; i<data.length; i++){
+            resp = resp+data[i];
+        }
+        System.out.println(resp);
         return resp.toCharArray();
     }
     public static Command parse(char[] input){

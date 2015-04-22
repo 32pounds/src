@@ -41,9 +41,11 @@ public class MoveCmd extends Command{
             out[0] = actor.toChar();
             out[1] = dir.toChar();
         }
+        System.out.println("Produced "+out[0]+" "+out[1]);
         return out;
     }
     protected void restore(char[] data){
+        System.out.println("Restoring from "+data[0]+" "+data[1]);
         actor = new GameID(data[0]);
         dir = Direction.getByChar(data[1]);
     }
