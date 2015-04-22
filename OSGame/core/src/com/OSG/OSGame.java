@@ -7,10 +7,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.comms.InputHandler;
-import com.comms.OSInputProcessor;
-import com.comms.GameID;
-import com.comms.GameState;
+import com.comms.*;
 import com.gameloop.GameLoop;
 import com.map.Map;
 import com.model.Debugger;
@@ -25,7 +22,7 @@ import java.util.*;
 import com.multi.*;
 import java.io.*;
 
-public class OSGame extends ApplicationAdapter {
+public class OSGame extends ApplicationAdapter implements CommandHandler {
     private Debugger debugger;
     private GameState gameState;
     private OrthographicCamera camera;
@@ -35,6 +32,7 @@ public class OSGame extends ApplicationAdapter {
     private GameLoop gameLoop;
     private String servAddress = null;
     private String cliAddress = null;
+    private ClientThread clientThread;
 
     @Override
     public void create() {
@@ -58,25 +56,61 @@ public class OSGame extends ApplicationAdapter {
         //This will be a call to comms in the future
         localPlayer = gameLoop.requestNewPlayer();
 
-        Gdx.input.setInputProcessor(new InputHandler(localPlayer));
+        Gdx.input.setInputProcessor(new InputHandler(localPlayer,this));
         popupMenu = new PopupMenu();
 
-        OSInputProcessor.getInstance().addInputPorcessor(new InputHandler(localPlayer));
+        OSInputProcessor.getInstance().addInputPorcessor(new InputHandler(localPlayer,this));
         gameLoop.setRunning(true);
         gameLoop.start();
+
+        MessageHandler handler = new MessageHandler(){
+            @Override
+            public void handle(String message){
+                syncWithState(message);
+/*                synchronized(gameState){
+                    gameLoop.syncWith(gameState);
+                }*/
+            }
+        };
+        clientThread = new ClientThread("127.0.0.1",5050,5051,handler);
+        clientThread.start();
+    }
+
+    public void handleCommand(Command cmd){
+        clientThread.SendString(String.valueOf(cmd.packetize()));
+    }
+
+    public void syncWithState(String state){
+        Parser p = new Parser(gameState);
+        Entity[] entities = p.DePerseEntities(state);
+        System.out.println(entities.length);
+        synchronized(gameState){
+            for(Entity remote : entities){
+                Entity local = gameState.getByID(remote.getID());
+                if(local == null){
+                    local = new Entity(gameState,remote.getSpriteString());
+                    local.assignID(remote.getID());
+                    gameState.register(local, local.getID());
+                }
+                local.changeSprite(remote.getSpriteString());
+                local.setXPos(remote.getXPos());
+                local.setYPos(remote.getYPos());
+                local.setRotation(remote.getRotation());
+            }
+        }
     }
 
     @Override
     public void render() {
-        gameLoop.syncWith(gameState);
+        //gameLoop.syncWith(gameState);
 
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 
-        Object player = gameState.getByID(localPlayer);
-        if(player == null) player = new Object();
-        synchronized(player){
+/*        Object player = gameState.getByID(localPlayer);
+        if(player == null) player = new Object();*/
+        synchronized(gameState){
             //the view is controlled by the position of local player,
             //so we syncronize with that instance to prevent it changing
             //during rendering

@@ -42,10 +42,9 @@ public class ClientThread extends Thread{
         System.out.println("Hello from client thread!");
         ConnectToServer();
         while(true){
-            SendString("Message from client");
             try{
                 RecieveGameState();
-                sleep(500);
+                sleep(5);
             } catch (Exception e){
                 e.printStackTrace();
             }
@@ -100,10 +99,9 @@ public class ClientThread extends Thread{
      */
     public void SendString( String dataToSend ){
         try{
-            byte[] buff = new byte[1024];
+            byte[] buff = new byte[2048];
             buff = dataToSend.getBytes();
-            System.out.println("sending...");
-                packet = new DatagramPacket(buff, buff.length, servAddress, remotePort);
+            packet = new DatagramPacket(buff, buff.length, servAddress, remotePort);
 
             SendPacket(packet);
         }catch(Exception e){System.out.println("Couldn't send string " + e);}
@@ -125,7 +123,7 @@ public class ClientThread extends Thread{
      */
     public void RecieveGameState() throws InterruptedException{
         try{
-            byte[] buff = new byte[1024];
+            byte[] buff = new byte[2048];
             DatagramPacket gamePacket = new DatagramPacket(buff, buff.length, servAddress, remotePort);
             udpSocket.receive(gamePacket);
             byte[] data = gamePacket.getData();

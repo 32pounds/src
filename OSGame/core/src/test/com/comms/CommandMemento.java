@@ -48,8 +48,10 @@ public void testStopCommandPacketize() throws Exception {
     Command orig = new StopCmd(testID, testDir);
 
     char[] data = orig.packetize();
+    String transmitted = String.valueOf(data);
+    char[] received = transmitted.toCharArray();
 
-    Command result = Command.parse(data);
+    Command result = Command.parse(received);
 
     assertTrue("Packetization class test", result.getClass()==orig.getClass());
     StopCmd mres = (StopCmd) result;

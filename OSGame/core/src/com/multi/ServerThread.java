@@ -39,10 +39,9 @@ public class ServerThread extends Thread{
         System.out.println("Hello from thread!");
         setupUDP();
         while(true){
-            SendString("Message from Server");
             try{
                 RecievePacket();
-                sleep(500);
+                sleep(5);
             } catch (Exception e){
                 e.printStackTrace();
             }
@@ -122,7 +121,6 @@ public class ServerThread extends Thread{
         try{
             byte[] buff = new byte[1024];
             buff = dataToSend.getBytes();
-            System.out.println("sending...");
             packet = new DatagramPacket(buff, buff.length, address, replyPort);
 
             SendPacket(packet);

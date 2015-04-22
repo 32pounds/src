@@ -27,22 +27,52 @@ import java.lang.InterruptedException;
 import java.util.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.*;
+import com.multi.*;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class GameLoop extends Thread {
-
-    private boolean running;
-
-    //list that will be updated every thread loop
     private List<Updatable> updatables;
-
     private GameState gameState;
+    private boolean running;
+    private ServerThread serverThread;
+    private ConcurrentLinkedQueue<Command> commands;
 
 
     public GameLoop() {
         updatables = new ArrayList<Updatable>();
+        commands = new ConcurrentLinkedQueue<Command>();
         running = true;
         //this is only temporary; the server should make its own in the future
         initializeGameState();
+
+        MessageHandler handler = new MessageHandler(){
+            @Override
+            public void handle(String message){
+                //System.out.println("Server received command "+message);
+                Command cmd = Command.parse(message.toCharArray());
+                if(cmd != null){
+                    commands.add(cmd);
+                }
+            }
+        };
+        try{
+            serverThread = new ServerThread(5051,handler);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+
+        ScheduledExecutorService executor =
+                    Executors.newSingleThreadScheduledExecutor();
+
+        Runnable sendStateTask = new Runnable() {
+            public void run() {
+                serverThread.SendString(getStateMessage());
+            }
+        };
+
+        executor.scheduleAtFixedRate(sendStateTask, 0, 25, TimeUnit.MILLISECONDS);
     }
 
     public void initializeGameState(){
@@ -67,6 +97,11 @@ public class GameLoop extends Thread {
             gameState.register(monster);
             addUpdatable(monster);
         }
+    }
+
+    public String getStateMessage(){
+        Parser p = new Parser(gameState);
+        return p.Parse(gameState.entities());
     }
 
     public GameID requestNewPlayer(){
@@ -104,6 +139,7 @@ public class GameLoop extends Thread {
 
     @Override
     public void run() {
+        serverThread.start();
         //this is acting as our server for now
         while (running) {
             synchronized(updatables){
@@ -111,7 +147,8 @@ public class GameLoop extends Thread {
                     updatable.update();
             }
 
-            Command command = CommandHandler.getInstance().remove();
+            Command command = commands.poll();
+
             //if there no command is not needed to be updated
             if (command != null) {
                 command.execute(gameState);

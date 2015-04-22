@@ -2,6 +2,7 @@ package com.comms;
 
 import com.model.Entity;
 import javafx.util.Pair;
+import java.util.*;
 
 /**
  * Parse Entities
@@ -96,6 +97,20 @@ public class Parser
      * @return String referent to a collection of Entities
      */
     public String Parse(Entity[] entities)
+    {
+        String result = "";
+
+        for (Entity item : entities)
+        {
+            result += item.getSpriteString() + splitChar;
+            result += item.getID().toChar() + splitChar;
+            result += item.getXPos() + splitChar;
+            result += item.getYPos() + splitChar;
+        }
+        return result;
+    }
+
+    public String Parse(Collection<Entity> entities)
     {
         String result = "";
 

@@ -26,6 +26,12 @@ public class StopCmd extends Command{
     public StopCmd(){
 
     }
+    public Direction getDirection(){
+        return dir;
+    }
+    public GameID getActorID(){
+        return actor;
+    }
     public void execute(GameState state){
         Player target = (Player) state.getByID(actor);
         target.stopMoving(dir);

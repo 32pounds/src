@@ -9,10 +9,6 @@ import com.comms.GameState;
  * @author Brett Menzies
  */
 public abstract class Command{
-    /**
-     * Returns all the data necessary to describe itself in a compact format
-     * for the comms system.
-     */
     abstract public void execute(GameState state);
 
     abstract public char[] getData();
