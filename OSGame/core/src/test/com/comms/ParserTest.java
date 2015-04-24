@@ -137,22 +137,22 @@ public class ParserTest
 
         assertEquals(4, entities.length);
 
-        assertEquals(entities[0].getSpriteString(), "0");
+        assertEquals(entities[0].getImageCode(), "0");
         assertEquals(entities[0].getID().toChar(), ' ');
         assertEquals(entities[0].getYPos(), 22);
         assertEquals(entities[0].getXPos(), 0);
 
-        assertEquals(entities[1].getSpriteString(), "2");
+        assertEquals(entities[1].getImageCode(), "2");
         assertEquals(entities[1].getID().toChar(), '@');
         assertEquals(entities[1].getYPos(), 2);
         assertEquals(entities[1].getXPos(), 0);
 
-        assertEquals(entities[2].getSpriteString(), "3");
+        assertEquals(entities[2].getImageCode(), "3");
         assertEquals(entities[2].getID().toChar(), '%');
         assertEquals(entities[2].getYPos(), 2);
         assertEquals(entities[2].getXPos(), 0);
 
-        assertEquals(entities[3].getSpriteString(), "#");
+        assertEquals(entities[3].getImageCode(), "#");
         assertEquals(entities[3].getID().toChar(), '&');
         assertEquals(entities[3].getYPos(), 2);
         assertEquals(entities[3].getXPos(), 0);
@@ -169,22 +169,22 @@ public class ParserTest
         Entity[] entities = pair.getKey();
         Command[] result = pair.getValue();
 
-        assertEquals(entities[0].getSpriteString(), "0");
+        assertEquals(entities[0].getImageCode(), "0");
         assertEquals(entities[0].getID().toChar(), ' ');
         assertEquals(entities[0].getYPos(), 22);
         assertEquals(entities[0].getXPos(), 0);
 
-        assertEquals(entities[1].getSpriteString(), "2");
+        assertEquals(entities[1].getImageCode(), "2");
         assertEquals(entities[1].getID().toChar(), '@');
         assertEquals(entities[1].getYPos(), 2);
         assertEquals(entities[1].getXPos(), 0);
 
-        assertEquals(entities[2].getSpriteString(), "3");
+        assertEquals(entities[2].getImageCode(), "3");
         assertEquals(entities[2].getID().toChar(), '%');
         assertEquals(entities[2].getYPos(), 2);
         assertEquals(entities[2].getXPos(), 0);
 
-        assertEquals(entities[3].getSpriteString(), "#");
+        assertEquals(entities[3].getImageCode(), "#");
         assertEquals(entities[3].getID().toChar(), '&');
         assertEquals(entities[3].getYPos(), 2);
         assertEquals(entities[3].getXPos(), 0);
@@ -202,15 +202,15 @@ public class ParserTest
     public void testStepString() throws Exception
     {
 //TODO: Test goes here...
-/*
-try {
-   Method method = Parser.getClass().getMethod("StepString", String.class);
-   method.setAccessible(true);
-   method.invoke(<Object>, <Parameters>);
-} catch(NoSuchMethodException e) {
-} catch(IllegalAccessException e) {
-} catch(InvocationTargetException e) {
-}
+/* 
+try { 
+   Method method = Parser.getClass().getMethod("StepString", String.class); 
+   method.setAccessible(true); 
+   method.invoke(<Object>, <Parameters>); 
+} catch(NoSuchMethodException e) { 
+} catch(IllegalAccessException e) { 
+} catch(InvocationTargetException e) { 
+} 
 */
     }
 
@@ -220,17 +220,17 @@ try {
     @Test
     public void testCountChar() throws Exception
     {
-//TODO: Test goes here...
-/*
-try {
-   Method method = Parser.getClass().getMethod("CountChar", String.class, char.class);
-   method.setAccessible(true);
-   method.invoke(<Object>, <Parameters>);
-} catch(NoSuchMethodException e) {
-} catch(IllegalAccessException e) {
-} catch(InvocationTargetException e) {
-}
+//TODO: Test goes here... 
+/* 
+try { 
+   Method method = Parser.getClass().getMethod("CountChar", String.class, char.class); 
+   method.setAccessible(true); 
+   method.invoke(<Object>, <Parameters>); 
+} catch(NoSuchMethodException e) { 
+} catch(IllegalAccessException e) { 
+} catch(InvocationTargetException e) { 
+} 
 */
     }
 
-}
+} 
