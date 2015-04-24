@@ -17,11 +17,14 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.comms.OSInputProcessor;
+import com.multi.*;
 
 public class PopupMenu extends com.renderer.Drawable implements InputProcessor {
 
     private Stage stage;
     private boolean visible = false;
+    public ServerThread serverUDP = null;
+    public ClientThread clientUDP = null;
 
     public PopupMenu() {
         stage = new Stage();
@@ -68,11 +71,57 @@ public class PopupMenu extends com.renderer.Drawable implements InputProcessor {
         table.row();
         TextButton textButton = new TextButton("Return",textButtonStyle);
         TextButton exitButton = new TextButton("Exit Game",textButtonStyle);
+        final TextButton clientButton = new TextButton("Join Game", textButtonStyle);
+        TextButton hostButton = new TextButton("Host Game", textButtonStyle);
+
+        // TODO make server/client a seperate thread.
+        clientButton.addListener(new ClickListener() {
+            public void clicked(InputEvent event, float x, float y) {
+                try{
+                    // start client
+                    // and fire off first packet.
+
+                    //this handler construction only temporary
+                    MessageHandler handler = new MessageHandler(){
+                        @Override
+                        public void handle(String message){
+                            System.out.println("Client Receive: "+message);
+                        }
+                    };
+
+                    (new ClientThread("127.0.0.1", 5050, 5051,handler)).start();
+                    //clientUDP = new ClientThread("127.0.0.1", 5050); // Test port/address
+                }catch(Exception e){System.out.println("COULDN'T setup server/client! " + e);}
+                clientButton.setText("Disconnect");
+            }
+        });
+
+        // hostButton simply launches a new serverThread.
+        // TODO: Possible bug of clicking the button more than once?
+        hostButton.addListener(new ClickListener() {
+            public void clicked(InputEvent event, float x, float y) {
+                try{
+                    MessageHandler handler = new MessageHandler(){
+                        @Override
+                        public void handle(String message){
+                            System.out.println("Server receive"+message);
+                        }
+                    };
+                    // setup server.
+                    // Multiplayer chooses to setup a server or client depending on
+                    // the boolean passed in to the main class call. 'true' results
+                    // in a server being created and 'false' creates a client.
+                    (new ServerThread(5051,handler)).start();
+                    //serverUDP = new ServerThread(5051);
+                    //serverUDP.setupUDP();
+        }catch(Exception e){System.out.println("COULDN'T setup server! " + e);}
+    }
+        });
 
         textButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 visible = !visible;
-                
+
             }
         });
 
@@ -81,13 +130,19 @@ public class PopupMenu extends com.renderer.Drawable implements InputProcessor {
         exitButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                Gdx.app.exit();
-                
+
             }
         });
+
+
         table.add(textButton).padTop(10).colspan(2);
+
         table.row(); // Start new row on in-game menu table for exit button
         table.add(exitButton).padTop(10).colspan(2);
-
+        table.top().padTop(100);
+        table.row();
+        table.add(hostButton).padTop(10).colspan(2);
+        table.add(clientButton).padTop(10).colspan(2);
         table.top().padTop(100);
 
         rootTable.addActor(table);

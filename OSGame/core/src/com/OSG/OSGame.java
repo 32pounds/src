@@ -22,6 +22,8 @@ import com.renderer.Drawable;
 import com.renderer.SpriteStorage;
 import com.renderer.Updatable;
 import java.util.*;
+import com.multi.*;
+import java.io.*;
 
 public class OSGame extends ApplicationAdapter {
     private Debugger debugger;
@@ -31,9 +33,15 @@ public class OSGame extends ApplicationAdapter {
     private PopupMenu popupMenu;
     private SpriteBatch batch;
     private GameLoop gameLoop;
+    private String servAddress = null;
+    private String cliAddress = null;
 
     @Override
     public void create() {
+        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+        servAddress = "127.0.0.1";
+        cliAddress = "127.0.0.1";
+
         float w = Gdx.graphics.getWidth();
         float h = Gdx.graphics.getHeight();
         camera = new OrthographicCamera(w, h);
@@ -50,13 +58,10 @@ public class OSGame extends ApplicationAdapter {
         //This will be a call to comms in the future
         localPlayer = gameLoop.requestNewPlayer();
 
-        //Sound splat = Gdx.audio.newSound(Gdx.files.internal("sounds/Squish.mp3"));
-
         Gdx.input.setInputProcessor(new InputHandler(localPlayer));
         popupMenu = new PopupMenu();
 
         OSInputProcessor.getInstance().addInputPorcessor(new InputHandler(localPlayer));
-
         gameLoop.setRunning(true);
         gameLoop.start();
     }
@@ -88,7 +93,6 @@ public class OSGame extends ApplicationAdapter {
 
             batch.end();
         }
-
         //this is here, because when it is on batch.begin() weird things happens
         popupMenu.draw(batch);
     }

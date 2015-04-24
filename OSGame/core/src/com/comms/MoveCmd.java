@@ -23,9 +23,17 @@ public class MoveCmd extends Command{
         actor = target;
         dir = direction;
     }
-    public MoveCmd(char[] data){
-        actor = new GameID(data[0]);
-        dir = Direction.getByChar(data[1]);
+    public MoveCmd(){
+    }
+    public Direction getDirection(){
+        return dir;
+    }
+    public GameID getActorID(){
+        return actor;
+    }
+    public void execute(GameState state){
+        Player target = (Player) state.getByID(actor);
+        target.setMovingDir(dir);
     }
     public char[] getData(){
         char[] out = new char[2];
@@ -35,11 +43,8 @@ public class MoveCmd extends Command{
         }
         return out;
     }
-    public Direction getDirection(){
-        return dir;
-    }
-    public void execute(GameState state){
-        Player target = (Player) state.getByID(actor);
-        target.setMovingDir(dir);
+    protected void restore(char[] data){
+        actor = new GameID(data[0]);
+        dir = Direction.getByChar(data[1]);
     }
 }

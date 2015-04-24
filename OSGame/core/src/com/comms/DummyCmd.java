@@ -13,9 +13,12 @@ import com.model.Player;
 public class DummyCmd extends Command{
     public DummyCmd(){
     }
-    public char[] getData(){
-        return new char[0];
-    }
     public void execute(GameState state){
+    }
+    public char[] getData(){
+        return (getClass().getName()+":test").toCharArray();
+    }
+    protected void   restore(char[] data){
+
     }
 }

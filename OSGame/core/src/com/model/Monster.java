@@ -11,7 +11,10 @@ import com.badlogic.gdx.utils.TimeUtils;
 import com.map.*;
 import com.comms.*;
 import com.renderer.Updatable;
+import static java.lang.Math.abs;
+import java.util.ArrayList;
 import java.util.Random;
+import java.util.Collection;
 
 /**
  *
@@ -19,26 +22,26 @@ import java.util.Random;
  */
 public class Monster extends Entity implements Updatable{
 
-    private long lastUpdateTime;
-    private static final long UPDATE_INTERVAL=100;
-    private static final long WAIT_TIME=2000;
-    private long deathTime;
-    private static Random randomGen= new Random();
-    private GameID hunter;
-    private String alive,dead;
-    private Sound splat;
-    private boolean wasDead;
+    protected long lastUpdateTime;
+    protected long UPDATE_INTERVAL=100;
+    protected static final long WAIT_TIME=2000;
+    protected long deathTime;
+    protected static Random randomGen= new Random();
+    protected String alive,dead;
+    protected Sound splat;
+    protected Player closestPlayer;
+    protected boolean wasDead;
 
-    public Monster(GameState state, String img, GameID killer, Sound splatSound)
+    public Monster(GameState state, String img, Sound splatSound)
     {
         super(state, img);
         lastUpdateTime=0;
-        hunter=killer;
         deathTime=-WAIT_TIME;
         alive=img;
-        dead="S";
+        dead="BlueSplat";
         splat= splatSound;
         wasDead=true;
+        closestPlayer=getClosestPlayer();
     }
 
     public boolean isDead()
@@ -46,6 +49,11 @@ public class Monster extends Entity implements Updatable{
         if(TimeUtils.millis()-deathTime>WAIT_TIME)
             return false;
         return true;
+    }
+
+    public void changeDeath(String img)
+    {
+        dead=img;
     }
 
     @Override
@@ -78,7 +86,15 @@ public class Monster extends Entity implements Updatable{
                 if(splat != null) splat.play();
                 wasDead=true;
             }
-            else */if(TimeUtils.millis()-lastUpdateTime > UPDATE_INTERVAL)
+            else */
+            if(squished()==true)
+            {
+                deathTime=TimeUtils.millis();
+                changeSprite(dead);
+                if(splat != null) splat.play();
+                wasDead=true;
+            }
+            else if(TimeUtils.millis()-lastUpdateTime > UPDATE_INTERVAL)
             {
                 lastUpdateTime=TimeUtils.millis();
                 int dir=randomGen.nextInt(4);
@@ -92,5 +108,32 @@ public class Monster extends Entity implements Updatable{
                     super.move(Direction.WEST);
             }
         }
+    }
+    public boolean squished()
+    {
+        int x,y;
+        for(Player player : gameState.getPlayers()){
+            x=player.getXPos();
+            y=player.getYPos();
+            if(getXPos()==x && getYPos()==y)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    public Player getClosestPlayer()
+    {
+        Collection<Player> players = gameState.getPlayers();
+        Player closest = null;
+        int minDist = Integer.MAX_VALUE;
+        for(Player player : players){
+            int dist = (abs(player.getXPos()-getXPos()) + abs(player.getYPos()-getYPos()));
+            if(dist < minDist){
+                closest = player;
+                minDist = dist;
+            }
+        }
+        return closest;
     }
 }

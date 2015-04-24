@@ -12,6 +12,9 @@ import javafx.util.Pair;
  */
 public class Parser
 {
+
+    private String splitChar = ",";
+
     /**
      * GameState necessary to create new instances of Entities
      */
@@ -37,7 +40,7 @@ public class Parser
     {
         String result = "";
 
-        result += entities.length + ",";
+        result += entities.length + splitChar;
 
         result += Parse(entities);
         result += Parse(commands);
@@ -54,16 +57,10 @@ public class Parser
     {
         String result = "";
 
-        result += commands.length + ",";
+        result += commands.length + splitChar;
 
         for (Command item : commands)
-        {
-            result += item.getData().length + ",";
-            for (char itemChar : item.getData())
-            {
-                result += itemChar + ",";
-            }
-        }
+            result += new String(item.getData()) + splitChar;
 
         return result;
     }
@@ -73,26 +70,20 @@ public class Parser
      * @param data Formatted string.
      * @return Collection of Commands.
      */
-    public char[][] DeParseCommands(String data)
+    public Command[] DeParseCommands(String data)
     {
         Pair<String, String> value = StepString(data);
         data = value.getValue();
 
-        char[][] result = new char[Integer.parseInt(value.getKey())][];
+        Command[] result = new Command[Integer.parseInt(value.getKey())];
 
         for (int x = 0; x < result.length; x++)
         {
             value = StepString(data);
             data = value.getValue();
 
-            result[x] = new char[Integer.parseInt(value.getKey())];
-
-            for (int i = 0; i < result[x].length; i++)
-            {
-                value = StepString(data);
-                data = value.getValue();
-                result[x][i] = value.getKey().toCharArray()[0];
-            }
+            String commandData = value.getKey();
+            result[x] = Command.parse(commandData.toCharArray());
         }
 
         return result;
@@ -110,10 +101,10 @@ public class Parser
 
         for (Entity item : entities)
         {
-            result += item.getImageCode() + ",";
-            result += item.getID().toChar() + ",";
-            result += item.getXPos() + ",";
-            result += item.getYPos() + ",";
+            result += item.getSpriteString() + splitChar;
+            result += item.getID().toChar() + splitChar;
+            result += item.getXPos() + splitChar;
+            result += item.getYPos() + splitChar;
         }
         return result;
     }
@@ -123,7 +114,7 @@ public class Parser
      * @param data Data
      * @return An array of Entities and an array of Commands
      */
-    public Pair<Entity[], char[][]> DeParse(String data)
+    public Pair<Entity[], Command[]> DeParse(String data)
     {
         Pair<String, String> value = StepString(data);
         data = value.getValue();
@@ -154,24 +145,18 @@ public class Parser
         value = StepString(data);
         data = value.getValue();
 
-        char[][] result = new char[Integer.parseInt(value.getKey())][];
+        Command[] result = new Command[Integer.parseInt(value.getKey())];
 
         for (int x = 0; x < result.length; x++)
         {
             value = StepString(data);
             data = value.getValue();
 
-            result[x] = new char[Integer.parseInt(value.getKey())];
-
-            for (int i = 0; i < result[x].length; i++)
-            {
-                value = StepString(data);
-                data = value.getValue();
-                result[x][i] = value.getKey().toCharArray()[0];
-            }
+            String commandData = value.getKey();
+            result[x] = Command.parse(commandData.toCharArray());
         }
 
-        return new Pair<Entity[], char[][]>(entities, result);
+        return new Pair<Entity[], Command[]>(entities, result);
     }
 
     /**

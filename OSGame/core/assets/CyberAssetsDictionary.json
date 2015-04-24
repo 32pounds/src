@@ -1,55 +1,55 @@
 {
   "data": [
     {
-      "code": " ",
+      "code": "CyberFloor",
       "path": "top-down/cyberspace/Floor.png"
     },
     {
-      "code": "C",
+      "code": "CyberWall",
       "path": "top-down/cyberspace/Wall.png"
     },
     {
-      "code": "c",
+      "code": "CorruptedWall",
       "path": "top-down/cyberspace/CorruptedWall.png"
     },
     {
-      "code": "#",
+      "code": "VirusEntry",
       "path": "top-down/cyberspace/VirusEntry.png"
     },
     {
-      "code": "x",
+      "code": "Xbox",
       "path": "top-down/cyberspace/Xbox.png"
     },
     {
-      "code": "X",
+      "code": "Xboxes",
       "path": "top-down/cyberspace/Xboxes.png"
     },
     {
-      "code": "^",
+      "code": "CyberUp",
       "path": "top-down/cyberspace/Up.png"
     },
     {
-      "code": "v",
+      "code": "CyberDown",
       "path": "top-down/cyberspace/Down.png"
     },
     {
-      "code": "<",
+      "code": "CyberLeft",
       "path": "top-down/cyberspace/Portal-left.png"
     },
     {
-      "code": ">",
+      "code": "CyberRight",
       "path": "top-down/cyberspace/Portal-right.png"
     },
     {
-      "code": "*",
+      "code": "Asterisk",
       "path": "top-down/cyberspace/Asterisk.png"
     },
     {
-      "code": "!",
+      "code": "Exclamation",
       "path": "top-down/cyberspace/Exclamation.png"
     },
     {
-      "code": "$",
+      "code": "Funds",
       "path": "top-down/cyberspace/Funds.png"
     }
   ]
