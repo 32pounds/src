@@ -167,7 +167,7 @@ public class Map extends Drawable {
     }
 
     public boolean isWalkable(int x, int y) {
-        if (grid[y][x] == ' ' || grid[y][x] == '^' || grid[y][x] == 'v' || grid[y][x] == '.' || grid[y][x] == '@' || grid[x][y] == ',' || grid[x][y] == '#')
+        if (grid[y][x] == ' ' || grid[x][y] == 'o' || grid[x][y] == 'g' || grid[y][x] == '^' || grid[y][x] == 'v' || grid[y][x] == '.' || grid[y][x] == '@' || grid[x][y] == ',' || grid[x][y] == '#')
             return true;
         return false;
     }
