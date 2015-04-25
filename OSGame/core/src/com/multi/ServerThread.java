@@ -9,7 +9,8 @@ import com.multi.MessageHandler;
 import java.net.*;
 import java.io.*;
 import java.util.*;
-
+import com.comms.*;
+import com.gameloop.*;
 
 public class ServerThread extends Thread{
 
@@ -22,17 +23,21 @@ public class ServerThread extends Thread{
     private InetAddress address = null;
     private int replyPort;
     private MessageHandler handler;
+    private clientLL clientList = null;
+    private GameLoop gameLoop = null;
+
 
     // Constructor will intialize port number
     // and a command line scanner for debugging.
     // Then calle SetupHost() to begin networking.
     // As well setup UDP listeners.
-    public ServerThread( int port, MessageHandler handler) throws IOException {
+    public ServerThread( int port, MessageHandler handler, GameLoop gl) throws IOException {
         this.handler = handler;
         portNum = port;
         System.out.println("Creating UDP socket @:" + portNum );
         isUp = false;
-
+        clientList = new clientLL();
+        gameLoop = gl;
     }
 
     public void run(){
@@ -46,6 +51,23 @@ public class ServerThread extends Thread{
                 e.printStackTrace();
             }
         }
+    }
+
+    public void OnConnect(InetAddress newClient, int port){
+        System.out.println("ON Connect.");
+        clientList.CreateClient(newClient, port);
+        
+        byte[] buff;
+        GameID newPlayer = gameLoop.requestNewPlayer();
+        String temp = String.valueOf(newPlayer.toChar());
+        buff = temp.getBytes();
+
+
+        DatagramPacket connectedClientPacket = new DatagramPacket(buff, buff.length, newClient, port);
+
+        try{SendPacket(connectedClientPacket);
+        }catch(Exception e){e.printStackTrace();}
+
     }
 
     /* getServerStatus()
@@ -64,39 +86,17 @@ public class ServerThread extends Thread{
      * TODO: Have setupUDP add to list of clients.
      */
     public void setupUDP() {
-            System.out.println("Creating UDP packet/socket...");
-                try {
-                    udpSocket = new DatagramSocket(portNum);
+        System.out.println("Creating UDP packet/socket...");
+        try {
+            udpSocket = new DatagramSocket(portNum);
+            System.out.println("Waiting to receive @: " + udpSocket.getLocalAddress() + " port " + udpSocket.getLocalPort());
+            //udpSocket.receive(recievedPacket);
 
-                    byte[] buf = new byte[256];
-
-                    // receive request
-                    DatagramPacket recievedPacket = new DatagramPacket(buf, buf.length);
-                    System.out.println("Packet created!");
-                    System.out.println("Waiting to receive @: " + udpSocket.getLocalAddress() + " port " + udpSocket.getLocalPort());
-                    udpSocket.receive(recievedPacket);
-
-                    System.out.println("Packet received!");
-                    // figure out response
-                    String dString = null;
-                    if (in == null) dString = new Date().toString();
-
-                    buf = dString.getBytes();
-
-                    System.out.println("Sending response...");
-                    // send the response to the client at "address" and "port"
-                    address = recievedPacket.getAddress();
-                    replyPort = recievedPacket.getPort();
-                    System.out.println("Got packet info " + address + ":" + replyPort );
-                    packet = new DatagramPacket(buf, buf.length, address, replyPort);
-                    udpSocket.send(packet);
-                    // set isUp to true to let others know the server is running.
-                    isUp = true;
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
+            // set isUp to true to let others know the server is running.
+            isUp = true;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -109,8 +109,10 @@ public class ServerThread extends Thread{
     */
     public void SendPacket( DatagramPacket toSendPacket ) throws InterruptedException{
         try{
-            udpSocket.send(toSendPacket);
-        }catch(Exception e){System.out.println("Sorry :( " + e);}
+            if(udpSocket != null){
+                udpSocket.send(toSendPacket);
+            }
+        }catch(Exception e){e.printStackTrace();}
     }
 
     /* SendString() will take in a string, break it into bytes
@@ -118,14 +120,21 @@ public class ServerThread extends Thread{
      * send off the UDP packet.
      */
     public void SendString( String dataToSend ){
-        try{
-            byte[] buff = new byte[1024];
-            buff = dataToSend.getBytes();
-            packet = new DatagramPacket(buff, buff.length, address, replyPort);
+        
+        for(int i=0; i < clientList.Size(); i++ ){
+            
+            try{
+                byte[] buff = new byte[1024];
+                buff = dataToSend.getBytes();
+                packet = new DatagramPacket(buff, buff.length, clientList.GetIP(i), clientList.GetPort(i));
 
-            SendPacket(packet);
-        }catch(Exception e){System.out.println("Couldn't send string " + e);}
+                SendPacket(packet);
+            }catch(Exception e){e.printStackTrace();}
+        }
     }
+
+
+    
 
     /* SetupHost will setup a server by binding to the
      * assigned port and begin listening on that socket.
@@ -160,8 +169,15 @@ public class ServerThread extends Thread{
             DatagramPacket clientPacket = new DatagramPacket(buff, buff.length, address, 5051);
             udpSocket.receive(clientPacket);
             byte[] data = clientPacket.getData();
-            handler.process(new String(data));
-        }catch(Exception e){System.out.println("server uh oh:  " +e);}
+            
+            System.out.println("SERVER: Got data");
+            if(!clientList.Contains(clientPacket.getAddress())){
+                OnConnect(clientPacket.getAddress(), clientPacket.getPort());
+            }else{
+                handler.process(new String(data));
+                System.out.println("Recieved from client");
+            }
+        }catch(Exception e){e.printStackTrace();}
     }
 
     /* CloserServer() should be called when multiplayer is over. */

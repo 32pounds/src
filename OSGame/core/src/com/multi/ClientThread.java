@@ -55,15 +55,22 @@ public class ClientThread extends Thread{
 
     public GameID joinGame(String address){
         serverAddress = address;
+        try{    
+            servAddress = InetAddress.getByName(serverAddress);
+        }catch(Exception e){e.printStackTrace();}
+
         ConnectToServer();
         byte[] buff = new byte[64];
+
         DatagramPacket gamePacket = new DatagramPacket(buff, buff.length, servAddress, remotePort);
         try{
             udpSocket.receive(gamePacket);
         } catch (Exception e){
             e.printStackTrace();
         }
-        GameID playerID = new GameID(gamePacket.getData()[0]);
+        String temp = new String(gamePacket.getData(), 0, gamePacket.getLength());
+        GameID playerID = new GameID(temp.charAt(0));
+        System.out.println(temp);
         this.start();
         return playerID;
     }
@@ -93,19 +100,7 @@ public class ClientThread extends Thread{
             udpSocket.send(packet);
             System.out.println("Packet sent! ");
 
-            // Now recieve response.
-            packet = new DatagramPacket(buf, buf.length);
-            System.out.println("Waiting for response...");
-            udpSocket.receive(packet);
-            System.out.println("Heard back from server!");
-
-            // display response
-            String received = new String(packet.getData(), 0, packet.getLength());
-            System.out.println("Data: " + received);
-
             isUp = true;
-            try{SendString("TESSST from client!");}catch(Exception e){System.out.println("uh oh client... " + e);}
-
         } catch(Exception e){ System.out.println("Couldn't setup UDP client!" + e);}
     }
 

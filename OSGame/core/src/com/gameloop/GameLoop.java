@@ -43,8 +43,7 @@ public class GameLoop extends Thread {
         updatables = new ArrayList<Updatable>();
         commands = new ConcurrentLinkedQueue<Command>();
         running = true;
-        //this is only temporary; the server should make its own in the future
-        initializeGameState();
+        
 
         MessageHandler handler = new MessageHandler(){
             @Override
@@ -57,11 +56,14 @@ public class GameLoop extends Thread {
             }
         };
         try{
-            serverThread = new ServerThread(5051,handler);
+            serverThread = new ServerThread(5051,handler, this);
+            serverThread.start();
         } catch (Exception e){
             e.printStackTrace();
         }
 
+        //this is only temporary; the server should make its own in the future
+        initializeGameState();
 
         ScheduledExecutorService executor =
                     Executors.newSingleThreadScheduledExecutor();
@@ -139,7 +141,6 @@ public class GameLoop extends Thread {
 
     @Override
     public void run() {
-        serverThread.start();
         //this is acting as our server for now
         while (running) {
             synchronized(updatables){

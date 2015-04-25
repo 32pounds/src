@@ -64,6 +64,9 @@ public class OSGame extends ApplicationAdapter implements CommandHandler {
         gameState = new GameState(new Map());
         gameLoop = new GameLoop();
 
+        gameLoop.setRunning(true);
+        gameLoop.start();
+        System.out.println("GAME LOOP START.");
         //This will be a call to comms in the future
         localPlayer = clientThread.joinGame(); //blocking call
 
@@ -71,8 +74,7 @@ public class OSGame extends ApplicationAdapter implements CommandHandler {
         popupMenu = new PopupMenu();
 
         OSInputProcessor.getInstance().addInputPorcessor(new InputHandler(localPlayer,this));
-        gameLoop.setRunning(true);
-        gameLoop.start();
+
     }
 
     public void handleCommand(Command cmd){
@@ -82,7 +84,7 @@ public class OSGame extends ApplicationAdapter implements CommandHandler {
     public void syncWithState(String state){
         Parser p = new Parser(gameState);
         Entity[] entities = p.DePerseEntities(state);
-        System.out.println(entities.length);
+       // System.out.println(entities.length);
         synchronized(gameState){
             for(Entity remote : entities){
                 Entity local = gameState.getByID(remote.getID());
