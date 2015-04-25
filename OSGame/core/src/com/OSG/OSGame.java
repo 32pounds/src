@@ -40,6 +40,17 @@ public class OSGame extends ApplicationAdapter implements CommandHandler {
         servAddress = "127.0.0.1";
         cliAddress = "127.0.0.1";
 
+        MessageHandler handler = new MessageHandler(){
+            @Override
+            public void handle(String message){
+                syncWithState(message);
+/*                synchronized(gameState){
+                    gameLoop.syncWith(gameState);
+                }*/
+            }
+        };
+        clientThread = new ClientThread(5050,5051,handler);
+
         float w = Gdx.graphics.getWidth();
         float h = Gdx.graphics.getHeight();
         camera = new OrthographicCamera(w, h);
@@ -55,6 +66,7 @@ public class OSGame extends ApplicationAdapter implements CommandHandler {
 
         //This will be a call to comms in the future
         localPlayer = gameLoop.requestNewPlayer();
+        localPlayer = clientThread.joinGame(); //blocking call
 
         Gdx.input.setInputProcessor(new InputHandler(localPlayer,this));
         popupMenu = new PopupMenu();
@@ -62,18 +74,6 @@ public class OSGame extends ApplicationAdapter implements CommandHandler {
         OSInputProcessor.getInstance().addInputPorcessor(new InputHandler(localPlayer,this));
         gameLoop.setRunning(true);
         gameLoop.start();
-
-        MessageHandler handler = new MessageHandler(){
-            @Override
-            public void handle(String message){
-                syncWithState(message);
-/*                synchronized(gameState){
-                    gameLoop.syncWith(gameState);
-                }*/
-            }
-        };
-        clientThread = new ClientThread("127.0.0.1",5050,5051,handler);
-        clientThread.start();
     }
 
     public void handleCommand(Command cmd){

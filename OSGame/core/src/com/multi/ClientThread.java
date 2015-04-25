@@ -5,6 +5,7 @@
 package com.multi;
 
 import com.multi.MessageHandler;
+import com.comms.*;
 
 import java.net.*;
 import java.io.*;
@@ -25,9 +26,8 @@ public class ClientThread extends Thread{
     private InetAddress servAddress = null;
     private MessageHandler handler;
 
-    public ClientThread(String address, int myPort,int servPort, MessageHandler handler){
+    public ClientThread(int myPort,int servPort, MessageHandler handler){
         this.handler = handler;
-    	if (address != "127.0.0.1") serverAddress = address;
         this.myPort = myPort;
         this.remotePort = servPort;
         in = new BufferedReader(new InputStreamReader(System.in));
@@ -39,8 +39,6 @@ public class ClientThread extends Thread{
     }
 
     public void run(){
-        System.out.println("Hello from client thread!");
-        ConnectToServer();
         while(true){
             try{
                 RecieveGameState();
@@ -51,6 +49,24 @@ public class ClientThread extends Thread{
         }
     }
 
+    public GameID joinGame(){
+        return joinGame("127.0.0.1");
+    }
+
+    public GameID joinGame(String address){
+        serverAddress = address;
+        ConnectToServer();
+        byte[] buff = new byte[64];
+        DatagramPacket gamePacket = new DatagramPacket(buff, buff.length, servAddress, remotePort);
+        try{
+            udpSocket.receive(gamePacket);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        GameID playerID = new GameID(gamePacket.getData()[0]);
+        this.start();
+        return playerID;
+    }
 
     /* ConnectToServer() will setup a UDP socket and packet
      * and fire off the packet to a server that's give in the
