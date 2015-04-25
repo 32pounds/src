@@ -65,7 +65,6 @@ public class OSGame extends ApplicationAdapter implements CommandHandler {
         gameLoop = new GameLoop();
 
         //This will be a call to comms in the future
-        localPlayer = gameLoop.requestNewPlayer();
         localPlayer = clientThread.joinGame(); //blocking call
 
         Gdx.input.setInputProcessor(new InputHandler(localPlayer,this));
