@@ -167,7 +167,7 @@ public class Map extends Drawable {
     }
 
     public boolean isWalkable(int x, int y) {
-        if (grid[y][x] == ' ' || grid[x][y] == 'o' || grid[x][y] == 'g' || grid[y][x] == '^' || grid[y][x] == 'v' || grid[y][x] == '.' || grid[y][x] == '@' || grid[x][y] == ',' || grid[x][y] == '#')
+        if (grid[y][x] == ' ' || grid[y][x] == 'o' || grid[y][x] == 'g' || grid[y][x] == '^' || grid[y][x] == 'v' || grid[y][x] == '.' || grid[y][x] == '@' || grid[y][x] == ',' || grid[y][x] == '#')
             return true;
         return false;
     }
@@ -182,9 +182,9 @@ public class Map extends Drawable {
 
 
    public int isMove(int x, int y) {
-        if (grid[y][x] == '^')
+        if (grid[y][x] == 'o')
             return 1;
-        else if (grid[y][x] == 'v')
+        else if (grid[y][x] == 'g')
             return 2;
         return 0;
     }
