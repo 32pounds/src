@@ -34,7 +34,7 @@ public class ClientThread extends Thread{
 
         try{
             udpSocket = new DatagramSocket(myPort);
-        }catch(Exception e){System.out.println("Couldn't create socket! " + e);}
+        }catch(Exception e){e.printStackTrace();}
         isUp = false;
     }
 
@@ -49,11 +49,15 @@ public class ClientThread extends Thread{
         }
     }
 
-    public GameID joinGame(){
-        return joinGame("127.0.0.1");
+    public GameID JoinGame(){
+        return JoinGame("127.0.0.1");
     }
 
-    public GameID joinGame(String address){
+    /* joinGame() will initialize a connection to a server a 
+     * 
+     *
+     */
+    public GameID JoinGame(String address){
         serverAddress = address;
         try{    
             servAddress = InetAddress.getByName(serverAddress);
@@ -83,25 +87,25 @@ public class ClientThread extends Thread{
 
         try{
             // Create UDP socket.
-            System.out.println("Creating socket...");
+            System.out.println("CLIENT: Creating socket...");
 
 
-            System.out.println("Socket created @ port: " + udpSocket.getLocalPort());
+            System.out.println("CLIENT: Socket created @ port: " + udpSocket.getLocalPort());
 
             // Send UDP request to server.
             byte[] buf = new byte[256];
             servAddress = InetAddress.getByName(serverAddress);
-            System.out.println("Creating packet...");
+            System.out.println("CLIENT: Creating packet...");
             packet = new DatagramPacket(buf, buf.length, servAddress, remotePort);
-            System.out.println("Packet created with payload: " + buf);
+            System.out.println("CLIENT: Packet created with payload: " + buf);
 
-            System.out.println("Sending packet to: " + servAddress + ":" + packet.getPort());
+            System.out.println("CLIENT: Sending packet to: " + servAddress + ":" + packet.getPort());
 
             udpSocket.send(packet);
-            System.out.println("Packet sent! ");
+            System.out.println("CLIENT: Packet sent! ");
 
             isUp = true;
-        } catch(Exception e){ System.out.println("Couldn't setup UDP client!" + e);}
+        } catch(Exception e){ e.printStackTrace();}
     }
 
     /* SendString() will take in a string, break it into bytes
@@ -121,7 +125,7 @@ public class ClientThread extends Thread{
     public void SendPacket( DatagramPacket toSendPacket ) throws InterruptedException{
         try{
             udpSocket.send(toSendPacket);
-        }catch(Exception e){System.out.println("Sorry :( " + e);}
+        }catch(Exception e){e.printStackTrace();}
     }
 
     /* RecieveGameState() will continually recieve UDP packets,
@@ -139,7 +143,7 @@ public class ClientThread extends Thread{
             udpSocket.receive(gamePacket);
             byte[] data = gamePacket.getData();
             handler.process(new String(data));
-        }catch(Exception e){System.out.println("client uh oh:  " +e);}
+        }catch(Exception e){e.printStackTrace();}
     }
 
     public void CloseConnection(){

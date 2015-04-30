@@ -32,7 +32,7 @@ public class OSGame extends ApplicationAdapter implements CommandHandler {
     private GameLoop gameLoop;
     private String servAddress = null;
     private String cliAddress = null;
-    private ClientThread clientThread;
+    public ClientThread clientThread;
 
     @Override
     public void create() {
@@ -66,9 +66,9 @@ public class OSGame extends ApplicationAdapter implements CommandHandler {
 
         gameLoop.setRunning(true);
         gameLoop.start();
-        System.out.println("GAME LOOP START.");
+        
         //This will be a call to comms in the future
-        localPlayer = clientThread.joinGame(); //blocking call
+        localPlayer = clientThread.JoinGame(); //blocking call
 
         Gdx.input.setInputProcessor(new InputHandler(localPlayer,this));
         popupMenu = new PopupMenu();
