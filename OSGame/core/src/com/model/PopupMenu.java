@@ -16,6 +16,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.Input.TextInputListener;
 import com.comms.OSInputProcessor;
 import com.multi.*;
 
@@ -26,7 +28,17 @@ public class PopupMenu extends com.renderer.Drawable implements InputProcessor {
     public ServerThread serverUDP = null;
     public ClientThread clientUDP = null;
 
+    // Used to get input from use for IP addresses.
+    private String initialText; // Text to ask user
+    private String ipAddressText;  // User's input is stored here.
+    private String hintText; // Used for hover over text field.
+
+
     public PopupMenu() {
+        // Initialize text Strings to get server IP from user.
+        initialText = "Please enter IP";
+        hintText = "127.0.0.1"; // NOT acutal address just prompt to inform user.
+
         stage = new Stage();
 
         OSInputProcessor.getInstance().addInputPorcessor(stage);
@@ -74,15 +86,26 @@ public class PopupMenu extends com.renderer.Drawable implements InputProcessor {
         final TextButton clientButton = new TextButton("Join Game", textButtonStyle);
         TextButton hostButton = new TextButton("Host Game", textButtonStyle);
 
-        // TODO make server/client a seperate thread.
+
+        // Client connects through host here, IP address is assigned.
         clientButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
+                Gdx.input.getTextInput(new TextInputListener() {
+                    @Override
+                    public void input(String text) {
+                        ipAddressText = text;
+                    }
 
+                    @Override
+                    public void canceled(){
+                        ipAddressText = null;
+                    }
+               }, initialText, null, hintText);
+                
             }
         });
 
-        // hostButton simply launches a new serverThread.
-        // TODO: Possible bug of clicking the button more than once?
+        // hostButton simply launches a new serverThread
         hostButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
 
