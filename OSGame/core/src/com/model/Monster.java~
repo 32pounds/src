@@ -51,22 +51,9 @@ public class Monster extends Entity implements Updatable{
         return true;
     }
 
-    // change image of monster alive
-    public void changeAlive(String img)
-    {
-        alive=img;
-    }
-
-    // change image of monster death
     public void changeDeath(String img)
     {
         dead=img;
-    }
-
-    // change sound of monster death
-    public void changeSplat(String sound)
-    {
-        splat=sound;
     }
 
     @Override
