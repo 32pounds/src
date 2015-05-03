@@ -88,6 +88,7 @@ public class ClientThread{
         return playerID;
     }
 
+
     /* ConnectToServer() will setup a UDP socket and packet
      * and fire off the packet to a server that's give in the
      * arguments that are passed in.
