@@ -102,6 +102,7 @@ public class clientLL{
 	}
 
 	public void RemoveClient(InetAddress clientAddress){
+		if(head == null) return;
 		Node curr = head;
 		Node tail = curr;
 

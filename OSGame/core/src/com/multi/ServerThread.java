@@ -53,6 +53,11 @@ public class ServerThread extends Thread{
         }
     }
 
+    public void ClientDisconnect(InetAddress lostAddress){
+        clientList.RemoveClient(lostAddress);
+        
+    }
+
     public void OnConnect(InetAddress newClient, int port){
         GameID player;
         int clientIndex = clientList.GetByAddress(newClient);
