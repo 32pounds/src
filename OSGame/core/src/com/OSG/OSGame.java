@@ -66,7 +66,7 @@ public class OSGame extends ApplicationAdapter implements CommandHandler {
 
         gameLoop.setRunning(true);
         gameLoop.start();
-        
+
         //This will be a call to comms in the future
         localPlayer = clientThread.JoinGame(); //blocking call
 

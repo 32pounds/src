@@ -3,6 +3,7 @@ package com.multi;
 import java.net.*;
 import java.io.*;
 import java.util.*;
+import com.comms.GameID;
 
 public class clientLL{
 
@@ -15,18 +16,23 @@ public class clientLL{
 		listCount = 0;
 	}
 
-	public boolean Contains(InetAddress testAddress){
-		boolean toReturn = false;
-		Node temp = head;
+	public boolean Contains(InetAddress address){
+		int index = GetByAddress(address);
+		return (index != -1);
+	}
 
+	public int GetByAddress(InetAddress testAddress){
+		boolean toReturn = false;
+		Node temp 		 = head;
+		int index 		 = 0;
 		while(temp != null){
 			if( temp.GetDataIP().equals(testAddress) ){
-				toReturn = true;
+				return index;
 			}
 			temp = temp.GetNext();
+			index++;
 		}
-
-		return toReturn;
+		return -1;
 	}
 
 	public Node GetNode(int index){
@@ -42,8 +48,8 @@ public class clientLL{
 		return temp;
 	}
 
-	public void CreateClient(InetAddress address, int port){
-		Node client = new Node(address, port);
+	public void CreateClient(InetAddress address, int port, GameID player){
+		Node client = new Node(address, port, player);
 		client.SetNext(null);
 		Node temp = head;
 
@@ -56,7 +62,7 @@ public class clientLL{
 			temp = client;
 			head = temp;
 		}
-		
+
 		listCount++;
 	}
 
@@ -70,6 +76,17 @@ public class clientLL{
 		}
 		temp = curr.GetDataIP();
 		return temp;
+	}
+
+	public GameID GetPlayerID(int index){
+		if(head == null) return null;
+		Node curr = head;
+		InetAddress temp = null;
+		for(int i = 0; i < index; i++){
+			curr = curr.GetNext();
+			if(curr == null) return null;
+		}
+		return curr.GetPlayerID();
 	}
 
 	public int GetPort(int index){
@@ -106,12 +123,14 @@ public class clientLL{
 	private class Node{
 		Node next;
 		InetAddress ipAddress;
+		GameID pairedPlayer;
 		int portNum;
 
-		public Node(InetAddress ip, int givenPort){
+		public Node(InetAddress ip, int givenPort, GameID paired){
 			ipAddress = ip;
 			portNum = givenPort;
 			next = null;
+			pairedPlayer = paired;
 		}
 
 		public InetAddress GetDataIP(){
@@ -120,6 +139,10 @@ public class clientLL{
 
 		public int GetDataPort(){
 			return portNum;
+		}
+
+		public GameID GetPlayerID(){
+			return pairedPlayer;
 		}
 
 		public Node GetNext(){

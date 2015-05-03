@@ -54,20 +54,21 @@ public class ServerThread extends Thread{
     }
 
     public void OnConnect(InetAddress newClient, int port){
-        System.out.println("ON Connect.");
-        clientList.CreateClient(newClient, port);
-        
-        byte[] buff;
-        GameID newPlayer = gameLoop.requestNewPlayer();
-        String temp = String.valueOf(newPlayer.toChar());
-        buff = temp.getBytes();
+        GameID player;
+        int clientIndex = clientList.GetByAddress(newClient);
+        if (clientIndex != -1) {
+            player = clientList.GetPlayerID(clientIndex);
+        } else {
+            player = gameLoop.requestNewPlayer();
+            clientList.CreateClient(newClient, port, player);
+        }
 
-
+        String temp = String.valueOf(player.toChar());
+        byte[] buff = temp.getBytes();
         DatagramPacket connectedClientPacket = new DatagramPacket(buff, buff.length, newClient, port);
 
         try{SendPacket(connectedClientPacket);
         }catch(Exception e){e.printStackTrace();}
-
     }
 
     /* getServerStatus()
@@ -120,9 +121,9 @@ public class ServerThread extends Thread{
      * send off the UDP packet.
      */
     public void SendString( String dataToSend ){
-        
+
         for(int i=0; i < clientList.Size(); i++ ){
-            
+
             try{
                 byte[] buff = new byte[1024];
                 buff = dataToSend.getBytes();
@@ -134,7 +135,7 @@ public class ServerThread extends Thread{
     }
 
 
-    
+
 
     /* SetupHost will setup a server by binding to the
      * assigned port and begin listening on that socket.
@@ -169,9 +170,9 @@ public class ServerThread extends Thread{
             DatagramPacket clientPacket = new DatagramPacket(buff, buff.length, address, 5051);
             udpSocket.receive(clientPacket);
             byte[] data = clientPacket.getData();
-            
-            System.out.println("SERVER: Got data");
-            if(!clientList.Contains(clientPacket.getAddress())){
+
+            System.out.println("SERVER: Got data of length "+clientPacket.getLength());
+            if(clientPacket.getLength() == 0){
                 OnConnect(clientPacket.getAddress(), clientPacket.getPort());
             }else{
                 handler.process(new String(data));

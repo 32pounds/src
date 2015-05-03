@@ -12,8 +12,7 @@ import java.io.*;
 import java.util.*;
 
 
-public class ClientThread extends Thread{
-
+public class ClientThread{
     private int myPort;
     private int remotePort;
     protected DatagramSocket udpSocket1 = null;
@@ -38,28 +37,36 @@ public class ClientThread extends Thread{
         isUp = false;
     }
 
-    public void run(){
-        while(true){
-            try{
-                RecieveGameState();
-                sleep(5);
-            } catch (Exception e){
-                e.printStackTrace();
+    private class ReceiveThread extends Thread{
+        public void run(){
+            while(isUp){
+                try{
+                    RecieveGameState();
+                    sleep(5);
+                } catch (InterruptedException e){
+                    break;
+                } catch (Exception e){
+                    e.printStackTrace();
+                    break;
+                }
             }
         }
     }
+    private ReceiveThread receiveThread;
+
 
     public GameID JoinGame(){
         return JoinGame("127.0.0.1");
     }
 
-    /* joinGame() will initialize a connection to a server a 
-     * 
+    /* joinGame() will initialize a connection to a server a
+     *
      *
      */
     public GameID JoinGame(String address){
+        isUp = false;
         serverAddress = address;
-        try{    
+        try{
             servAddress = InetAddress.getByName(serverAddress);
         }catch(Exception e){e.printStackTrace();}
 
@@ -75,7 +82,9 @@ public class ClientThread extends Thread{
         String temp = new String(gamePacket.getData(), 0, gamePacket.getLength());
         GameID playerID = new GameID(temp.charAt(0));
         System.out.println(temp);
-        this.start();
+        if(receiveThread != null) receiveThread.interrupt();
+        receiveThread = new ReceiveThread();
+        receiveThread.start();
         return playerID;
     }
 
@@ -93,7 +102,7 @@ public class ClientThread extends Thread{
             System.out.println("CLIENT: Socket created @ port: " + udpSocket.getLocalPort());
 
             // Send UDP request to server.
-            byte[] buf = new byte[256];
+            byte[] buf = new byte[0];
             servAddress = InetAddress.getByName(serverAddress);
             System.out.println("CLIENT: Creating packet...");
             packet = new DatagramPacket(buf, buf.length, servAddress, remotePort);
