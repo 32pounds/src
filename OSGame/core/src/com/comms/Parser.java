@@ -1,7 +1,11 @@
 package com.comms;
 
 import com.model.Entity;
+<<<<<<< HEAD
 import javafx.util.Pair;
+=======
+import java.util.*;
+>>>>>>> 02db4fe... Changed parser to not require JavaFX
 
 /**
  * Parse Entities
@@ -12,6 +16,19 @@ import javafx.util.Pair;
  */
 public class Parser
 {
+    class Pair{
+        String value, key;
+        Pair(String k, String v){
+            value = v;
+            key = k;
+        }
+        String getValue(){
+            return value;
+        }
+        String getKey(){
+            return key;
+        }
+    }
 
     private String splitChar = ",";
 
@@ -72,7 +89,7 @@ public class Parser
      */
     public Command[] DeParseCommands(String data)
     {
-        Pair<String, String> value = StepString(data);
+        Pair value = StepString(data);
         data = value.getValue();
 
         Command[] result = new Command[Integer.parseInt(value.getKey())];
@@ -114,9 +131,8 @@ public class Parser
      * @param data Data
      * @return An array of Entities and an array of Commands
      */
-    public Pair<Entity[], Command[]> DeParse(String data)
+/*    public Pair<Entity[], Command[]> DeParse(String data)
     {
-        Pair<String, String> value = StepString(data);
         data = value.getValue();
 
         int numberOfEntities = Integer.parseInt(value.getKey());
@@ -157,7 +173,7 @@ public class Parser
         }
 
         return new Pair<Entity[], Command[]>(entities, result);
-    }
+    }*/
 
     /**
      * Create a collection of Entities from a formatted string.
@@ -170,7 +186,7 @@ public class Parser
 
         for (int x = 0; x < entities.length; x++)
         {
-            Pair<String, String> value = StepString(data);
+            Pair value = StepString(data);
             data = value.getValue();
             entities[x] = new Entity(gameState, value.getKey());
 
@@ -190,14 +206,14 @@ public class Parser
         return entities;
     }
 
-    private Pair<String, String> StepString(String data)
+    private Pair StepString(String data)
     {
         int indexOf = data.indexOf(',');
 
         String value = data.substring(0, indexOf);
         String remainder = data.substring(indexOf + 1, data.length());
 
-        return new Pair<String, String>(value, remainder);
+        return new Pair(value, remainder);
     }
 
 
