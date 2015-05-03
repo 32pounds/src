@@ -33,6 +33,7 @@ public class OSGame extends ApplicationAdapter implements CommandHandler {
     private String servAddress = null;
     private String cliAddress = null;
     public ClientThread clientThread;
+    private InputHandler input;
 
     @Override
     public void create() {
@@ -70,10 +71,12 @@ public class OSGame extends ApplicationAdapter implements CommandHandler {
         //This will be a call to comms in the future
         localPlayer = clientThread.JoinGame(); //blocking call
 
-        Gdx.input.setInputProcessor(new InputHandler(localPlayer,this));
+        input = new InputHandler(localPlayer,this);
+
+        Gdx.input.setInputProcessor(input);
         popupMenu = new PopupMenu(this);
 
-        OSInputProcessor.getInstance().addInputPorcessor(new InputHandler(localPlayer,this));
+        OSInputProcessor.getInstance().addInputPorcessor(input);
 
     }
 
@@ -82,6 +85,7 @@ public class OSGame extends ApplicationAdapter implements CommandHandler {
         Runnable connect = new Runnable(){
             public void run(){
                 localPlayer = clientThread.JoinGame(ipAddr);
+                input.setLocalPlayer(localPlayer);
             }
         };
         (new Thread(connect)).start();
