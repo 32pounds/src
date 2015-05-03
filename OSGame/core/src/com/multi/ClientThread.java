@@ -148,10 +148,12 @@ public class ClientThread{
     public void RecieveGameState() throws InterruptedException{
         try{
             byte[] buff = new byte[2048];
-            DatagramPacket gamePacket = new DatagramPacket(buff, buff.length, servAddress, remotePort);
+            DatagramPacket gamePacket = new DatagramPacket(buff, buff.length);
             udpSocket.receive(gamePacket);
-            byte[] data = gamePacket.getData();
-            handler.process(new String(data));
+            if ( (gamePacket.getAddress()).equals(servAddress) ){
+                byte[] data = gamePacket.getData();
+                handler.process(new String(data));
+            }
         }catch(Exception e){e.printStackTrace();}
     }
 

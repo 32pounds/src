@@ -71,10 +71,14 @@ public class OSGame extends ApplicationAdapter implements CommandHandler {
         localPlayer = clientThread.JoinGame(); //blocking call
 
         Gdx.input.setInputProcessor(new InputHandler(localPlayer,this));
-        popupMenu = new PopupMenu();
+        popupMenu = new PopupMenu(this);
 
         OSInputProcessor.getInstance().addInputPorcessor(new InputHandler(localPlayer,this));
 
+    }
+
+    public void connectToIP(String ip){
+        localPlayer = clientThread.JoinGame(ip);
     }
 
     public void handleCommand(Command cmd){

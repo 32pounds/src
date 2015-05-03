@@ -20,6 +20,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.Input.TextInputListener;
 import com.comms.OSInputProcessor;
 import com.multi.*;
+import com.OSG.OSGame;
 
 public class PopupMenu extends com.renderer.Drawable implements InputProcessor {
 
@@ -32,9 +33,10 @@ public class PopupMenu extends com.renderer.Drawable implements InputProcessor {
     private String initialText; // Text to ask user
     private String ipAddressText;  // User's input is stored here.
     private String hintText; // Used for hover over text field.
+    private OSGame game;
 
-
-    public PopupMenu() {
+    public PopupMenu(OSGame parentGame) {
+        this.game = parentGame;
         // Initialize text Strings to get server IP from user.
         initialText = "Please enter IP";
         hintText = "127.0.0.1"; // NOT acutal address just prompt to inform user.
@@ -94,6 +96,7 @@ public class PopupMenu extends com.renderer.Drawable implements InputProcessor {
                     @Override
                     public void input(String text) {
                         ipAddressText = text;
+                        if(game != null) game.connectToIP(ipAddressText);
                     }
 
                     @Override
@@ -101,7 +104,7 @@ public class PopupMenu extends com.renderer.Drawable implements InputProcessor {
                         ipAddressText = null;
                     }
                }, initialText, null, hintText);
-                
+
             }
         });
 
