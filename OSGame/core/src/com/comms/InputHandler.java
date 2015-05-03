@@ -11,6 +11,10 @@ public class InputHandler implements InputProcessor {
     GameID actor;
     CommandHandler cH;
 
+    public void setLocalPlayer(GameID player){
+        actor = player;
+    }
+
     public InputHandler(GameID target, CommandHandler cH){
         actor = target;
         this.cH = cH;
