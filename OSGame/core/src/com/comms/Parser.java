@@ -1,11 +1,9 @@
 package com.comms;
 
 import com.model.Entity;
-<<<<<<< HEAD
-import javafx.util.Pair;
-=======
+
 import java.util.*;
->>>>>>> 02db4fe... Changed parser to not require JavaFX
+
 
 /**
  * Parse Entities
