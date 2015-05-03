@@ -106,6 +106,7 @@ public class Parser
             result += item.getID().toChar() + splitChar;
             result += item.getXPos() + splitChar;
             result += item.getYPos() + splitChar;
+            result += item.getRotation() + splitChar;
         }
         return result;
     }
@@ -120,6 +121,7 @@ public class Parser
             result += item.getID().toChar() + splitChar;
             result += item.getXPos() + splitChar;
             result += item.getYPos() + splitChar;
+            result += item.getRotation() + splitChar;
         }
         return result;
     }
@@ -155,6 +157,10 @@ public class Parser
             value = StepString(data);
             data = value.getValue();
             entities[x].setYPos(Integer.parseInt(value.getKey()));
+
+            value = StepString(data);
+            data = value.getValue();
+            entities[x].setRotation(Integer.parseInt(value.getKey()));
         }
 
         value = StepString(data);
@@ -181,7 +187,7 @@ public class Parser
      */
     public Entity[] DePerseEntities(String data)
     {
-        Entity[] entities = new Entity[CountChar(data, ',') / 4];
+        Entity[] entities = new Entity[CountChar(data, ',') / 5];
 
         for (int x = 0; x < entities.length; x++)
         {
@@ -200,6 +206,10 @@ public class Parser
             value = StepString(data);
             data = value.getValue();
             entities[x].setYPos(Integer.parseInt(value.getKey()));
+
+            value = StepString(data);
+            data = value.getValue();
+            entities[x].setRotation(Integer.parseInt(value.getKey()));
         }
 
         return entities;
