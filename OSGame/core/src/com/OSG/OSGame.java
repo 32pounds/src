@@ -78,7 +78,13 @@ public class OSGame extends ApplicationAdapter implements CommandHandler {
     }
 
     public void connectToIP(String ip){
-        localPlayer = clientThread.JoinGame(ip);
+        final String ipAddr = ip;
+        Runnable connect = new Runnable(){
+            public void run(){
+                localPlayer = clientThread.JoinGame(ipAddr);
+            }
+        };
+        (new Thread(connect)).start();
     }
 
     public void handleCommand(Command cmd){

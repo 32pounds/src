@@ -66,7 +66,7 @@ public class ServerThread extends Thread{
         String temp = String.valueOf(player.toChar());
         byte[] buff = temp.getBytes();
         DatagramPacket connectedClientPacket = new DatagramPacket(buff, buff.length, newClient, port);
-
+        System.out.println("Sent player ID message");
         try{SendPacket(connectedClientPacket);
         }catch(Exception e){e.printStackTrace();}
     }

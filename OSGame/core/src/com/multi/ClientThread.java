@@ -63,26 +63,38 @@ public class ClientThread{
      *
      *
      */
-    public GameID JoinGame(String address){
+    public synchronized GameID JoinGame(String address){
         isUp = false;
         serverAddress = address;
         try{
             servAddress = InetAddress.getByName(serverAddress);
         }catch(Exception e){e.printStackTrace();}
 
+        if(receiveThread != null) {
+            receiveThread.interrupt();
+            while(receiveThread.isAlive());
+        }
+
         ConnectToServer();
         byte[] buff = new byte[64];
 
         DatagramPacket gamePacket = new DatagramPacket(buff, buff.length, servAddress, remotePort);
-        try{
-            udpSocket.receive(gamePacket);
-        } catch (Exception e){
-            e.printStackTrace();
+
+        int fails = 0;
+        while(gamePacket.getLength() != 2 && fails < 25){
+            fails++;
+            try {
+                System.out.println("Listening for player assignment message from server");
+                udpSocket.setSoTimeout(500);
+                udpSocket.receive(gamePacket);
+            } catch (Exception e){
+
+            }
         }
+
         String temp = new String(gamePacket.getData(), 0, gamePacket.getLength());
         GameID playerID = new GameID(temp.charAt(0));
-        System.out.println(temp);
-        if(receiveThread != null) receiveThread.interrupt();
+
         receiveThread = new ReceiveThread();
         receiveThread.start();
         return playerID;
@@ -154,6 +166,7 @@ public class ClientThread{
                 byte[] data = gamePacket.getData();
                 handler.process(new String(data));
             }
+        }catch(SocketTimeoutException e){
         }catch(Exception e){e.printStackTrace();}
     }
 
