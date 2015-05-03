@@ -1,7 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/* VirusEntry.java
+ * by Elizabeth Hernandez
+ * developed from MonsterTowards by Michael
+ * 4-29-15
  */
 package com.model;
 
@@ -15,15 +15,17 @@ import com.map.Position;
 
 /**
  *
- * @author michael
+ * @author elizabeth
  */
-public class MonsterTowards extends Monster
+public class VirusEntry extends Monster
 {
-    public MonsterTowards(GameState state, String img, Sound splatSound) 
+    public VirusEntry(GameState state, String img, Sound splatSound, int X, int Y) 
     {
         super(state, img, splatSound);
-        super.changeDeath("!");
-        UPDATE_INTERVAL=250;
+        super.changeAlive("VirusEntry");
+        super.changeDeath("CyberFloor");
+	//super.changeSplat("");
+        UPDATE_INTERVAL=10000;
     }
     
     @Override

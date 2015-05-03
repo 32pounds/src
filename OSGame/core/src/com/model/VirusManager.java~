@@ -1,0 +1,44 @@
+
+
+
+
+    // spawn a virus entry
+    public void spawnVirusEntry (int X, int Y) {
+        monster=new Virus(gameState, "VirusEntry", splat, X, Y);
+        gameState.register(monster);
+        addUpdatable(monster);
+    }
+
+    // spawn a virus if count is below target
+    public boolean spawnVirus (int X, int Y) {
+        if (virusCount < virusTarget) {
+            monster=new Virus(gameState, "Virus", splat, X, Y);
+            virusCount++;
+            gameState.register(monster);
+            addUpdatable(monster);
+            return true;
+        }
+        return false;
+    }
+
+    // spawn a virus queen if count is below target
+    public boolean spawnVirusQueen (int X, int Y) {
+        if (virusQueenCount < virusQueenTarget) {
+            monster=new VirusQueen(gameState, "VirusQueen", splat, X, Y);
+            virusQueenCount++;
+            gameState.register(monster);
+            addUpdatable(monster);
+            return true;
+        }
+        return false;
+    }
+
+    // lower virus count by 1
+    public void virusDied() {
+        virusCount--;
+    }
+
+    // lower virus queen count by 1
+    public void virusQueenDied() {
+        virusQueenCount--;
+    }

@@ -79,7 +79,7 @@ public class GameLoop extends Thread {
         }
 
         // initialize cyberspace monsters
-        VirusManager virusManager = new VirusManager(gameState);
+        VirusHandler virusHandler = new VirusHandler(gameState);
     }
 
     public GameID requestNewPlayer(){

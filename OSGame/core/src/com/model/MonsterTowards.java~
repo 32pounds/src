@@ -57,8 +57,6 @@ public class MonsterTowards extends Monster
                 splat.play();
                 wasDead=true;
             }
-
-            // check if it's time to take a step
             else if(TimeUtils.millis()-lastUpdateTime > UPDATE_INTERVAL)
             {   // seek player to chase
                 lastUpdateTime=TimeUtils.millis();

@@ -243,14 +243,6 @@
     {
       "code": "Funds",
       "path": "top-down/cyberspace/Funds.png"
-    },
-    {
-      "code": "Virus",
-      "path": "top-down/cyberspace/Virus-purple.png"
-    },
-    {
-      "code": "VirusQueen",
-      "path": "top-down/cyberspace/VirusWinged-purple.png"
     }
   ]
 }

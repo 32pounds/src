@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.renderer.Drawable;
 import com.renderer.SpriteStorage;
 import com.map.Position;
-import com.model.VirusManager;
 
 public class Map extends Drawable {
     //this grid is [y][x] to make parsing _much_ easier
