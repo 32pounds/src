@@ -21,6 +21,26 @@ public class clientLL{
 		return (index != -1);
 	}
 
+
+	/* TouchClient() will take in a given address,
+	   find the address in the LL and reset the touch
+	   counter withing that node. Keeping the node alive.
+	*/
+	public void TouchClient(InetAddress clientAddress){
+		Node clientNode = GetNode(GetByAddress(clientAddress));
+		clientNode.touchNode();
+	}
+
+	public void DecrementClient(){
+		Node temp = head;
+		for (int i=0; i < listCount; i++){
+			temp = GetNode(i);
+			temp.lowerAlive();
+			if( temp.getAlive() <= 0) RemoveClient(temp.GetDataIP());
+
+		}
+	}
+
 	public int GetByAddress(InetAddress testAddress){
 		boolean toReturn = false;
 		Node temp 		 = head;
@@ -35,6 +55,10 @@ public class clientLL{
 		return -1;
 	}
 
+
+	/* GetNode() will return a client's node
+	   based on the place in the LL
+	*/
 	public Node GetNode(int index){
 		boolean toReturn = false;
 		Node temp = head;
@@ -126,12 +150,26 @@ public class clientLL{
 		InetAddress ipAddress;
 		GameID pairedPlayer;
 		int portNum;
+		int alive; 
 
 		public Node(InetAddress ip, int givenPort, GameID paired){
 			ipAddress = ip;
 			portNum = givenPort;
 			next = null;
 			pairedPlayer = paired;
+			alive = 10;
+		}
+
+		public void lowerAlive(){
+			alive--;
+		}
+
+		public int getAlive(){
+			return alive;
+		}
+
+		public void touchNode(){
+			alive = 10;
 		}
 
 		public InetAddress GetDataIP(){

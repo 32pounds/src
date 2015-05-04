@@ -68,13 +68,26 @@ public class GameLoop extends Thread {
         ScheduledExecutorService executor =
                     Executors.newSingleThreadScheduledExecutor();
 
+        ScheduledExecutorService idleTimer =
+                    Executors.newSingleThreadScheduledExecutor();
+
         Runnable sendStateTask = new Runnable() {
             public void run() {
                 serverThread.SendString(getStateMessage());
             }
         };
 
+        /* lowerIdleTime will work against idle players.
+         * decrementing thier "alive" variable every 
+         */ 
+        Runnable lowerIdleTime = new Runnable(){
+            public void run(){
+                serverThread.LowerIdle();
+            }
+        };
+
         executor.scheduleAtFixedRate(sendStateTask, 0, 25, TimeUnit.MILLISECONDS);
+        executor.scheduleAtFixedRate(lowerIdleTime, 10, 3000, TimeUnit.MILLISECONDS);
     }
 
     public void initializeGameState(){

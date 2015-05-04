@@ -55,7 +55,6 @@ public class ServerThread extends Thread{
 
     public void ClientDisconnect(InetAddress lostAddress){
         clientList.RemoveClient(lostAddress);
-        
     }
 
     public void OnConnect(InetAddress newClient, int port){
@@ -126,9 +125,11 @@ public class ServerThread extends Thread{
      * send off the UDP packet.
      */
     public void SendString( String dataToSend ){
-
+        // Check if we have any connect clients.
+        // if not simple never send the string.
+        if( clientList.Size() == 0 ) return;
+        
         for(int i=0; i < clientList.Size(); i++ ){
-
             try{
                 byte[] buff = new byte[1024];
                 buff = dataToSend.getBytes();
@@ -138,7 +139,6 @@ public class ServerThread extends Thread{
             }catch(Exception e){e.printStackTrace();}
         }
     }
-
 
 
 
@@ -166,7 +166,7 @@ public class ServerThread extends Thread{
     	    out.close();
     	    listeningSocket.close();
     	    servr.close();
-        }catch(Exception e){ System.out.println("NETWORKING ERROR SERVER SIDE: " + e); }
+        }catch(Exception e){ e.printStackTrace(); }
     }
 
     public void RecievePacket() throws InterruptedException{
@@ -177,13 +177,21 @@ public class ServerThread extends Thread{
             byte[] data = clientPacket.getData();
 
             System.out.println("SERVER: Got data of length "+clientPacket.getLength());
+
             if(clientPacket.getLength() == 0){
                 OnConnect(clientPacket.getAddress(), clientPacket.getPort());
             }else{
                 handler.process(new String(data));
                 System.out.println("Recieved from client");
+                // We also start touching the client to make sure it's not idle.
+                clientList.TouchClient(clientPacket.getAddress());
             }
+
         }catch(Exception e){e.printStackTrace();}
+    }
+
+    public void LowerIdle(){
+        clientList.DecrementClient();
     }
 
     /* CloserServer() should be called when multiplayer is over. */
