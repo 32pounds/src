@@ -33,7 +33,7 @@ public class MoveCmd extends Command{
     }
     public void execute(GameState state){
         Player target = (Player) state.getByID(actor);
-        target.setMovingDir(dir);
+        if(target != null) target.setMovingDir(dir);
     }
     public char[] getData(){
         char[] out = new char[2];

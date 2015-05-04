@@ -34,7 +34,7 @@ public class StopCmd extends Command{
     }
     public void execute(GameState state){
         Player target = (Player) state.getByID(actor);
-        target.stopMoving(dir);
+        if(target != null) target.stopMoving(dir);
     }
     public char[] getData(){
         char[] out = new char[2];
