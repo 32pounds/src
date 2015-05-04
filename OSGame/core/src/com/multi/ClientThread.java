@@ -59,7 +59,7 @@ public class ClientThread{
         return JoinGame("127.0.0.1");
     }
 
-    /* joinGame() will initialize a connection to a server a
+    /* JoinGame() will initialize a connection to a server
      *
      *
      */
@@ -101,8 +101,8 @@ public class ClientThread{
     }
 
     /* ConnectToServer() will setup a UDP socket and packet
-     * and fire off the packet to a server that's give in the
-     * arguments that are passed in.
+     * and fire off the packet to a server whos info is stored
+     * in above variables.
      */
     public void ConnectToServer(){
 
@@ -118,7 +118,7 @@ public class ClientThread{
             servAddress = InetAddress.getByName(serverAddress);
             System.out.println("CLIENT: Creating packet...");
             packet = new DatagramPacket(buf, buf.length, servAddress, remotePort);
-            System.out.println("CLIENT: Packet created with payload: " + buf);
+            System.out.println("CLIENT: Packet created");
 
             System.out.println("CLIENT: Sending packet to: " + servAddress + ":" + packet.getPort());
 
@@ -165,6 +165,9 @@ public class ClientThread{
             if ( (gamePacket.getAddress()).equals(servAddress) ){
                 byte[] data = gamePacket.getData();
                 handler.process(new String(data));
+            }else if(gamePacket.getLength() == 1){ 
+                System.out.println("Idle timeout falling back!");
+                JoinGame(); // For now we'll fall back to single player mode.
             }
         }catch(SocketTimeoutException e){
         }catch(Exception e){e.printStackTrace();}

@@ -180,7 +180,8 @@ public class ServerThread extends Thread{
 
             if(clientPacket.getLength() == 0){
                 OnConnect(clientPacket.getAddress(), clientPacket.getPort());
-            }else{
+            }
+            else{
                 handler.process(new String(data));
                 System.out.println("Recieved from client");
                 // We also start touching the client to make sure it's not idle.

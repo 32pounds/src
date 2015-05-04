@@ -187,7 +187,7 @@ public class Map extends Drawable {
         char[][] tmp = new char[height][];
         for (int y = 0; y < height; y++) {
             tmp[y] = lines[height - y - 1].toCharArray();
-            System.err.println(lines[height - y - 1]);
+            //System.err.println(lines[height - y - 1]);
         }
         return tmp;
     }
