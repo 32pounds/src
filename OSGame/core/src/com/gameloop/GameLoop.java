@@ -80,14 +80,15 @@ public class GameLoop extends Thread {
         /* lowerIdleTime will work against idle players.
          * decrementing thier "alive" variable every 
          */ 
+        /*
         Runnable lowerIdleTime = new Runnable(){
             public void run(){
                 serverThread.LowerIdle();
             }
         };
-
+        */
         executor.scheduleAtFixedRate(sendStateTask, 0, 25, TimeUnit.MILLISECONDS);
-        executor.scheduleAtFixedRate(lowerIdleTime, 10, 3000, TimeUnit.MILLISECONDS);
+        //executor.scheduleAtFixedRate(lowerIdleTime, 10, 3000, TimeUnit.MILLISECONDS);
     }
 
     public void initializeGameState(){
