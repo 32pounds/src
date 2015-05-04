@@ -31,14 +31,27 @@ public class clientLL{
 		clientNode.touchNode();
 	}
 
-	public void DecrementClient(){
+	/* DecrementClient() is called every 3 seconds
+	 * and will decrement all clients' alive counter
+	 * if this method finds that one of the clients
+	 * has ticked to zero it will return the address
+	 * of that client to the calling function which 
+	 * from this perspective is the server. If there
+	 * aren't any idle clients this fucntion will
+	 * return -1.
+	 */
+	public int DecrementClient(){
 		Node temp = head;
+
 		for (int i=0; i < listCount; i++){
 			temp = GetNode(i);
 			temp.lowerAlive();
-			if( temp.getAlive() <= 0) RemoveClient(temp.GetDataIP());
+			if( temp.getAlive() <= 0){
+				return i;
+			}
 
 		}
+		return -1;
 	}
 
 	public int GetByAddress(InetAddress testAddress){

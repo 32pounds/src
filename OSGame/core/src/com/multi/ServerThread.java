@@ -190,8 +190,28 @@ public class ServerThread extends Thread{
         }catch(Exception e){e.printStackTrace();}
     }
 
+    /* LowerIdle() is called at an interval of 3
+     * seconds from gameLoop in it's own thread.
+     * All it does for a standard case is lower the
+     * idle timer for all the connected clients
+     * in the LL and closes. But if a client has 
+     * timed out the server sends a packet of 1 byte
+     * back to the client informing it that it has
+     * been disconnected.
+     */
     public void LowerIdle(){
-        clientList.DecrementClient();
+        int tempIndex = clientList.DecrementClient();
+
+        if(  tempIndex >= 0 ){
+            System.out.println("DISCONNECTING CLIENT: " + tempIndex);
+            try{
+                byte[] buff = new byte[1];
+                packet =
+                    new DatagramPacket(buff, buff.length, clientList.GetIP(tempIndex), clientList.GetPort(tempIndex));
+                SendPacket(packet);
+                clientList.RemoveClient(clientList.GetIP(tempIndex));
+            }catch(Exception e){e.printStackTrace();}
+        }
     }
 
     /* CloserServer() should be called when multiplayer is over. */
