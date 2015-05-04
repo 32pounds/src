@@ -7,6 +7,7 @@ import com.renderer.Drawable;
 import com.renderer.SpriteStorage;
 import com.map.Position;
 import com.model.VirusManager;
+import java.util.*;
 
 public class Map extends Drawable {
     //this grid is [y][x] to make parsing _much_ easier
@@ -14,21 +15,31 @@ public class Map extends Drawable {
     public static final int XDIMENSION = 32;
     public static final int YDIMENSION = 32;
 
-    // identifies bounds for map areas
-    public final int MapWidth = grid[0].length;
-    public static final int CyberStartY = 170;
-    public final int MapHeight = grid.length;
+    public final int mapWidth;
+    public final int cyberStartY;
+    public final int mapHeight;
 
-    // tracks placement of cyberspace virus entries
-    public int entryTotal = 6;
-    private int entryCount = 0;
-    public int EntryCoords[][] = new int[entryTotal][2];
+    public int entryTotal;
+    private int entryCount;
+    public ArrayList EntryCoords;
+    public ArrayList xCoord;
+    public ArrayList yCoord;
 
     public Map() {
         FileHandle mapOne = Gdx.files.internal("Level_1_Big_Map.map");
 
         //create the grid with the map
         grid = parseGrid(mapOne);
+        mapWidth = grid[0].length;
+        mapHeight = grid.length;
+        cyberStartY = 170;
+        
+        // tracks placement of cyberspace virus entries
+        entryTotal = 6;
+        entryCount = 0;
+        EntryCoords= new ArrayList();
+        xCoord = new ArrayList<Integer>();
+        yCoord = new ArrayList<Integer>();
     }
 
     // specifies tile drawing instructions for all map symbols
@@ -118,8 +129,10 @@ public class Map extends Drawable {
                     case '#':
                         batch.draw(SpriteStorage.getInstance().getTexture("CyberFloor"), x * XDIMENSION, y * YDIMENSION);
                         // records location of '#' as a cyberspace virus entry
-                        EntryCoords[entryCount][0] = x;
-                        EntryCoords[entryCount][1] = y;
+                        //EntryCoords[entryCount][0] = x;
+                        //EntryCoords[entryCount][1] = y;
+                        xCoord.add(x);
+                        yCoord.add(y);
                         entryCount++;
                         break;
                     case 'H':
@@ -163,29 +176,31 @@ public class Map extends Drawable {
     // gives horizontal bound for all map areas
     public int getXBound()
     {
-        return MapWidth;
+        return mapWidth;
     }
 
     // gives vertical bound for standard map area
     public int getYBound()
     {
-	return MapHeight;
+	return mapHeight;
     }
 
     // gives starting vertical bound for cyberspace map area
     public int getCyberYStart()
     {
-	return CyberStartY;
+	return cyberStartY;
     }
 
     // gives ending vertical bound for cyberspace map area
     public int getCyberYBound()
     {
-	return MapHeight;
+	return mapHeight;
     }
 
     // triggers spawning of virus entries from coordinate record
-    public int[][] getVirusEntries(){
+    public ArrayList getVirusEntries(){
+        EntryCoords.add(xCoord);
+        EntryCoords.add(yCoord);
         return EntryCoords; 
     }
 

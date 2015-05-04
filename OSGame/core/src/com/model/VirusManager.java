@@ -66,10 +66,12 @@ public class VirusManager {
     }
     
     private void initializeVirusEntries() {
-        int [][] Coord = map.getVirusEntries();
-        int total = Coord[0].length;
+        ArrayList Coord = map.getVirusEntries();
+        ArrayList<Integer> xCoord = (ArrayList) Coord.get(0);
+        ArrayList<Integer> yCoord = (ArrayList) Coord.get(1);
+        int total = xCoord.size();
         for (int i = 0; i < total; i++){
-            id = gameLoop.spawnVirusEntry(Coord[0][i], Coord[1][i]);
+            id = gameLoop.spawnVirusEntry(xCoord.get(i), yCoord.get(i));
             entries.add(id);
         }
     }
