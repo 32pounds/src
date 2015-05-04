@@ -18,6 +18,9 @@ import com.model.Entity;
 import com.model.Monster;
 import com.model.MonsterDistance;
 import com.model.MonsterTowards;
+import com.model.Virus;
+import com.model.VirusEntry;
+import com.model.VirusQueen;
 import com.model.Player;
 import com.model.PopupMenu;
 import com.model.VirusManager;
@@ -35,17 +38,18 @@ public class GameLoop extends Thread {
 
     //list that will be updated every thread loop
     private List<Updatable> updatables;
-
     private GameState gameState;
+    private int roachTarget;
+    Monster monster;
 
-
+    //to add sound
+    Sound splat = Gdx.audio.newSound(Gdx.files.internal("sounds/Squish.mp3"));
+        
     public GameLoop() {
         updatables = new ArrayList<Updatable>();
         running = true;
 
-        // initialize monster variables
-        private int roachTarget = 100;
-        Monster monster;
+
 
         //this is only temporary; the server should make its own in the future
         initializeGameState();
@@ -55,9 +59,8 @@ public class GameLoop extends Thread {
         gameState = new GameState(new Map());
         Random rand=new Random();
         int id;
-
-        //to add sound
-        Sound splat = Gdx.audio.newSound(Gdx.files.internal("sounds/Squish.mp3"));
+        // initialize monster variables
+        roachTarget = 100;
 
         // initialize standard monsters
         for(int i=0; i<roachTarget; i++){
@@ -79,7 +82,7 @@ public class GameLoop extends Thread {
         }
 
         // initialize cyberspace monsters
-        VirusManager virusManager = new VirusManager(gameState);
+        VirusManager virusManager = new VirusManager(gameState, this);
     }
 
     public GameID requestNewPlayer(){
@@ -137,7 +140,29 @@ public class GameLoop extends Thread {
             }
         }
     }
+    // spawn a virus entry
+    public GameID spawnVirusEntry (int X, int Y) {
+        monster=new VirusEntry(gameState, "VirusEntry", splat, X, Y);
+        GameID id = gameState.register(monster);
+        addUpdatable(monster);
+        return id;
+    }
 
+    // spawn a virus 
+    public GameID spawnVirusQueen (int X, int Y) {
+        monster=new VirusQueen(gameState, "VirusQueen", splat, X, Y);
+        GameID id= gameState.register(monster);
+        addUpdatable(monster);
+        return id;
+    }
+    
+    // spawn a virus 
+    public GameID spawnVirus (int X, int Y) {
+        monster=new Virus(gameState, "Virus", splat, X, Y);
+        GameID id = gameState.register(monster);
+        addUpdatable(monster);
+        return id;
+    }
 
 }
 

@@ -35,16 +35,15 @@ public class GameLoop extends Thread {
 
     //list that will be updated every thread loop
     private List<Updatable> updatables;
-
     private GameState gameState;
-
+    private int roachTarget;
 
     public GameLoop() {
         updatables = new ArrayList<Updatable>();
         running = true;
 
         // initialize monster variables
-        private int roachTarget = 100;
+        roachTarget = 100;
         Monster monster;
 
         //this is only temporary; the server should make its own in the future
@@ -79,7 +78,7 @@ public class GameLoop extends Thread {
         }
 
         // initialize cyberspace monsters
-        VirusHandler virusHandler = new VirusHandler(gameState);
+        VirusManager virusManager = new VirusManager(gameState);
     }
 
     public GameID requestNewPlayer(){

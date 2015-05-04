@@ -15,9 +15,9 @@ public class Map extends Drawable {
     public static final int YDIMENSION = 32;
 
     // identifies bounds for map areas
-    public static final int MapWidth = grid[0].length;
+    public final int MapWidth = grid[0].length;
     public static final int CyberStartY = 170;
-    public static final int MapHeight = grid.length;
+    public final int MapHeight = grid.length;
 
     // tracks placement of cyberspace virus entries
     public int entryTotal = 6;
@@ -169,7 +169,7 @@ public class Map extends Drawable {
     // gives vertical bound for standard map area
     public int getYBound()
     {
-	return CyberStartY;
+	return MapHeight;
     }
 
     // gives starting vertical bound for cyberspace map area
@@ -185,10 +185,8 @@ public class Map extends Drawable {
     }
 
     // triggers spawning of virus entries from coordinate record
-    public void triggerVirusEntries(){
-        for (int i = 0; i < entryTotal; i++) {
-            virusManager.spawnVirusEntry(EntryCoords[i][0], EntryCoords[i][1]);
-        }
+    public int[][] getVirusEntries(){
+        return EntryCoords; 
     }
 
     @Override

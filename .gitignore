@@ -66,3 +66,5 @@ build
 
 ## Sublime
 gradlew.sublime-workspace
+/OSGame/32p/.nb-gradle/private/
+/OSGame/32p/.nb-gradle/profiles/private/

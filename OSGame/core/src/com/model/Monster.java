@@ -62,13 +62,13 @@ public class Monster extends Entity implements Updatable{
     {
         dead=img;
     }
-
+/*
     // change sound of monster death
     public void changeSplat(String sound)
     {
         splat=sound;
     }
-
+*/
     @Override
     public void update()
     {

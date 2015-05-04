@@ -17,6 +17,10 @@ import com.comms.GameID;
 import com.map.Map;
 import com.model.Entity;
 import com.model.Player;
+import com.model.VirusEntry;
+import com.model.VirusQueen;
+import com.model.Virus;
+import com.gameloop.GameLoop;
 import com.renderer.Drawable;
 import java.util.*;
 import java.util.concurrent.*;
@@ -35,47 +39,61 @@ import java.util.Collection;
 
 public class VirusManager {
 
-    public VirusManager (GameState gameState) {
+    private int virusTarget;
+    private int virusQueenTarget;
+    private int virusCount;
+    private int virusQueenCount;
+    Monster virus;
+    GameID id;
+    GameState gameState;
+    Map map;
+    private List entries;
+    private List queens;
+    private List viruses;
+    private GameLoop gameLoop;
+
+    public VirusManager (GameState gameState, GameLoop gl) {
         // initialize virus variables
-        private int virusTarget = 50;
-        private int virusQueenTarget = 5;
-        private int virusCount = 0;
-        private int virusQueenCount = 0;
-        Monster virus;
-
+        gameLoop = gl;
+        virusTarget = 50;
+        virusQueenTarget = 5;
+        virusCount = 0;
+        virusQueenCount = 0;
+        map = gameState.gameMap();
+        entries = new ArrayList();
+        queens = new ArrayList();
+        viruses = new ArrayList();
     }
-
-    // spawn a virus entry
-    public void spawnVirusEntry (int X, int Y) {
-        virus=new Monster(gameState, "VirusEntry", splat, X, Y);
-        gameState.register(virus);
-        addUpdatable(virus);
-    }
-
-    // spawn a virus if count is below target
-    public boolean spawnVirus (int X, int Y) {
-        if (virusCount < virusTarget) {
-            virus=new Monster(gameState, "Virus", splat, X, Y);
-            virusCount++;
-            gameState.register(virus);
-            addUpdatable(virus);
-            return true;
+    
+    private void initializeVirusEntries() {
+        int [][] Coord = map.getVirusEntries();
+        int total = Coord[0].length;
+        for (int i = 0; i < total; i++){
+            id = gameLoop.spawnVirusEntry(Coord[0][i], Coord[1][i]);
+            entries.add(id);
         }
-        return false;
     }
 
     // spawn a virus queen if count is below target
-    public boolean spawnVirusQueen (int X, int Y) {
+    public boolean okaySpawnQueen (int X, int Y) {
         if (virusQueenCount < virusQueenTarget) {
-            virus=new VirusQueen(gameState, "VirusQueen", splat, X, Y);
+            id = gameLoop.spawnVirusQueen(X,Y);
             virusQueenCount++;
-            gameState.register(virus);
-            addUpdatable(virus);
             return true;
         }
         return false;
     }
 
+    // spawn a virus if count is below target
+    public boolean okaySpawnVirus (int X, int Y) {
+        if (virusCount < virusTarget) {
+            id = gameLoop.spawnVirus(X, Y);
+            virusCount++;
+            return true;
+        }
+        return false;
+    }
+    
     // lower virus count by 1
     public void virusDied() {
         virusCount--;
