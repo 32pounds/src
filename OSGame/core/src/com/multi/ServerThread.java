@@ -209,7 +209,7 @@ public class ServerThread extends Thread{
                 byte[] buff = new byte[1];
                 packet =
                     new DatagramPacket(buff, buff.length, clientList.GetIP(tempIndex), clientList.GetPort(tempIndex));
-                SendPacket(packet);
+                SendPacket(packet); 
                 clientList.RemoveClient(clientList.GetIP(tempIndex));
             }catch(Exception e){e.printStackTrace();}
         }

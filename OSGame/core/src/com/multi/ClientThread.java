@@ -6,7 +6,6 @@ package com.multi;
 
 import com.multi.MessageHandler;
 import com.comms.*;
-
 import java.net.*;
 import java.io.*;
 import java.util.*;
@@ -15,9 +14,7 @@ import java.util.*;
 public class ClientThread{
     private int myPort;
     private int remotePort;
-    protected DatagramSocket udpSocket1 = null;
     protected static BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-    protected PrintWriter out = null;
     private String serverAddress = "127.0.0.1";
     private DatagramSocket udpSocket = null;
     private DatagramPacket packet = null;
@@ -29,6 +26,7 @@ public class ClientThread{
         this.handler = handler;
         this.myPort = myPort;
         this.remotePort = servPort;
+
         in = new BufferedReader(new InputStreamReader(System.in));
 
         try{
@@ -105,14 +103,7 @@ public class ClientThread{
      * in above variables.
      */
     public void ConnectToServer(){
-
         try{
-            // Create UDP socket.
-            System.out.println("CLIENT: Creating socket...");
-
-
-            System.out.println("CLIENT: Socket created @ port: " + udpSocket.getLocalPort());
-
             // Send UDP request to server.
             byte[] buf = new byte[0];
             servAddress = InetAddress.getByName(serverAddress);
@@ -152,10 +143,6 @@ public class ClientThread{
     /* RecieveGameState() will continually recieve UDP packets,
      * and print out the info
      *
-     * TODO: RecieveGameState() shouldn't return "void" but rather
-     * a list of entities that it gets from the udp packet, or a
-     * character array list that get's taken care of by the parser
-     * depending on how this is all gonna go.
      */
     public void RecieveGameState() throws InterruptedException{
         try{
@@ -165,10 +152,7 @@ public class ClientThread{
             if ( (gamePacket.getAddress()).equals(servAddress) ){
                 byte[] data = gamePacket.getData();
                 handler.process(new String(data));
-            }else if(gamePacket.getLength() == 1){ 
-                System.out.println("Idle timeout falling back!");
-                JoinGame(); // For now we'll fall back to single player mode.
-            }
+            } 
         }catch(SocketTimeoutException e){
         }catch(Exception e){e.printStackTrace();}
     }
