@@ -143,24 +143,24 @@ public class GameLoop extends Thread {
         }
     }
     // spawn a virus entry
-    public GameID spawnVirusEntry (Position pos) {
-        monster=new VirusEntry(gameState, "VirusEntry", splat, pos);
+    public GameID spawnVirusEntry (VirusManager manager) {
+        monster=new VirusEntry(gameState, "VirusEntry", splat, manager);
         GameID id = gameState.register(monster);
         addUpdatable(monster);
         return id;
     }
 
     // spawn a virus 
-    public GameID spawnVirusQueen (Position pos) {
-        monster=new VirusQueen(gameState, "VirusQueen", splat, pos);
+    public GameID spawnVirusQueen (VirusManager manager) {
+        monster=new VirusQueen(gameState, "VirusQueen", splat, manager);
         GameID id= gameState.register(monster);
         addUpdatable(monster);
         return id;
     }
     
     // spawn a virus 
-    public GameID spawnVirus (Position pos) {
-        monster=new Virus(gameState, "Virus", splat, pos);
+    public GameID spawnVirus (VirusManager manager) {
+        monster=new Virus(gameState, "Virus", splat, manager);
         GameID id = gameState.register(monster);
         addUpdatable(monster);
         return id;

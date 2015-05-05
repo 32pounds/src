@@ -20,17 +20,18 @@ import com.map.Position;
 public class VirusEntry extends Monster
 {
     public Map map;
+    VirusManager manager;
     
-    public VirusEntry(GameState state, String img, Sound splatSound, Position pos) 
+    public VirusEntry(GameState state, String img, Sound splatSound, VirusManager mngr) 
     {
         super(state, img, splatSound);
         super.changeAlive("VirusEntry");
-        //super.changeDeath("CyberFloor");
-        super.changeDeath("!");
+        super.changeDeath("Blank");
 	//super.changeSplat("");
         UPDATE_INTERVAL=10000;
         map=gameState.gameMap();
-        position = pos;
+        manager = mngr;
+        position = manager.placeVirusEntry();
     }
     
     @Override
@@ -38,7 +39,7 @@ public class VirusEntry extends Monster
     {
         if(isDead()==true)
             return;
-
+        map=gameState.gameMap();
         if(wasDead==true)
         {
             //come alive

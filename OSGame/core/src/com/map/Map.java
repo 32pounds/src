@@ -21,7 +21,7 @@ public class Map extends Drawable {
 
     public int entryTotal;
     private int entryCount;
-    public ArrayList EntryCoords;
+    public ArrayList<Position> EntryCoords;
     public Position position;
     //public ArrayList xCoord;
     //public ArrayList yCoord;
@@ -130,12 +130,8 @@ public class Map extends Drawable {
                     case '#':
                         batch.draw(SpriteStorage.getInstance().getTexture("CyberFloor"), x * XDIMENSION, y * YDIMENSION);
                         // records location of '#' as a cyberspace virus entry
-                        //EntryCoords[entryCount][0] = x;
-                        //EntryCoords[entryCount][1] = y;
-                        position = new Position(x,y);
+                        position = new Position(y,x);  // remember: this parser swapped 'y' and 'x'
                         EntryCoords.add(position);
-                        //xCoord.add(x);
-                        //yCoord.add(y);
                         entryCount++;
                         break;
                     case 'H':
@@ -202,9 +198,12 @@ public class Map extends Drawable {
 
     // triggers spawning of virus entries from coordinate record
     public ArrayList getVirusEntries(){
-        //EntryCoords.add(xCoord);
-        //EntryCoords.add(yCoord);
         return EntryCoords; 
+    }
+    
+    // gives the count of virus entries
+    public int getEntryCount() {
+        return entryCount;
     }
 
     @Override

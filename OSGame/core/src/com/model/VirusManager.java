@@ -63,12 +63,15 @@ public class VirusManager {
     private List viruses;
     private GameLoop gameLoop;
     private Position nullPosition;
+    private ArrayList<Position> EntryPositions;
+    private int entryCount;
+    private int entryIndex;
 
     // manages virus population
     public VirusManager (GameState gameState, GameLoop loop) {
         // initialize virus variables
         gameLoop = loop;
-        virusTarget = 50;
+        virusTarget = 40;
         virusQueenTarget = 5;
         virusCount = 0;
         virusQueenCount = 0;
@@ -80,25 +83,49 @@ public class VirusManager {
         spawnAtEntry = 0;
         spawnAtQueen = 0;
         nullPosition = new Position(0,0);
+        EntryPositions = map.getVirusEntries();
+        entryCount = map.getEntryCount();
+        entryIndex = 0;
         
         // spawn viruses
         initializeVirusEntries();
-        //initializeVirusQueens()
-        //initializeViruses()
+        initializeVirusQueens();
+        initializeViruses();
     }
     
     private void initializeVirusEntries() {
-        ArrayList<Position> EntryPositions = map.getVirusEntries();
+
         //ArrayList<Integer> xCoord = (ArrayList) Coord.get(0);
         //ArrayList<Integer> yCoord = (ArrayList) Coord.get(1);
-        virusEntryCount = EntryPositions.size();
-        for (int i = 0; i < virusEntryCount; i++){
-            id = gameLoop.spawnVirusEntry(EntryPositions.get(i));
+        for (int i = 0; i < entryCount; i++){
+            id = gameLoop.spawnVirusEntry(this);
             entries.add(id);
             virusEntryCount++;
         }
     }
-
+    
+    private void initializeVirusQueens() {
+        for (int i = 0; i < virusQueenTarget; i++){
+            id = gameLoop.spawnVirusQueen(this);
+            queens.add(id);
+            virusQueenCount++;
+        }        
+    }
+    
+    private void initializeViruses() {
+        for (int i = 0; i < virusTarget; i++){
+            id = gameLoop.spawnVirus(this);
+            queens.add(id);
+            virusCount++;
+        }        
+    }
+    
+    public Position placeVirusEntry() {
+        Position position = EntryPositions.get(entryIndex);
+        entryIndex++;
+        return position;
+    }
+    
     // respawn a virus queen if live entry found
     public Position respawnQueen (GameID asker) {
         Position position = nullPosition;
