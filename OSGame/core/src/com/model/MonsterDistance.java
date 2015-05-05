@@ -51,6 +51,7 @@ public class MonsterDistance extends Monster
         }
         else
         {
+            //check if dead
             if(squished()==true)
             {
                 deathTime=TimeUtils.millis();
@@ -61,51 +62,62 @@ public class MonsterDistance extends Monster
             else if(TimeUtils.millis()-lastUpdateTime > UPDATE_INTERVAL)
             {
                 lastUpdateTime=TimeUtils.millis();
-                if(closestPlayer==null) 
+                if(closestPlayer==null) //if no players are in the game, do nothing
                     return;
+                //if player is on your right
                 if(closestPlayer.getXPos()>getXPos())
                 {
+                    //try to move left
                     if(map.isWalkable(getXPos()-1,getYPos())==true)
                         super.move(Direction.WEST);
+                    //if the player is above you, try to move down
                     else if(closestPlayer.getYPos()>getYPos()) 
                     {
                         super.move(Direction.SOUTH);
                     }
-                    else //if(hunter.getYPos()<getYPos()) 
+                    else //as a last resort, move up
                     {
                         super.move(Direction.NORTH);
                     }
                 }
+                //if player is on your left
                 else if(closestPlayer.getXPos()<getXPos())
                 {
+                    //move right if possible
                     if(map.isWalkable(getXPos()+1,getYPos())==true)
                         super.move(Direction.EAST);
+                    //if player is above you, move down
                     else if(closestPlayer.getYPos()>getYPos()) 
                     {
                         super.move(Direction.SOUTH);
                     }
-                    else //if(hunter.getYPos()<getYPos()) 
+                    else  
                     {
                         super.move(Direction.NORTH);
                     }
                 }
+                //if the player is above you
                 else if(closestPlayer.getYPos()>getYPos())
                 {
+                    //try to move down
                     if(map.isWalkable(getXPos(),getYPos()-1)==true)
                         super.move(Direction.SOUTH);
+                    //if the player is on your right run left
                     else if(closestPlayer.getXPos()>getXPos()) 
                     {
                         super.move(Direction.WEST);
                     }
-                    else //if(hunter.getYPos()<getYPos()) 
+                    else  
                     {
                         super.move(Direction.EAST);
                     }
                 }
                 else
                 {
+                    //the player must be below you, try to run up
                     if(map.isWalkable(getXPos(),getYPos()+1)==true)
                         super.move(Direction.NORTH);
+                    //if the player is on your right, run left
                     else if(closestPlayer.getXPos()>getXPos()) 
                     {
                         super.move(Direction.WEST);
