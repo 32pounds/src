@@ -71,6 +71,7 @@ public class Monster extends Entity implements Updatable{
             wasDead=false;
             changeSprite(alive);
             int x,y;
+            //generate a random valid X,Y spot to spawn
             do
             {
                 x=randomGen.nextInt(map.getXBound());

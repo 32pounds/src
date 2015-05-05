@@ -39,6 +39,7 @@ public class MonsterTowards extends Monster
             wasDead=false;
             changeSprite(alive);
             int x,y;
+            //generate a random valid X,Y spot to spawn
             do
             {
                 x=randomGen.nextInt(map.getXBound());
@@ -48,6 +49,7 @@ public class MonsterTowards extends Monster
         }
         else
         {
+            //check to see if it is dead
             if(squished()==true)
             {
                 deathTime=TimeUtils.millis();
@@ -58,16 +60,16 @@ public class MonsterTowards extends Monster
             else if(TimeUtils.millis()-lastUpdateTime > UPDATE_INTERVAL)
             {
                 lastUpdateTime=TimeUtils.millis();
-                if(closestPlayer==null) 
+                if(closestPlayer==null) //if no players in the game, do nothing
                     return;
-                if(closestPlayer.getXPos()>getXPos())
+                if(closestPlayer.getXPos()>getXPos()) //if player on the right, move right
                     super.move(Direction.EAST);
-                else if(closestPlayer.getXPos()<getXPos())
+                else if(closestPlayer.getXPos()<getXPos()) //if player on left, move left
                     super.move(Direction.WEST);
-                else if(closestPlayer.getYPos()>getYPos())
+                else if(closestPlayer.getYPos()>getYPos()) //if player above you, move up
                     super.move(Direction.NORTH);
                 else
-                    super.move(Direction.SOUTH);
+                    super.move(Direction.SOUTH); //player must be below you
             }
         }
     }
