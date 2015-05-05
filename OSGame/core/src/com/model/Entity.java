@@ -17,26 +17,17 @@ public class Entity extends Drawable{
     //sprite of the player
     //I am using a Sprite cuz texture doesn't have rotation
     protected Sprite sprite;
+    public Map map;
 
     //This will be a shorter identifier in the future
     protected String spriteString;
-    public String getSpriteString(){
-        return spriteString;
-    }
 
     //initial position of the player
     protected Position position;
     protected GameState gameState;
 
-
     //The GameID being used to reference this entity remotely
     private GameID id;
-    public GameID getID(){
-        return id;
-    }
-    public void assignID(GameID newID){
-        id = newID;
-    }
 
     /**
      * Provide a way to access map data, but after game state finished this property must be ripped off from here.
@@ -49,6 +40,18 @@ public class Entity extends Drawable{
         spriteString = img;
         //temporarily here
         this.gameState = state;
+        map = gameState.gameMap();
+    }
+
+    public String getSpriteString(){
+        return spriteString;
+    }
+
+    public GameID getID(){
+        return id;
+    }
+    public void assignID(GameID newID){
+        id = newID;
     }
 
     public void changeSprite(String img)
@@ -102,7 +105,7 @@ public class Entity extends Drawable{
     }
 
     public synchronized void move(Direction dir) {
-        Map map = gameState.gameMap();
+
         int x = getXPos();
         int y = getYPos();
         switch (dir) {

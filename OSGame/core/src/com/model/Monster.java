@@ -31,6 +31,10 @@ public class Monster extends Entity implements Updatable{
     protected Sound splat;
     protected Player closestPlayer;
     protected boolean wasDead;
+    public Map map;
+    private int xBound;
+    private int yStart;
+    private int yRange;
 
     public Monster(GameState state, String img, Sound splatSound)
     {
@@ -42,6 +46,11 @@ public class Monster extends Entity implements Updatable{
         splat= splatSound;
         wasDead=true;
         closestPlayer=getClosestPlayer();
+        map = gameState.gameMap();
+        // coordinate (0,0) is the SouthEast corner
+        xBound = map.getXBound();
+        yStart = map.getCyberYStart();
+        yRange = map.getYBound() - yStart;
     }
 
     public boolean isDead()
@@ -51,6 +60,13 @@ public class Monster extends Entity implements Updatable{
         return true;
     }
 
+    // change image of monster alive
+    public void changeAlive(String img)
+    {
+        alive=img;
+    }
+
+    // change image of monster death
     public void changeDeath(String img)
     {
         dead=img;
@@ -59,7 +75,6 @@ public class Monster extends Entity implements Updatable{
     @Override
     public void update()
     {
-        Map map = gameState.gameMap();
         if(isDead()==true)
             return;
         else if(wasDead==true)
@@ -70,23 +85,14 @@ public class Monster extends Entity implements Updatable{
             int x,y;
             do
             {
-                x=randomGen.nextInt(map.getXBound());
-                y=randomGen.nextInt(map.getYBound());
+                x=randomGen.nextInt(xBound);
+                y=randomGen.nextInt(yRange)+yStart;
             }while(map.isWalkable(x,y)==false);
             position = new Position(x,y);
         }
         else
         {
-/*            Entity killer = state.getByID(hunter);
-            if(killer == null) return;
-            if(getXPos()==killer.getXPos() && getYPos()==killer.getYPos())
-            {
-                deathTime=TimeUtils.millis();
-                changeSprite(dead);
-                if(splat != null) splat.play();
-                wasDead=true;
-            }
-            else */
+
             if(squished()==true)
             {
                 deathTime=TimeUtils.millis();

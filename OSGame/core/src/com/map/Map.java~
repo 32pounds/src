@@ -6,8 +6,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.renderer.Drawable;
 import com.renderer.SpriteStorage;
 import com.map.Position;
-import com.model.VirusManager;
-import java.util.*;
 
 public class Map extends Drawable {
     //this grid is [y][x] to make parsing _much_ easier
@@ -15,32 +13,21 @@ public class Map extends Drawable {
     public static final int XDIMENSION = 32;
     public static final int YDIMENSION = 32;
 
-    public final int mapWidth;
-    public final int cyberStartY;
-    public final int mapHeight;
+    // identifies bounds for map areas
+    public static final int MapWidth = grid[0].length;
+    public static final int CyberStartY = 170;
+    public static final int MapHeight = grid.length;
 
-    public int entryTotal;
-    private int entryCount;
-    public ArrayList<Position> EntryCoords;
-    public Position position;
-    //public ArrayList xCoord;
-    //public ArrayList yCoord;
+    // tracks placement of cyberspace virus entries
+    public int entryTotal = 6;
+    private int entryCount = 0;
+    public int EntryCoords[][] = new int[entryTotal][2];
 
     public Map() {
         FileHandle mapOne = Gdx.files.internal("Level_1_Big_Map.map");
 
         //create the grid with the map
         grid = parseGrid(mapOne);
-        mapWidth = grid[0].length;
-        mapHeight = grid.length;
-        cyberStartY = 170;
-        
-        // tracks placement of cyberspace virus entries
-        entryTotal = 6;
-        entryCount = 0;
-        EntryCoords= new ArrayList();
-        //xCoord = new ArrayList<Integer>();
-        //yCoord = new ArrayList<Integer>();
     }
 
     // specifies tile drawing instructions for all map symbols
@@ -130,8 +117,8 @@ public class Map extends Drawable {
                     case '#':
                         batch.draw(SpriteStorage.getInstance().getTexture("CyberFloor"), x * XDIMENSION, y * YDIMENSION);
                         // records location of '#' as a cyberspace virus entry
-                        position = new Position(y,x);  // remember: this parser swapped 'y' and 'x'
-                        EntryCoords.add(position);
+                        EntryCoords[entryCount][0] = x;
+                        EntryCoords[entryCount][1] = y;
                         entryCount++;
                         break;
                     case 'H':
@@ -175,35 +162,32 @@ public class Map extends Drawable {
     // gives horizontal bound for all map areas
     public int getXBound()
     {
-        return mapWidth;
+        return MapWidth;
     }
 
     // gives vertical bound for standard map area
     public int getYBound()
     {
-	return mapHeight;
+	return CyberStartY;
     }
 
     // gives starting vertical bound for cyberspace map area
     public int getCyberYStart()
     {
-	return cyberStartY;
+	return CyberStartY;
     }
 
     // gives ending vertical bound for cyberspace map area
     public int getCyberYBound()
     {
-	return mapHeight;
+	return MapHeight;
     }
 
     // triggers spawning of virus entries from coordinate record
-    public ArrayList getVirusEntries(){
-        return EntryCoords; 
-    }
-    
-    // gives the count of virus entries
-    public int getEntryCount() {
-        return entryCount;
+    public void triggerVirusEntries(){
+        for (int i = 0; i < entryTotal; i++) {
+            virusManager.spawnVirusEntry(EntryCoords[i][0], EntryCoords[i][1]);
+        }
     }
 
     @Override

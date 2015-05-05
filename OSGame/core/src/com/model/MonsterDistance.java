@@ -20,11 +20,21 @@ import static com.model.Monster.randomGen;
  */
 public class MonsterDistance extends Monster
 {
-
+    public Map map;
+    private int xBound;
+    private int yStart;
+    private int yRange;
+    
+    
     public MonsterDistance(GameState state, String img, Sound splatSound) {
         super(state, img, splatSound);
         super.changeDeath("#");
         UPDATE_INTERVAL=150;
+        map = gameState.gameMap(); 
+        // coordinate (0,0) is the SouthEast corner
+        xBound = map.getXBound();
+        yStart = map.getCyberYStart();
+        yRange = map.getYBound()-yStart;
     }
 
     
@@ -32,7 +42,6 @@ public class MonsterDistance extends Monster
     @Override
     public void update()
     {
-        Map map=gameState.gameMap();
         closestPlayer=getClosestPlayer();
         if(isDead()==true)
             return;
@@ -44,8 +53,8 @@ public class MonsterDistance extends Monster
             int x,y;
             do
             {
-                x=randomGen.nextInt(map.getXBound());
-                y=randomGen.nextInt(map.getYBound());
+                x=randomGen.nextInt(xBound);
+                y=randomGen.nextInt(yRange)+yStart;
             }while(map.isWalkable(x,y)==false);
             position = new Position(x,y);
         }
