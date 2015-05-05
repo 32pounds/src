@@ -31,6 +31,9 @@ public class Monster extends Entity implements Updatable{
     protected Sound splat;
     protected Player closestPlayer;
     protected boolean wasDead;
+    public Map map;
+    private int xBound;
+    private int yBound;
 
     public Monster(GameState state, String img, Sound splatSound)
     {
@@ -42,6 +45,9 @@ public class Monster extends Entity implements Updatable{
         splat= splatSound;
         wasDead=true;
         closestPlayer=getClosestPlayer();
+        map = gameState.gameMap();
+        xBound = map.getXBound();
+        yBound = map.getCyberYStart();
     }
 
     public boolean isDead()
@@ -72,7 +78,6 @@ public class Monster extends Entity implements Updatable{
     @Override
     public void update()
     {
-        Map map = gameState.gameMap();
         if(isDead()==true)
             return;
         else if(wasDead==true)
@@ -83,8 +88,8 @@ public class Monster extends Entity implements Updatable{
             int x,y;
             do
             {
-                x=randomGen.nextInt(map.getXBound());
-                y=randomGen.nextInt(map.getYBound());
+                x=randomGen.nextInt(xBound);
+                y=randomGen.nextInt(yBound);
             }while(map.isWalkable(x,y)==false);
             position = new Position(x,y);
         }

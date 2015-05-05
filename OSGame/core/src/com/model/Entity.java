@@ -27,7 +27,7 @@ public class Entity extends Drawable{
     //initial position of the player
     protected Position position;
     protected GameState gameState;
-
+    Map map = gameState.gameMap();
 
     //The GameID being used to reference this entity remotely
     private GameID id;
@@ -102,7 +102,7 @@ public class Entity extends Drawable{
     }
 
     public synchronized void move(Direction dir) {
-        Map map = gameState.gameMap();
+
         int x = getXPos();
         int y = getYPos();
         switch (dir) {

@@ -1,3 +1,10 @@
+/* VirusManager.java
+ * by Elizabeth Hernandez
+ * 5-4-15
+ *
+ * manages the virus population and spawning
+ */
+
 package com.model;
 
 import com.gameloop.GameLoop;
@@ -15,6 +22,7 @@ import java.util.List;
 
 import com.comms.GameID;
 import com.map.Map;
+import com.map.Position;
 import com.model.Entity;
 import com.model.Player;
 import com.model.VirusEntry;
@@ -43,6 +51,9 @@ public class VirusManager {
     private int virusQueenTarget;
     private int virusCount;
     private int virusQueenCount;
+    private int virusEntryCount;
+    private int spawnAtEntry;
+    private int spawnAtQueen;
     Monster virus;
     GameID id;
     GameState gameState;
@@ -51,10 +62,12 @@ public class VirusManager {
     private List queens;
     private List viruses;
     private GameLoop gameLoop;
+    private Position nullPosition;
 
-    public VirusManager (GameState gameState, GameLoop gl) {
+    // manages virus population
+    public VirusManager (GameState gameState, GameLoop loop) {
         // initialize virus variables
-        gameLoop = gl;
+        gameLoop = loop;
         virusTarget = 50;
         virusQueenTarget = 5;
         virusCount = 0;
@@ -63,47 +76,82 @@ public class VirusManager {
         entries = new ArrayList();
         queens = new ArrayList();
         viruses = new ArrayList();
+        spawnAtEntry = 0;
+        spawnAtQueen = 0;
+        nullPosition = new Position(0,0);
+        
+        // spawn viruses
+        //initializeVirusEntries()
+        //initializeVirusQueens()
+        //initializeViruses()
     }
     
     private void initializeVirusEntries() {
-        ArrayList Coord = map.getVirusEntries();
-        ArrayList<Integer> xCoord = (ArrayList) Coord.get(0);
-        ArrayList<Integer> yCoord = (ArrayList) Coord.get(1);
-        int total = xCoord.size();
-        for (int i = 0; i < total; i++){
-            id = gameLoop.spawnVirusEntry(xCoord.get(i), yCoord.get(i));
+        ArrayList<Position> EntryPositions = map.getVirusEntries();
+        //ArrayList<Integer> xCoord = (ArrayList) Coord.get(0);
+        //ArrayList<Integer> yCoord = (ArrayList) Coord.get(1);
+        virusEntryCount = EntryPositions.size();
+        for (int i = 0; i < virusEntryCount; i++){
+            id = gameLoop.spawnVirusEntry(EntryPositions.get(i));
             entries.add(id);
+            virusEntryCount++;
         }
     }
 
-    // spawn a virus queen if count is below target
-    public boolean okaySpawnQueen (int X, int Y) {
-        if (virusQueenCount < virusQueenTarget) {
-            id = gameLoop.spawnVirusQueen(X,Y);
-            virusQueenCount++;
-            return true;
+    // respawn a virus queen if live entry found
+    public Position respawnQueen (GameID asker) {
+        Position position = nullPosition;
+        if (virusEntryCount > 0) {
+            position = findEntry();
+            if (position != nullPosition) {
+                // make queen live
+                virusQueenCount++;
+            }
         }
-        return false;
+        return position;
     }
 
-    // spawn a virus if count is below target
-    public boolean okaySpawnVirus (int X, int Y) {
+    // respawn a virus if live queen found
+    public boolean respawnVirus (GameID asker) {
         if (virusCount < virusTarget) {
-            id = gameLoop.spawnVirus(X, Y);
             virusCount++;
+            
             return true;
         }
         return false;
     }
     
-    // lower virus count by 1
-    public void virusDied() {
-        virusCount--;
+    // finds the position of the next live virus entry
+    public Position findEntry() {
+        int i = spawnAtEntry;
+        Position position = nullPosition;
+        do {
+            // check if virus entry is live
+            
+            // move index to next virus entry
+            i++;
+            if (i == virusEntryCount){
+                i = 0;
+            }
+        } while (i != spawnAtEntry);
+        return position;
+    }
+    
+    // mark virus entry as dead
+    public void virusEntryDied(GameID sender) {
+        // mark entry as dead
+        virusEntryCount--;
     }
 
-    // lower virus queen count by 1
-    public void virusQueenDied() {
+    // mark virus queen as dead
+    public void virusQueenDied(GameID sender) {
         virusQueenCount--;
+    }
+    
+    // mark virus entry as alive
+    public void virusEntryRespawned() {
+        // mark entry as alive
+        virusEntryCount++;
     }
 
 

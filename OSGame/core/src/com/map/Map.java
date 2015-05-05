@@ -22,8 +22,9 @@ public class Map extends Drawable {
     public int entryTotal;
     private int entryCount;
     public ArrayList EntryCoords;
-    public ArrayList xCoord;
-    public ArrayList yCoord;
+    public Position position;
+    //public ArrayList xCoord;
+    //public ArrayList yCoord;
 
     public Map() {
         FileHandle mapOne = Gdx.files.internal("Level_1_Big_Map.map");
@@ -38,8 +39,8 @@ public class Map extends Drawable {
         entryTotal = 6;
         entryCount = 0;
         EntryCoords= new ArrayList();
-        xCoord = new ArrayList<Integer>();
-        yCoord = new ArrayList<Integer>();
+        //xCoord = new ArrayList<Integer>();
+        //yCoord = new ArrayList<Integer>();
     }
 
     // specifies tile drawing instructions for all map symbols
@@ -131,8 +132,10 @@ public class Map extends Drawable {
                         // records location of '#' as a cyberspace virus entry
                         //EntryCoords[entryCount][0] = x;
                         //EntryCoords[entryCount][1] = y;
-                        xCoord.add(x);
-                        yCoord.add(y);
+                        position = new Position(x,y);
+                        EntryCoords.add(position);
+                        //xCoord.add(x);
+                        //yCoord.add(y);
                         entryCount++;
                         break;
                     case 'H':
@@ -199,8 +202,8 @@ public class Map extends Drawable {
 
     // triggers spawning of virus entries from coordinate record
     public ArrayList getVirusEntries(){
-        EntryCoords.add(xCoord);
-        EntryCoords.add(yCoord);
+        //EntryCoords.add(xCoord);
+        //EntryCoords.add(yCoord);
         return EntryCoords; 
     }
 

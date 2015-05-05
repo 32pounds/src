@@ -24,6 +24,7 @@ import com.model.VirusQueen;
 import com.model.Player;
 import com.model.PopupMenu;
 import com.model.VirusManager;
+import com.map.Position;
 import com.renderer.Drawable;
 import com.renderer.SpriteStorage;
 import com.renderer.Updatable;
@@ -41,6 +42,7 @@ public class GameLoop extends Thread {
     private GameState gameState;
     private int roachTarget;
     Monster monster;
+    Position position;
 
     //to add sound
     Sound splat = Gdx.audio.newSound(Gdx.files.internal("sounds/Squish.mp3"));
@@ -141,24 +143,24 @@ public class GameLoop extends Thread {
         }
     }
     // spawn a virus entry
-    public GameID spawnVirusEntry (int X, int Y) {
-        monster=new VirusEntry(gameState, "VirusEntry", splat, X, Y);
+    public GameID spawnVirusEntry (Position pos) {
+        monster=new VirusEntry(gameState, "VirusEntry", splat, pos.getX(), pos.getY());
         GameID id = gameState.register(monster);
         addUpdatable(monster);
         return id;
     }
 
     // spawn a virus 
-    public GameID spawnVirusQueen (int X, int Y) {
-        monster=new VirusQueen(gameState, "VirusQueen", splat, X, Y);
+    public GameID spawnVirusQueen (Position pos) {
+        monster=new VirusQueen(gameState, "VirusQueen", splat, pos.getX(), pos.getY());
         GameID id= gameState.register(monster);
         addUpdatable(monster);
         return id;
     }
     
     // spawn a virus 
-    public GameID spawnVirus (int X, int Y) {
-        monster=new Virus(gameState, "Virus", splat, X, Y);
+    public GameID spawnVirus (Position pos) {
+        monster=new Virus(gameState, "Virus", splat, pos.getX(), pos.getY());
         GameID id = gameState.register(monster);
         addUpdatable(monster);
         return id;

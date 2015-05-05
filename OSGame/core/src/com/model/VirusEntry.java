@@ -19,6 +19,8 @@ import com.map.Position;
  */
 public class VirusEntry extends Monster
 {
+    public Map map;
+    
     public VirusEntry(GameState state, String img, Sound splatSound, int X, int Y) 
     {
         super(state, img, splatSound);
@@ -26,6 +28,7 @@ public class VirusEntry extends Monster
         super.changeDeath("CyberFloor");
 	//super.changeSplat("");
         UPDATE_INTERVAL=10000;
+        map=gameState.gameMap();
     }
     
     @Override
@@ -34,21 +37,11 @@ public class VirusEntry extends Monster
         if(isDead()==true)
             return;
 
-        Map map=gameState.gameMap();
-        closestPlayer=getClosestPlayer();
-
         if(wasDead==true)
         {
-            //set image and rand X/Y
+            //come alive
             wasDead=false;
             changeSprite(alive);
-            int x,y;
-            do
-            {
-                x=randomGen.nextInt(map.getXBound());
-                y=randomGen.nextInt(map.getYBound());
-            }while(map.isWalkable(x,y)==false);
-            position = new Position(x,y);
         }
         else
         {
@@ -60,28 +53,14 @@ public class VirusEntry extends Monster
                 wasDead=true;
             }
 
-            // check if it's time to take a step
+            // time to try to spawn a virus queen
             else if(TimeUtils.millis()-lastUpdateTime > UPDATE_INTERVAL)
-            {   // seek player to chase
+            {   
+                // reset update timer
                 lastUpdateTime=TimeUtils.millis();
-                if(closestPlayer==null) 
-                    return;
-
-                // get coordinates of self and closest player
-                int myX = getXPos();
-                int myY = getXPos();
-                int playerX = closestPlayer.getXPos();
-                int playerY = closestPlayer.getYPos();
-
-                // chase closest player
-                if(playerX > myX)
-                    super.move(Direction.EAST);
-                else if(playerX < myX)
-                    super.move(Direction.WEST);
-                else if(playerY > myY)
-                    super.move(Direction.NORTH);
-                else
-                    super.move(Direction.SOUTH);
+                
+                // ask to spawn queen
+                
             }
         }
     }
