@@ -19,13 +19,21 @@ import com.map.Position;
  */
 public class Virus extends Monster
 {
-    public Virus(GameState state, String img, Sound splatSound, int X, int Y) 
+    public Map map;
+    private int xBound;
+    private int yBound;
+    
+    public Virus(GameState state, String img, Sound splatSound, Position pos) 
     {
         super(state, img, splatSound);
         super.changeAlive("VirusEntry");
         super.changeDeath("CyberFloor");
 	//super.changeSplat("");
         UPDATE_INTERVAL=10000;
+        position = pos;
+        map = gameState.gameMap();
+        xBound = map.getXBound();
+        yBound = map.getCyberYStart();
     }
     
     @Override
@@ -34,7 +42,6 @@ public class Virus extends Monster
         if(isDead()==true)
             return;
 
-        Map map=gameState.gameMap();
         closestPlayer=getClosestPlayer();
 
         if(wasDead==true)
@@ -45,8 +52,8 @@ public class Virus extends Monster
             int x,y;
             do
             {
-                x=randomGen.nextInt(map.getXBound());
-                y=randomGen.nextInt(map.getYBound());
+                x=randomGen.nextInt(xBound);
+                y=randomGen.nextInt(yBound);
             }while(map.isWalkable(x,y)==false);
             position = new Position(x,y);
         }

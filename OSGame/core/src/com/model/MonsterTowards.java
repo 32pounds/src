@@ -18,7 +18,8 @@ public class MonsterTowards extends Monster
 {
     public Map map;
     private int xBound;
-    private int yBound;
+    private int yStart;
+    private int yRange;
     int myX;
     int myY;
     int relativeX;
@@ -33,6 +34,11 @@ public class MonsterTowards extends Monster
         super(state, img, splatSound);
         super.changeDeath("!");
         UPDATE_INTERVAL=250;
+        map = gameState.gameMap();
+        // coordinate (0,0) is the SouthEast corner
+        xBound = map.getXBound();
+        yStart = map.getCyberYStart();
+        yRange = map.getYBound()- yStart;
 
     }
     
@@ -53,7 +59,7 @@ public class MonsterTowards extends Monster
             do
             {
                 x=randomGen.nextInt(xBound);
-                y=randomGen.nextInt(yBound);
+                y=randomGen.nextInt(yRange)+yStart;
             }while(map.isWalkable(x,y)==false);
             position = new Position(x,y);
         }
@@ -117,6 +123,10 @@ public class MonsterTowards extends Monster
     }
     
     private void moveBest() {
+        /* Remember, the map coordinates don't match our standard understanding,
+           so these values might not seem to make sense.
+           The directions are named by the movement observed during gameplay.
+        */
         Direction best;
         // they are closer horizontally
         if (abs(relativeX) > abs(relativeY)) {

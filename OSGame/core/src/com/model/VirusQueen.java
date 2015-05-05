@@ -19,13 +19,14 @@ import com.map.Position;
  */
 public class VirusQueen extends Monster
 {
-    public VirusQueen(GameState state, String img, Sound splatSound, int X, int Y) 
+    public VirusQueen(GameState state, String img, Sound splatSound, Position pos) 
     {
         super(state, img, splatSound);
         super.changeAlive("VirusEntry");
         super.changeDeath("CyberFloor");
 	//super.changeSplat("");
         UPDATE_INTERVAL=10000;
+        position = pos;
     }
     
     @Override

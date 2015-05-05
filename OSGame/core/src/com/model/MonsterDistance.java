@@ -22,16 +22,19 @@ public class MonsterDistance extends Monster
 {
     public Map map;
     private int xBound;
-    private int yBound;
+    private int yStart;
+    private int yRange;
     
     
     public MonsterDistance(GameState state, String img, Sound splatSound) {
         super(state, img, splatSound);
         super.changeDeath("#");
         UPDATE_INTERVAL=150;
-        map = gameState.gameMap();
+        map = gameState.gameMap(); 
+        // coordinate (0,0) is the SouthEast corner
         xBound = map.getXBound();
-        yBound = map.getCyberYStart();
+        yStart = map.getCyberYStart();
+        yRange = map.getYBound()-yStart;
     }
 
     
@@ -51,7 +54,7 @@ public class MonsterDistance extends Monster
             do
             {
                 x=randomGen.nextInt(xBound);
-                y=randomGen.nextInt(yBound);
+                y=randomGen.nextInt(yRange)+yStart;
             }while(map.isWalkable(x,y)==false);
             position = new Position(x,y);
         }

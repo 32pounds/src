@@ -33,7 +33,8 @@ public class Monster extends Entity implements Updatable{
     protected boolean wasDead;
     public Map map;
     private int xBound;
-    private int yBound;
+    private int yStart;
+    private int yRange;
 
     public Monster(GameState state, String img, Sound splatSound)
     {
@@ -46,8 +47,10 @@ public class Monster extends Entity implements Updatable{
         wasDead=true;
         closestPlayer=getClosestPlayer();
         map = gameState.gameMap();
+        // coordinate (0,0) is the SouthEast corner
         xBound = map.getXBound();
-        yBound = map.getCyberYStart();
+        yStart = map.getCyberYStart();
+        yRange = map.getYBound() - yStart;
     }
 
     public boolean isDead()
@@ -68,13 +71,7 @@ public class Monster extends Entity implements Updatable{
     {
         dead=img;
     }
-/*
-    // change sound of monster death
-    public void changeSplat(String sound)
-    {
-        splat=sound;
-    }
-*/
+
     @Override
     public void update()
     {
@@ -89,22 +86,13 @@ public class Monster extends Entity implements Updatable{
             do
             {
                 x=randomGen.nextInt(xBound);
-                y=randomGen.nextInt(yBound);
+                y=randomGen.nextInt(yRange)+yStart;
             }while(map.isWalkable(x,y)==false);
             position = new Position(x,y);
         }
         else
         {
-/*            Entity killer = state.getByID(hunter);
-            if(killer == null) return;
-            if(getXPos()==killer.getXPos() && getYPos()==killer.getYPos())
-            {
-                deathTime=TimeUtils.millis();
-                changeSprite(dead);
-                if(splat != null) splat.play();
-                wasDead=true;
-            }
-            else */
+
             if(squished()==true)
             {
                 deathTime=TimeUtils.millis();

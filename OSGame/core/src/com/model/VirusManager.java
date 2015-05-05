@@ -73,6 +73,7 @@ public class VirusManager {
         virusCount = 0;
         virusQueenCount = 0;
         map = gameState.gameMap();
+        // coordinate (0,0) is the SouthEast corner
         entries = new ArrayList();
         queens = new ArrayList();
         viruses = new ArrayList();
@@ -81,7 +82,7 @@ public class VirusManager {
         nullPosition = new Position(0,0);
         
         // spawn viruses
-        //initializeVirusEntries()
+        initializeVirusEntries();
         //initializeVirusQueens()
         //initializeViruses()
     }

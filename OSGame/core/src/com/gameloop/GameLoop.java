@@ -144,7 +144,7 @@ public class GameLoop extends Thread {
     }
     // spawn a virus entry
     public GameID spawnVirusEntry (Position pos) {
-        monster=new VirusEntry(gameState, "VirusEntry", splat, pos.getX(), pos.getY());
+        monster=new VirusEntry(gameState, "VirusEntry", splat, pos);
         GameID id = gameState.register(monster);
         addUpdatable(monster);
         return id;
@@ -152,7 +152,7 @@ public class GameLoop extends Thread {
 
     // spawn a virus 
     public GameID spawnVirusQueen (Position pos) {
-        monster=new VirusQueen(gameState, "VirusQueen", splat, pos.getX(), pos.getY());
+        monster=new VirusQueen(gameState, "VirusQueen", splat, pos);
         GameID id= gameState.register(monster);
         addUpdatable(monster);
         return id;
@@ -160,7 +160,7 @@ public class GameLoop extends Thread {
     
     // spawn a virus 
     public GameID spawnVirus (Position pos) {
-        monster=new Virus(gameState, "Virus", splat, pos.getX(), pos.getY());
+        monster=new Virus(gameState, "Virus", splat, pos);
         GameID id = gameState.register(monster);
         addUpdatable(monster);
         return id;

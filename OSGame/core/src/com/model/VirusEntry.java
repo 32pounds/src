@@ -21,14 +21,16 @@ public class VirusEntry extends Monster
 {
     public Map map;
     
-    public VirusEntry(GameState state, String img, Sound splatSound, int X, int Y) 
+    public VirusEntry(GameState state, String img, Sound splatSound, Position pos) 
     {
         super(state, img, splatSound);
         super.changeAlive("VirusEntry");
-        super.changeDeath("CyberFloor");
+        //super.changeDeath("CyberFloor");
+        super.changeDeath("!");
 	//super.changeSplat("");
         UPDATE_INTERVAL=10000;
         map=gameState.gameMap();
+        position = pos;
     }
     
     @Override
