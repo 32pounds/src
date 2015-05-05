@@ -46,13 +46,16 @@ public class Monster extends Entity implements Updatable{
 
     public boolean isDead()
     {
+        //has enough time passed since the monster died?
         if(TimeUtils.millis()-deathTime>WAIT_TIME)
             return false;
+        
         return true;
     }
 
     public void changeDeath(String img)
     {
+        //switch to the monsteres new death imaige
         dead=img;
     }
 
@@ -77,26 +80,19 @@ public class Monster extends Entity implements Updatable{
         }
         else
         {
-/*            Entity killer = state.getByID(hunter);
-            if(killer == null) return;
-            if(getXPos()==killer.getXPos() && getYPos()==killer.getYPos())
-            {
-                deathTime=TimeUtils.millis();
-                changeSprite(dead);
-                if(splat != null) splat.play();
-                wasDead=true;
-            }
-            else */
+            //if a player was on your square, you should die
             if(squished()==true)
             {
-                deathTime=TimeUtils.millis();
-                changeSprite(dead);
-                if(splat != null) splat.play();
-                wasDead=true;
+                deathTime=TimeUtils.millis();//update death time to now
+                changeSprite(dead);//put dead sprite image
+                if(splat != null) splat.play(); //check to play a sound effect
+                wasDead=true; //update death state
             }
+            //move if enough time has passed
             else if(TimeUtils.millis()-lastUpdateTime > UPDATE_INTERVAL)
             {
                 lastUpdateTime=TimeUtils.millis();
+                //this is to chose a random direction and move in it
                 int dir=randomGen.nextInt(4);
                 if(dir==0)
                     super.move(Direction.SOUTH);
@@ -109,31 +105,33 @@ public class Monster extends Entity implements Updatable{
             }
         }
     }
+    
     public boolean squished()
     {
         int x,y;
-        for(Player player : gameState.getPlayers()){
+        for(Player player : gameState.getPlayers()){ //traverse the players
             x=player.getXPos();
             y=player.getYPos();
-            if(getXPos()==x && getYPos()==y)
+            if(getXPos()==x && getYPos()==y) //return if dead
             {
                 return true;
             }
         }
         return false;
     }
+    
     public Player getClosestPlayer()
     {
-        Collection<Player> players = gameState.getPlayers();
-        Player closest = null;
-        int minDist = Integer.MAX_VALUE;
-        for(Player player : players){
-            int dist = (abs(player.getXPos()-getXPos()) + abs(player.getYPos()-getYPos()));
-            if(dist < minDist){
+        Collection<Player> players = gameState.getPlayers(); //list of players
+        Player closest = null; //nearest player starts as no one 
+        int minDist = Integer.MAX_VALUE; //this is so that the nearest player has a closer distance
+        for(Player player : players){ //traverse the players list
+            int dist = (abs(player.getXPos()-getXPos()) + abs(player.getYPos()-getYPos())); //calculate distance function
+            if(dist < minDist){ //update distance and player
                 closest = player;
                 minDist = dist;
             }
         }
-        return closest;
+        return closest; //returns the nearest player
     }
 }
