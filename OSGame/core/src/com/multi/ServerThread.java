@@ -67,7 +67,7 @@ public class ServerThread extends Thread{
             clientList.CreateClient(newClient, port, player);
         }
 
-        String temp = String.valueOf(player.toChar());
+        String temp = player.toString();
         byte[] buff = temp.getBytes();
         DatagramPacket connectedClientPacket = new DatagramPacket(buff, buff.length, newClient, port);
         System.out.println("Sent player ID message");
@@ -128,7 +128,7 @@ public class ServerThread extends Thread{
         // Check if we have any connect clients.
         // if not simple never send the string.
         if( clientList.Size() == 0 ) return;
-        
+
         for(int i=0; i < clientList.Size(); i++ ){
             try{
                 byte[] buff = new byte[1024];
@@ -195,7 +195,7 @@ public class ServerThread extends Thread{
      * seconds from gameLoop in it's own thread.
      * All it does for a standard case is lower the
      * idle timer for all the connected clients
-     * in the LL and closes. But if a client has 
+     * in the LL and closes. But if a client has
      * timed out the server sends a packet of 1 byte
      * back to the client informing it that it has
      * been disconnected.
@@ -209,7 +209,7 @@ public class ServerThread extends Thread{
                 byte[] buff = new byte[1];
                 packet =
                     new DatagramPacket(buff, buff.length, clientList.GetIP(tempIndex), clientList.GetPort(tempIndex));
-                SendPacket(packet); 
+                SendPacket(packet);
                 clientList.RemoveClient(clientList.GetIP(tempIndex));
             }catch(Exception e){e.printStackTrace();}
         }

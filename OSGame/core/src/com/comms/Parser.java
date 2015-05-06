@@ -115,7 +115,7 @@ public class Parser
         for (Entity item : entities)
         {
             result += item.getSpriteString() + splitChar;
-            result += item.getID().toChar() + splitChar;
+            result += item.getID().toString() + splitChar;
             result += item.getXPos() + splitChar;
             result += item.getYPos() + splitChar;
             result += item.getRotation() + splitChar;
@@ -130,7 +130,7 @@ public class Parser
         for (Entity item : entities)
         {
             result += item.getSpriteString() + splitChar;
-            result += item.getID().toChar() + splitChar;
+            result += item.getID().toString() + splitChar;
             result += item.getXPos() + splitChar;
             result += item.getYPos() + splitChar;
             result += item.getRotation() + splitChar;
@@ -159,7 +159,7 @@ public class Parser
 
             value = StepString(data);
             data = value.getValue();
-            entities[x].assignID(new GameID(value.getKey().toCharArray()[0]));
+            entities[x].assignID(new GameID(value.getKey()));
 
             value = StepString(data);
             data = value.getValue();
@@ -208,7 +208,7 @@ public class Parser
 
             value = StepString(data);
             data = value.getValue();
-            entities[x].assignID(new GameID(value.getKey().toCharArray()[0]));
+            entities[x].assignID(new GameID(value.getKey()));
 
             value = StepString(data);
             data = value.getValue();

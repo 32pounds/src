@@ -79,7 +79,10 @@ public class ClientThread{
         DatagramPacket gamePacket = new DatagramPacket(buff, buff.length, servAddress, remotePort);
 
         int fails = 0;
-        while(gamePacket.getLength() != 2 && fails < 25){
+        //25 was chosen randomly for fail limit;
+        //5 was chosen lazily to differentiate packets with a single gameID
+        //and latent packets with the game state
+        while(gamePacket.getLength() >= 5 && fails < 25){
             fails++;
             try {
                 System.out.println("Listening for player assignment message from server");
@@ -91,7 +94,7 @@ public class ClientThread{
         }
 
         String temp = new String(gamePacket.getData(), 0, gamePacket.getLength());
-        GameID playerID = new GameID(temp.charAt(0));
+        GameID playerID = new GameID(temp);
 
         receiveThread = new ReceiveThread();
         receiveThread.start();
@@ -149,11 +152,11 @@ public class ClientThread{
             byte[] buff = new byte[2048];
             DatagramPacket gamePacket = new DatagramPacket(buff, buff.length);
             udpSocket.receive(gamePacket);
-            
+
             if ( (gamePacket.getAddress()).equals(servAddress) ){
                 byte[] data = gamePacket.getData();
                 handler.process(new String(data));
-            } 
+            }
         }catch(SocketTimeoutException e){
         }catch(Exception e){e.printStackTrace();}
     }

@@ -70,6 +70,7 @@ public class OSGame extends ApplicationAdapter implements CommandHandler {
 
         //This will be a call to comms in the future
         localPlayer = clientThread.JoinGame(); //blocking call
+        System.out.println("Got playerID "+localPlayer.toString());
 
         input = new InputHandler(localPlayer,this);
 
@@ -85,6 +86,7 @@ public class OSGame extends ApplicationAdapter implements CommandHandler {
         Runnable connect = new Runnable(){
             public void run(){
                 localPlayer = clientThread.JoinGame(ipAddr);
+                System.out.println("Got playerID "+localPlayer.toString());
                 gameState = new GameState(new Map());
                 input.setLocalPlayer(localPlayer);
             }
