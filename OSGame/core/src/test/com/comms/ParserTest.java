@@ -7,18 +7,9 @@ import com.comms.*;
 import com.map.Map;
 import com.model.Entity;
 import static org.junit.Assert.assertEquals;
-
-import javafx.util.Pair;
 import org.junit.After;
 import org.junit.Test;
 
-/**
- * Parser Tester.
- *
- * @author <Authors name>
- * @version 1.0
- * @since <pre>Apr 20, 2015</pre>
- */
 public class ParserTest
 {
     LwjglApplication lwjglApplication;
@@ -164,10 +155,10 @@ public class ParserTest
     @Test
     public void testDeParse() throws Exception
     {
-        Pair<Entity[],Command[]> pair = new Parser(new GameState(new Map())).DeParse("4,0, ,0,22,2,@,0,2,3,%,0,2,#,&,0,2,3,com.comms.DummyCmd:test,com.comms.DummyCmd:test,com.comms.DummyCmd:test,");
+        Tuple<Entity[],Command[]> pair = new Parser(new GameState(new Map())).DeParse("4,0, ,0,22,2,@,0,2,3,%,0,2,#,&,0,2,3,com.comms.DummyCmd:test,com.comms.DummyCmd:test,com.comms.DummyCmd:test,");
 
-        Entity[] entities = pair.getKey();
-        Command[] result = pair.getValue();
+        Entity[] entities = pair.getValue1();
+        Command[] result = pair.getValue2();
 
         assertEquals(entities[0].getSpriteString(), "0");
         assertEquals(entities[0].getID().toChar(), ' ');
