@@ -87,7 +87,9 @@ public class OSGame extends ApplicationAdapter implements CommandHandler {
             public void run(){
                 localPlayer = clientThread.JoinGame(ipAddr);
                 System.out.println("Got playerID "+localPlayer.toString());
-                gameState = new GameState(new Map());
+                synchronized(gameState){
+                    gameState = new GameState(new Map());
+                }
                 input.setLocalPlayer(localPlayer);
             }
         };
