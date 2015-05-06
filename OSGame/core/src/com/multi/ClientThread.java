@@ -89,7 +89,7 @@ public class ClientThread{
                 System.out.println("Listening for player assignment message from server");
                 udpSocket.setSoTimeout(500);
                 udpSocket.receive(gamePacket);
-
+                System.out.println( "GameID Connect Packet: " + new String(gamePacket.getData(), 0, gamePacket.getLength()) );
             } catch (Exception e){
 
             }
@@ -102,8 +102,10 @@ public class ClientThread{
                 break;
             }
         }
+
         String temp = new String(gData, 0, nullPos);
-        GameID playerID = new GameID(temp);
+        GameID playerID;
+        playerID = new GameID(temp);
 
         receiveThread = new ReceiveThread();
         receiveThread.start();

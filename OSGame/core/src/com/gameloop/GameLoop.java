@@ -75,7 +75,7 @@ public class GameLoop extends Thread {
             public void run() {
                 String state = getStateMessage();
                 serverThread.SendString(state);
-                System.out.println("Game state length: "+state.length());
+                //System.out.println("Game state length: "+state.length());
             }
         };
 
