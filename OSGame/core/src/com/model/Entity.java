@@ -6,7 +6,6 @@ import com.comms.*;
 import com.map.*;
 import com.renderer.Drawable;
 import com.renderer.SpriteStorage;
-import com.renderer.Updatable;
 
 /**
  * This function represent the player
@@ -40,7 +39,8 @@ public class Entity extends Drawable{
 
     /**
      * Provide a way to access map data, but after game state finished this property must be ripped off from here.
-     * @param map Map
+     * @param state GameState
+     * @param img String
      */
     public Entity(GameState state, String img) {
         position = new Position(1,1);
