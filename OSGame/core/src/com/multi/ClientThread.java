@@ -39,7 +39,7 @@ public class ClientThread{
 
     private class ReceiveThread extends Thread{
         public void run(){
-            while(isUp){
+            while(true){
                 try{
                     RecieveGameState();
                     sleep(5);
@@ -64,11 +64,9 @@ public class ClientThread{
      *
      */
     public synchronized GameID JoinGame(String address){
-        isUp = false;
         serverAddress = address;
-        try{
-            servAddress = InetAddress.getByName(serverAddress);
-        }catch(Exception e){e.printStackTrace();}
+
+        if(localPlayer == null) localPlayer = new GameID((Number)0);
 
         if(receiveThread == null) {
             receiveThread = new ReceiveThread();
@@ -77,7 +75,6 @@ public class ClientThread{
 
         ConnectToServer();
 
-        localPlayer = new GameID((Number)0);
         return localPlayer;
     }
 
