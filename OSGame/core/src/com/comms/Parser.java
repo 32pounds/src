@@ -143,8 +143,9 @@ public class Parser
      * @param data Data
      * @return An array of Entities and an array of Commands
      */
-/*    public Pair<Entity[], Command[]> DeParse(String data)
+    public Tuple<Entity[], Command[]> DeParse(String data)
     {
+        Pair value = StepString(data);
         data = value.getValue();
 
         int numberOfEntities = Integer.parseInt(value.getKey());
@@ -188,8 +189,8 @@ public class Parser
             result[x] = Command.parse(commandData.toCharArray());
         }
 
-        return new Pair<Entity[], Command[]>(entities, result);
-    }*/
+        return new Tuple<Entity[], Command[]>(entities, result);
+    }
 
     /**
      * Create a collection of Entities from a formatted string.
