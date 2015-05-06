@@ -82,22 +82,24 @@ public class ClientThread{
         //25 was chosen randomly for fail limit;
         //100 was chosen lazily to differentiate packets with a single gameID
         //and latent packets with the game state
-        while(gamePacket.getLength() >= 100 && fails < 25){
+        GameID playerID = new GameID((Number)0);
+        while(fails < 25){
             fails++;
             try {
-
                 System.out.println("Listening for player assignment message from server");
                 udpSocket.setSoTimeout(500);
                 udpSocket.receive(gamePacket);
                 System.out.println( "GameID Connect Packet: " + new String(gamePacket.getData(), 0, gamePacket.getLength()) );
+                String temp = new String(gamePacket.getData(), 0, gamePacket.getLength());
+
+                int nullIndex = temp.indexOf('\0');
+                if(nullIndex > 0) temp = temp.substring(0, nullIndex);
+                if(!GameID.isValidIDString(temp)) continue;
+                playerID = new GameID(temp);
             } catch (Exception e){
 
             }
         }
-        String temp = new String(gamePacket.getData(), 0, gamePacket.getLength());
-        int nullIndex = temp.indexOf('\0');
-        if(nullIndex > 0) temp = temp.substring(0, nullIndex);
-        GameID playerID = new GameID(temp);
 
         receiveThread = new ReceiveThread();
         receiveThread.start();

@@ -39,6 +39,13 @@ public class GameID{
         return (""+id);
     }
 
+    public static boolean isValidIDString(String str){
+        for(int i=0; i<str.length(); i++){
+            if(!Character.isDigit(str.charAt(i))) return false;
+        }
+        return true;
+    }
+
     @Override
     public boolean equals(Object obj){
         if (obj == this) {
