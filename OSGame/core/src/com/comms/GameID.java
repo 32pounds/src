@@ -18,7 +18,7 @@ public class GameID{
         return idGen;
     }
 
-    private final int id;
+    private int id;
     private GameID(int inputID){
         id = inputID;
     }
@@ -44,6 +44,10 @@ public class GameID{
             if(!Character.isDigit(str.charAt(i))) return false;
         }
         return true;
+    }
+
+    public void copy(GameID other){
+        this.id = other.id;
     }
 
     @Override
