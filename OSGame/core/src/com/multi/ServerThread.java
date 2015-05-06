@@ -190,6 +190,7 @@ public class ServerThread extends Thread{
         }catch(Exception e){e.printStackTrace();}
     }
 
+
     /* LowerIdle() is called at an interval of 3
      * seconds from gameLoop in it's own thread.
      * All it does for a standard case is lower the
@@ -216,6 +217,8 @@ public class ServerThread extends Thread{
 
     /* CloserServer() should be called when multiplayer is over. */
     public void CloseServer(){
+        if(!isUp) return;
+        
         // close socket and let others know the server is no longer up.
         udpSocket.close();
         isUp = false;

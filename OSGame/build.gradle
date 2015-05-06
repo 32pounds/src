@@ -9,7 +9,7 @@ buildscript {
 allprojects {
     apply plugin: "eclipse"
     apply plugin: "idea"
-
+    
     version = '1.0'
     ext {
         appName = 'OfficeSpaceGame'
@@ -53,6 +53,8 @@ project(":core") {
         testCompile group: 'junit', name: 'junit', version: '4.12'
     }
 }
+
+
 
 tasks.eclipse.doLast {
     delete ".project"

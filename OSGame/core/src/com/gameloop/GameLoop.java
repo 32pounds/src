@@ -89,6 +89,7 @@ public class GameLoop extends Thread {
             }
         };
         */
+        
         executor.scheduleAtFixedRate(sendStateTask, 0, 25, TimeUnit.MILLISECONDS);
         //executor.scheduleAtFixedRate(lowerIdleTime, 10, 3000, TimeUnit.MILLISECONDS);
     }
