@@ -35,6 +35,8 @@ public class MoveCmd extends Command{
     }
     public void execute(GameState state){
         Entity target = state.getByID(actor);
+        if(target == null) return;
+        if(dir == null) return;
         if(target.getClass() == Player.class){
             ((Player)target).setMovingDir(dir);
         } else {

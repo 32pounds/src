@@ -66,6 +66,8 @@ public class ClientThread{
     public synchronized GameID JoinGame(String address){
         serverAddress = address;
 
+        if(localPlayer == null) localPlayer = new GameID((Number)0);
+
         if(receiveThread == null) {
             receiveThread = new ReceiveThread();
             receiveThread.start();
@@ -73,7 +75,6 @@ public class ClientThread{
 
         ConnectToServer();
 
-        localPlayer = new GameID((Number)0);
         return localPlayer;
     }
 
