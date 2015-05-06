@@ -43,7 +43,7 @@ public class GameLoop extends Thread {
         updatables = new ArrayList<Updatable>();
         commands = new ConcurrentLinkedQueue<Command>();
         running = true;
-        
+
 
         MessageHandler handler = new MessageHandler(){
             @Override
@@ -73,13 +73,15 @@ public class GameLoop extends Thread {
 
         Runnable sendStateTask = new Runnable() {
             public void run() {
-                serverThread.SendString(getStateMessage());
+                String state = getStateMessage();
+                serverThread.SendString(state);
+                System.out.println("Game state length: "+state.length());
             }
         };
 
         /* lowerIdleTime will work against idle players.
-         * decrementing thier "alive" variable every 
-         */ 
+         * decrementing thier "alive" variable every
+         */
         /*
         Runnable lowerIdleTime = new Runnable(){
             public void run(){

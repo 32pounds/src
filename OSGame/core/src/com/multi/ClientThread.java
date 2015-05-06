@@ -92,8 +92,13 @@ public class ClientThread{
 
             }
         }
-
-        String temp = new String(gamePacket.getData(), 0, gamePacket.getLength());
+        int nullPos=0;
+        byte[] gData = gamePacket.getData();
+        for(int i=0; i<gData.length; i++){
+            nullPos=i;
+            if(gData[i]=='\0') break;
+        }
+        String temp = new String(gData, 0, nullPos);
         GameID playerID = new GameID(temp);
 
         receiveThread = new ReceiveThread();

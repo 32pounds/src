@@ -53,7 +53,6 @@ public class StopCmd extends Command{
     protected void restore(String data){
         String gameID = data.substring(1, data.length());
         gameID = gameID.substring(0, gameID.indexOf('\0'));
-        System.out.println(gameID.length()+":"+gameID+":");
         actor = new GameID(gameID);
         dir = Direction.getByChar(data.charAt(0));
     }

@@ -183,7 +183,6 @@ public class ServerThread extends Thread{
             }
             else{
                 handler.process(new String(data));
-                System.out.println("Recieved from client");
                 // We also start touching the client to make sure it's not idle.
                 clientList.TouchClient(clientPacket.getAddress());
             }
