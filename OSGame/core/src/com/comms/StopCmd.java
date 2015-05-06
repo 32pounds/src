@@ -35,6 +35,7 @@ public class StopCmd extends Command{
     }
     public void execute(GameState state){
         Entity target = state.getByID(actor);
+        if(target == null) return;
         if(target.getClass() == Player.class){
             ((Player)target).stopMoving(dir);
         } else {
