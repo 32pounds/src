@@ -74,7 +74,7 @@ public class ClientThread{
         }
 
         ConnectToServer();
-        byte[] buff = new byte[64];
+        byte[] buff = new byte[128];
 
         DatagramPacket gamePacket = new DatagramPacket(buff, buff.length, servAddress, remotePort);
 
