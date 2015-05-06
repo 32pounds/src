@@ -84,32 +84,36 @@ public class ParserTest
     @Test
     public void testParseEntities() throws Exception
     {
-        String resultString = "0, ,0,2,2,@,0,2,3,%,0,2,#,&,0,2,";
+        String resultString = "0, ,0,2,90,2,@,0,2,90,3,%,0,2,90,#,&,0,2,90,";
 
         Entity[] entities = new Entity[4];
 
         Entity entity = new Entity(new GameState(new Map()), "0");
         entity.assignID(new GameID(' '));
-        entity.setYPos(2);
         entity.setXPos(0);
+        entity.setYPos(2);
+        entity.setRotation(90);
         entities[0] = entity;
 
         entity = new Entity(new GameState(new Map()), "2");
         entity.assignID(new GameID('@'));
-        entity.setYPos(2);
         entity.setXPos(0);
+        entity.setYPos(2);
+        entity.setRotation(90);
         entities[1] = entity;
 
         entity = new Entity(new GameState(new Map()), "3");
         entity.assignID(new GameID('%'));
-        entity.setYPos(2);
         entity.setXPos(0);
+        entity.setYPos(2);
+        entity.setRotation(90);
         entities[2] = entity;
 
         entity = new Entity(new GameState(new Map()), "#");
         entity.assignID(new GameID('&'));
-        entity.setYPos(2);
         entity.setXPos(0);
+        entity.setYPos(2);
+        entity.setRotation(90);
         entities[3] = entity;
 
         String result = new Parser(new GameState(new Map())).Parse(entities);
@@ -124,7 +128,7 @@ public class ParserTest
     @Test
     public void testDePerseEntities() throws Exception
     {
-        Entity[] entities = new Parser(new GameState(new Map())).DePerseEntities("0, ,0,22,2,@,0,2,3,%,0,2,#,&,0,2,");
+        Entity[] entities = new Parser(new GameState(new Map())).DePerseEntities("0, ,0,22,90,2,@,0,2,90,3,%,0,2,90,#,&,0,2,90,");
 
         assertEquals(4, entities.length);
 
@@ -132,21 +136,25 @@ public class ParserTest
         assertEquals(entities[0].getID().toChar(), ' ');
         assertEquals(entities[0].getYPos(), 22);
         assertEquals(entities[0].getXPos(), 0);
+        assertEquals(entities[0].getRotation(), 90);
 
         assertEquals(entities[1].getSpriteString(), "2");
         assertEquals(entities[1].getID().toChar(), '@');
         assertEquals(entities[1].getYPos(), 2);
         assertEquals(entities[1].getXPos(), 0);
+        assertEquals(entities[1].getRotation(), 90);
 
         assertEquals(entities[2].getSpriteString(), "3");
         assertEquals(entities[2].getID().toChar(), '%');
         assertEquals(entities[2].getYPos(), 2);
         assertEquals(entities[2].getXPos(), 0);
+        assertEquals(entities[2].getRotation(), 90);
 
         assertEquals(entities[3].getSpriteString(), "#");
         assertEquals(entities[3].getID().toChar(), '&');
         assertEquals(entities[3].getYPos(), 2);
         assertEquals(entities[3].getXPos(), 0);
+        assertEquals(entities[3].getRotation(), 90);
     }
 
     /**
@@ -155,7 +163,7 @@ public class ParserTest
     @Test
     public void testDeParse() throws Exception
     {
-        Tuple<Entity[],Command[]> pair = new Parser(new GameState(new Map())).DeParse("4,0, ,0,22,2,@,0,2,3,%,0,2,#,&,0,2,3,com.comms.DummyCmd:test,com.comms.DummyCmd:test,com.comms.DummyCmd:test,");
+        Tuple<Entity[],Command[]> pair = new Parser(new GameState(new Map())).DeParse("4,0, ,0,22,90,2,@,0,2,90,3,%,0,2,90,#,&,0,2,90,3,com.comms.DummyCmd:test,com.comms.DummyCmd:test,com.comms.DummyCmd:test,");
 
         Entity[] entities = pair.getValue1();
         Command[] result = pair.getValue2();
@@ -164,21 +172,25 @@ public class ParserTest
         assertEquals(entities[0].getID().toChar(), ' ');
         assertEquals(entities[0].getYPos(), 22);
         assertEquals(entities[0].getXPos(), 0);
+        assertEquals(entities[0].getRotation(), 90);
 
         assertEquals(entities[1].getSpriteString(), "2");
         assertEquals(entities[1].getID().toChar(), '@');
         assertEquals(entities[1].getYPos(), 2);
         assertEquals(entities[1].getXPos(), 0);
+        assertEquals(entities[1].getRotation(), 90);
 
         assertEquals(entities[2].getSpriteString(), "3");
         assertEquals(entities[2].getID().toChar(), '%');
         assertEquals(entities[2].getYPos(), 2);
         assertEquals(entities[2].getXPos(), 0);
+        assertEquals(entities[2].getRotation(), 90);
 
         assertEquals(entities[3].getSpriteString(), "#");
         assertEquals(entities[3].getID().toChar(), '&');
         assertEquals(entities[3].getYPos(), 2);
         assertEquals(entities[3].getXPos(), 0);
+        assertEquals(entities[3].getRotation(), 90);
 
         assertEquals("com.comms.DummyCmd:test", new String(result[0].getData()));
         assertEquals("com.comms.DummyCmd:test", new String(result[1].getData()));
@@ -192,17 +204,7 @@ public class ParserTest
     @Test
     public void testStepString() throws Exception
     {
-//TODO: Test goes here...
-/*
-try {
-   Method method = Parser.getClass().getMethod("StepString", String.class);
-   method.setAccessible(true);
-   method.invoke(<Object>, <Parameters>);
-} catch(NoSuchMethodException e) {
-} catch(IllegalAccessException e) {
-} catch(InvocationTargetException e) {
-}
-*/
+
     }
 
     /**
@@ -211,17 +213,7 @@ try {
     @Test
     public void testCountChar() throws Exception
     {
-//TODO: Test goes here...
-/*
-try {
-   Method method = Parser.getClass().getMethod("CountChar", String.class, char.class);
-   method.setAccessible(true);
-   method.invoke(<Object>, <Parameters>);
-} catch(NoSuchMethodException e) {
-} catch(IllegalAccessException e) {
-} catch(InvocationTargetException e) {
-}
-*/
+
     }
 
 }
