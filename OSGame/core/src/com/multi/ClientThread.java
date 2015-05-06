@@ -94,18 +94,10 @@ public class ClientThread{
 
             }
         }
-        int nullPos=0;
-        byte[] gData = gamePacket.getData();
-        for(int i=0; i<gData.length; i++){
-            if(gData[i]=='\0') {
-                nullPos=i;
-                break;
-            }
-        }
-
-        String temp = new String(gData, 0, nullPos);
-        GameID playerID;
-        playerID = new GameID(temp);
+        String temp = new String(gamePacket.getData(), 0, gamePacket.getLength());
+        int nullIndex = temp.indexOf('\0');
+        if(nullIndex > 0) temp = temp.substring(0, nullIndex);
+        GameID playerID = new GameID(temp);
 
         receiveThread = new ReceiveThread();
         receiveThread.start();
