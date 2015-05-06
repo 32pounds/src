@@ -28,12 +28,15 @@ public class GameID{
     public GameID(char inputID){
         id = inputID;
     }
+    public GameID(String inputID){
+        id = (char) Integer.parseInt(inputID);
+    }
 
     /**
      * Used to transmit the ID over the network
      */
-    public char toChar(){
-        return id;
+    public String toChar(){
+        return (""+id);
     }
 
     @Override
