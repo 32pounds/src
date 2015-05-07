@@ -188,7 +188,6 @@ public class Parser
             String commandData = value.getKey();
             result[x] = Command.parse(commandData.toCharArray());
         }
-
         return new Tuple<Entity[], Command[]>(entities, result);
     }
 

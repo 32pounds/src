@@ -132,6 +132,7 @@ public class ParserTest
 
         assertEquals(4, entities.length);
 
+
         assertEquals(entities[0].getSpriteString(), "0");
         assertEquals(entities[0].getID().toString(), " ");
         assertEquals(entities[0].getYPos(), 22);
@@ -169,25 +170,25 @@ public class ParserTest
         Command[] result = pair.getValue2();
 
         assertEquals(entities[0].getSpriteString(), "0");
-        assertEquals(entities[0].getID().toChar(), ' ');
+        assertEquals(entities[0].getID().toString(), " ");
         assertEquals(entities[0].getYPos(), 22);
         assertEquals(entities[0].getXPos(), 0);
         assertEquals(entities[0].getRotation(), 90);
 
         assertEquals(entities[1].getSpriteString(), "2");
-        assertEquals(entities[1].getID().toChar(), '@');
+        assertEquals(entities[1].getID().toString(), "@");
         assertEquals(entities[1].getYPos(), 2);
         assertEquals(entities[1].getXPos(), 0);
         assertEquals(entities[1].getRotation(), 90);
 
         assertEquals(entities[2].getSpriteString(), "3");
-        assertEquals(entities[2].getID().toChar(), '%');
+        assertEquals(entities[2].getID().toString(), "%");
         assertEquals(entities[2].getYPos(), 2);
         assertEquals(entities[2].getXPos(), 0);
         assertEquals(entities[2].getRotation(), 90);
 
         assertEquals(entities[3].getSpriteString(), "#");
-        assertEquals(entities[3].getID().toChar(), '&');
+        assertEquals(entities[3].getID().toString(), "&");
         assertEquals(entities[3].getYPos(), 2);
         assertEquals(entities[3].getXPos(), 0);
         assertEquals(entities[3].getRotation(), 90);
@@ -197,23 +198,4 @@ public class ParserTest
         assertEquals("com.comms.DummyCmd:test", new String(result[2].getData()));
 
     }
-
-    /**
-     * Method: StepString(String data)
-     */
-    @Test
-    public void testStepString() throws Exception
-    {
-
-    }
-
-    /**
-     * Method: CountChar(String string, char iChar)
-     */
-    @Test
-    public void testCountChar() throws Exception
-    {
-
-    }
-
 }

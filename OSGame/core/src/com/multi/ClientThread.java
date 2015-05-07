@@ -54,6 +54,9 @@ public class ClientThread{
     }
     private ReceiveThread receiveThread;
 
+    public void AddPlayer(){
+
+    }
 
     public GameID JoinGame(){
         return JoinGame("127.0.0.1");
