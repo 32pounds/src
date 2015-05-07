@@ -9,14 +9,10 @@ import com.comms.GameState;
  * @author Brett Menzies
  */
 public abstract class Command{
-    /**
-     * Returns all the data necessary to describe itself in a compact format
-     * for the comms system.
-     */
     abstract public void execute(GameState state);
 
     abstract public char[] getData();
-    abstract protected void   restore(char[] data);
+    abstract protected void restore(String data);
     public char[] packetize(){
         char[] data = getData();
         Class  subclass = this.getClass();
@@ -32,11 +28,12 @@ public abstract class Command{
         int split = inputData.indexOf(':');
         String className = inputData.substring(0,split);
         String data = inputData.substring(split+1,inputData.length());
+        //data = data.substring( 0, data.indexOf(' ') );
         Command cmd = null;
         try{
             Class commandSubclass = Class.forName(className);
             cmd = (Command) commandSubclass.newInstance();
-            cmd.restore(data.toCharArray());
+            cmd.restore(data);
         } catch (Exception e) {
             e.printStackTrace();
         }

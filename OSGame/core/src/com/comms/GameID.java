@@ -5,7 +5,7 @@ package com.comms;
  * @author Brett Menzies
  */
 public class GameID{
-    private static char idGen = 257;
+    private static int idGen = 0;
         //I don't want this in the ascii range
         //because the parser probably will not handle that well
     /**
@@ -13,27 +13,41 @@ public class GameID{
      * It is separate from the constructor so that it may be synchronized to
      * prevent id duplication in multi threaded scenarios
      */
-    private static synchronized char newID(){
+    private static synchronized int newID(){
         idGen++;
         return idGen;
     }
 
-    private final char id;
+    private int id;
+    private GameID(int inputID){
+        id = inputID;
+    }
     public GameID(){
         id = newID();
     }
     public GameID(Number inputID){
-        id = (char) inputID.shortValue();
+        id = (int) inputID.shortValue();
     }
-    public GameID(char inputID){
-        id = inputID;
+    public GameID(String inputID){
+        id = Integer.valueOf(inputID);
     }
 
     /**
      * Used to transmit the ID over the network
      */
-    public char toChar(){
-        return id;
+    public String toString(){
+        return (""+id);
+    }
+
+    public static boolean isValidIDString(String str){
+        for(int i=0; i<str.length(); i++){
+            if(!Character.isDigit(str.charAt(i))) return false;
+        }
+        return true;
+    }
+
+    public void copy(GameID other){
+        this.id = other.id;
     }
 
     @Override

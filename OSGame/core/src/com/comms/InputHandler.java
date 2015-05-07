@@ -3,16 +3,21 @@ package com.comms;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.map.Direction;
-import com.comms.GameID;
 import com.comms.*;
 /**
  * Handle the player input
  */
 public class InputHandler implements InputProcessor {
     GameID actor;
+    CommandHandler cH;
 
-    public InputHandler(GameID target){
+    public void setLocalPlayer(GameID player){
+        actor = player;
+    }
+
+    public InputHandler(GameID target, CommandHandler cH){
         actor = target;
+        this.cH = cH;
     }
 
     @Override
@@ -35,7 +40,7 @@ public class InputHandler implements InputProcessor {
             default:
                 keyRegistered = false;
         }
-        if(keyRegistered) CommandHandler.getInstance().add(result);
+        if(keyRegistered) cH.handleCommand(result);
 
         return keyRegistered;
     }
@@ -60,7 +65,7 @@ public class InputHandler implements InputProcessor {
             default:
                 keyRegistered = false;
         }
-        if(keyRegistered) CommandHandler.getInstance().add(result);
+        if(keyRegistered) cH.handleCommand(result);
 
         return keyRegistered;
     }

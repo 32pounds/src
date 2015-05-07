@@ -5,97 +5,102 @@
 package com.multi;
 
 import com.multi.MessageHandler;
-
+import com.comms.*;
 import java.net.*;
 import java.io.*;
 import java.util.*;
 
 
-public class ClientThread extends Thread{
-
+public class ClientThread{
     private int myPort;
     private int remotePort;
-    protected DatagramSocket udpSocket1 = null;
     protected static BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-    protected PrintWriter out = null;
     private String serverAddress = "127.0.0.1";
     private DatagramSocket udpSocket = null;
     private DatagramPacket packet = null;
     public boolean isUp;
     private InetAddress servAddress = null;
-    private MessageHandler handler; 
+    private MessageHandler handler;
+    private GameID localPlayer;
 
-
-    public ClientThread(String address, int myPort, int servPort, MessageHandler handler){
+    public ClientThread(int myPort,int servPort, MessageHandler handler){
         this.handler = handler;
-    	if (address != "127.0.0.1") serverAddress = address;
         this.myPort = myPort;
         this.remotePort = servPort;
+
         in = new BufferedReader(new InputStreamReader(System.in));
 
         try{
             udpSocket = new DatagramSocket(myPort);
-        }catch(Exception e){System.out.println("Couldn't create socket! " + e);}
+            udpSocket.setSoTimeout(500);
+        }catch(Exception e){e.printStackTrace();}
         isUp = false;
     }
 
-    public void run(){
-        System.out.println("Hello from client thread!");
-        ConnectToServer();
-        while(true){
-            SendString("Message from client");
-            try{
-                RecieveGameState();
-                sleep(500);
-            } catch (Exception e){
-                e.printStackTrace();
+    private class ReceiveThread extends Thread{
+        public void run(){
+            while(true){
+                try{
+                    RecieveGameState();
+                    sleep(5);
+                } catch (InterruptedException e){
+                    break;
+                } catch (Exception e){
+                    e.printStackTrace();
+                    break;
+                }
             }
         }
     }
+    private ReceiveThread receiveThread;
 
     public void AddPlayer(){
 
     }
 
+    public GameID JoinGame(){
+        return JoinGame("127.0.0.1");
+    }
+
+    /* JoinGame() will initialize a connection to a server
+     *
+     *
+     */
+    public synchronized GameID JoinGame(String address){
+        serverAddress = address;
+
+        if(localPlayer == null) localPlayer = new GameID((Number)0);
+
+        if(receiveThread == null) {
+            receiveThread = new ReceiveThread();
+            receiveThread.start();
+        }
+
+        ConnectToServer();
+
+        return localPlayer;
+    }
+
     /* ConnectToServer() will setup a UDP socket and packet
-     * and fire off the packet to a server that's give in the
-     * arguments that are passed in.
+     * and fire off the packet to a server whos info is stored
+     * in above variables.
      */
     public void ConnectToServer(){
-
         try{
-            // Create UDP socket.
-            System.out.println("Creating socket...");
-
-
-            System.out.println("Socket created @ port: " + udpSocket.getLocalPort());
-
             // Send UDP request to server.
-            byte[] buf = new byte[256];
+            byte[] buf = new byte[0];
             servAddress = InetAddress.getByName(serverAddress);
-            System.out.println("Creating packet...");
+            System.out.println("CLIENT: Creating packet...");
             packet = new DatagramPacket(buf, buf.length, servAddress, remotePort);
-            System.out.println("Packet created with payload: " + buf);
+            System.out.println("CLIENT: Packet created");
 
-            System.out.println("Sending packet to: " + servAddress + ":" + packet.getPort());
+            System.out.println("CLIENT: Sending packet to: " + servAddress + ":" + packet.getPort());
 
             udpSocket.send(packet);
-            System.out.println("Packet sent! ");
-
-            // Now recieve response.
-            packet = new DatagramPacket(buf, buf.length);
-            System.out.println("Waiting for response...");
-            udpSocket.receive(packet);
-            System.out.println("Heard back from server!");
-
-            // display response
-            String received = new String(packet.getData(), 0, packet.getLength());
-            System.out.println("Data: " + received);
+            System.out.println("CLIENT: Packet sent! ");
 
             isUp = true;
-            try{SendString("TESSST from client!");}catch(Exception e){System.out.println("uh oh client... " + e);}
-
-        } catch(Exception e){ System.out.println("Couldn't setup UDP client!" + e);}
+        } catch(Exception e){ e.printStackTrace();}
     }
 
     /* SendString() will take in a string, break it into bytes
@@ -104,10 +109,9 @@ public class ClientThread extends Thread{
      */
     public void SendString( String dataToSend ){
         try{
-            byte[] buff = new byte[1024];
+            byte[] buff = new byte[2048];
             buff = dataToSend.getBytes();
-            System.out.println("sending...");
-                packet = new DatagramPacket(buff, buff.length, servAddress, remotePort);
+            packet = new DatagramPacket(buff, buff.length, servAddress, remotePort);
 
             SendPacket(packet);
         }catch(Exception e){System.out.println("Couldn't send string " + e);}
@@ -116,25 +120,38 @@ public class ClientThread extends Thread{
     public void SendPacket( DatagramPacket toSendPacket ) throws InterruptedException{
         try{
             udpSocket.send(toSendPacket);
-        }catch(Exception e){System.out.println("Sorry :( " + e);}
+        }catch(Exception e){e.printStackTrace();}
     }
 
     /* RecieveGameState() will continually recieve UDP packets,
      * and print out the info
      *
-     * TODO: RecieveGameState() shouldn't return "void" but rather
-     * a list of entities that it gets from the udp packet, or a
-     * character array list that get's taken care of by the parser
-     * depending on how this is all gonna go.
      */
     public void RecieveGameState() throws InterruptedException{
         try{
-            byte[] buff = new byte[1024];
-            DatagramPacket gamePacket = new DatagramPacket(buff, buff.length, servAddress, remotePort);
+            byte[] buff = new byte[2048];
+            DatagramPacket gamePacket = new DatagramPacket(buff, buff.length);
             udpSocket.receive(gamePacket);
+
+            if ( !(gamePacket.getAddress()).equals(servAddress) ) return;
+
             byte[] data = gamePacket.getData();
-            handler.process(new String(data));
-        }catch(Exception e){System.out.println("client uh oh:  " +e);}
+            String temp = new String(gamePacket.getData(), 0, gamePacket.getLength());
+
+
+            if(!GameID.isValidIDString(temp)){
+                handler.process(temp);
+                return;
+            }
+            System.out.println( "GameID Connect Packet: " + new String(gamePacket.getData(), 0, gamePacket.getLength()) );
+            int nullIndex = temp.indexOf('\0');
+            if(nullIndex > 0) temp = temp.substring(0, nullIndex);
+            GameID playerID = new GameID(temp);
+
+            localPlayer.copy(playerID);
+
+        }catch(SocketTimeoutException e){
+        }catch(Exception e){e.printStackTrace();}
     }
 
     public void CloseConnection(){

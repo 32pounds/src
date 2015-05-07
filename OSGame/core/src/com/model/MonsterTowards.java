@@ -19,13 +19,13 @@ import com.map.Position;
  */
 public class MonsterTowards extends Monster
 {
-    public MonsterTowards(GameState state, String img, Sound splatSound) 
+    public MonsterTowards(GameState state, String img, Sound splatSound)
     {
         super(state, img, splatSound);
         super.changeDeath("!");
         UPDATE_INTERVAL=250;
     }
-    
+
     @Override
     public void update()
     {
@@ -58,7 +58,7 @@ public class MonsterTowards extends Monster
             else if(TimeUtils.millis()-lastUpdateTime > UPDATE_INTERVAL)
             {
                 lastUpdateTime=TimeUtils.millis();
-                if(closestPlayer==null) 
+                if(closestPlayer==null)
                     return;
                 if(closestPlayer.getXPos()>getXPos())
                     super.move(Direction.EAST);
