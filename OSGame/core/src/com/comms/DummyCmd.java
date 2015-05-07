@@ -18,7 +18,7 @@ public class DummyCmd extends Command{
     public char[] getData(){
         return (getClass().getName()+":test").toCharArray();
     }
-    protected void   restore(char[] data){
+    protected void   restore(String data){
 
     }
 }

@@ -1,0 +1,8 @@
+TODO
+new player handshake over network
+switch client to new localPlayer ID
+turn off local server upon remote connect
+server transmits data to all clients automatically
+redirect client traffic to new IP
+transmit sprite rotations
+activate party mode procedurally

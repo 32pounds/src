@@ -16,8 +16,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.Input.TextInputListener;
 import com.comms.OSInputProcessor;
 import com.multi.*;
+import com.OSG.OSGame;
 
 public class PopupMenu extends com.renderer.Drawable implements InputProcessor {
 
@@ -26,7 +29,18 @@ public class PopupMenu extends com.renderer.Drawable implements InputProcessor {
     public ServerThread serverUDP = null;
     public ClientThread clientUDP = null;
 
-    public PopupMenu() {
+    // Used to get input from use for IP addresses.
+    private String initialText; // Text to ask user
+    private String ipAddressText;  // User's input is stored here.
+    private String hintText; // Used for hover over text field.
+    private OSGame game;
+
+    public PopupMenu(OSGame parentGame) {
+        this.game = parentGame;
+        // Initialize text Strings to get server IP from user.
+        initialText = "Please enter IP";
+        hintText = "127.0.0.1"; // NOT acutal address just prompt to inform user.
+
         stage = new Stage();
 
         OSInputProcessor.getInstance().addInputPorcessor(stage);
@@ -74,49 +88,31 @@ public class PopupMenu extends com.renderer.Drawable implements InputProcessor {
         final TextButton clientButton = new TextButton("Join Game", textButtonStyle);
         TextButton hostButton = new TextButton("Host Game", textButtonStyle);
 
-        // TODO make server/client a seperate thread.
+
+        // Client connects through host here, IP address is assigned.
         clientButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
-                try{
-                    // start client
-                    // and fire off first packet.
+                Gdx.input.getTextInput(new TextInputListener() {
+                    @Override
+                    public void input(String text) {
+                        ipAddressText = text;
+                        if(game != null) game.connectToIP(ipAddressText);
+                    }
 
-                    //this handler construction only temporary
-                    MessageHandler handler = new MessageHandler(){
-                        @Override
-                        public void handle(String message){
-                            System.out.println("Client Receive: "+message);
-                        }
-                    };
+                    @Override
+                    public void canceled(){
+                        ipAddressText = null;
+                    }
+               }, initialText, null, hintText);
 
-                    (new ClientThread("127.0.0.1", 5050, 5051,handler)).start();
-                    //clientUDP = new ClientThread("127.0.0.1", 5050); // Test port/address
-                }catch(Exception e){System.out.println("COULDN'T setup server/client! " + e);}
-                clientButton.setText("Disconnect");
             }
         });
 
-        // hostButton simply launches a new serverThread.
-        // TODO: Possible bug of clicking the button more than once?
+        // hostButton simply launches a new serverThread
         hostButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
-                try{
-                    MessageHandler handler = new MessageHandler(){
-                        @Override
-                        public void handle(String message){
-                            System.out.println("Server receive"+message);
-                        }
-                    };
-                    // setup server.
-                    // Multiplayer chooses to setup a server or client depending on
-                    // the boolean passed in to the main class call. 'true' results
-                    // in a server being created and 'false' creates a client.
-                    (new ServerThread(5051,handler)).start();
-                    //serverUDP = new ServerThread(5051);
-                    //serverUDP.setupUDP();
-        }catch(Exception e){System.out.println("COULDN'T setup server! " + e);}
-    }
-        });
+
+        }});
 
         textButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {

@@ -5,6 +5,7 @@ import com.comms.GameID;
 import com.comms.GameState;
 import com.map.Direction;
 import com.model.Player;
+import com.model.Entity;
 /**
  * This represents user commands for moving in a cardinal direction
  *
@@ -26,20 +27,35 @@ public class StopCmd extends Command{
     public StopCmd(){
 
     }
+    public Direction getDirection(){
+        return dir;
+    }
+    public GameID getActorID(){
+        return actor;
+    }
     public void execute(GameState state){
-        Player target = (Player) state.getByID(actor);
-        target.stopMoving(dir);
+        Entity target = state.getByID(actor);
+        if(target == null) return;
+        if(dir == null) return;
+        if(target.getClass() == Player.class){
+            ((Player)target).stopMoving(dir);
+        } else {
+            System.err.println("Received non-player target ID in StopCmd ID was "+actor.toString());
+        }
     }
     public char[] getData(){
-        char[] out = new char[2];
-        if(dir != null){
-            out[0] = actor.toChar();
-            out[1] = dir.toChar();
+        char[] gameID = (actor.toString()).toCharArray();
+        char[] out = new char[gameID.length+1];
+        out[0] = dir.toChar();
+        for(int i=1; i<=gameID.length; i++){
+            out[i] = gameID[i-1];
         }
         return out;
     }
-    protected void restore(char[] data){
-        actor = new GameID(data[0]);
-        dir = Direction.getByChar(data[1]);
+    protected void restore(String data){
+        String gameID = data.substring(1, data.length());
+        gameID = gameID.substring(0, gameID.indexOf('\0'));
+        actor = new GameID(gameID);
+        dir = Direction.getByChar(data.charAt(0));
     }
 }

@@ -1,9 +1,7 @@
 package com.comms;
 
 import com.model.Entity;
-
 import java.util.*;
-
 
 /**
  * Parse Entities
@@ -117,9 +115,25 @@ public class Parser
         for (Entity item : entities)
         {
             result += item.getSpriteString() + splitChar;
-            result += item.getID().toChar() + splitChar;
+            result += item.getID().toString() + splitChar;
             result += item.getXPos() + splitChar;
             result += item.getYPos() + splitChar;
+            result += item.getRotation() + splitChar;
+        }
+        return result;
+    }
+
+    public String Parse(Collection<Entity> entities)
+    {
+        String result = "";
+
+        for (Entity item : entities)
+        {
+            result += item.getSpriteString() + splitChar;
+            result += item.getID().toString() + splitChar;
+            result += item.getXPos() + splitChar;
+            result += item.getYPos() + splitChar;
+            result += item.getRotation() + splitChar;
         }
         return result;
     }
@@ -129,8 +143,9 @@ public class Parser
      * @param data Data
      * @return An array of Entities and an array of Commands
      */
-/*    public Pair<Entity[], Command[]> DeParse(String data)
+    public Tuple<Entity[], Command[]> DeParse(String data)
     {
+        Pair value = StepString(data);
         data = value.getValue();
 
         int numberOfEntities = Integer.parseInt(value.getKey());
@@ -145,7 +160,7 @@ public class Parser
 
             value = StepString(data);
             data = value.getValue();
-            entities[x].assignID(new GameID(value.getKey().toCharArray()[0]));
+            entities[x].assignID(new GameID(value.getKey()));
 
             value = StepString(data);
             data = value.getValue();
@@ -154,6 +169,10 @@ public class Parser
             value = StepString(data);
             data = value.getValue();
             entities[x].setYPos(Integer.parseInt(value.getKey()));
+
+            value = StepString(data);
+            data = value.getValue();
+            entities[x].setRotation(Integer.parseInt(value.getKey()));
         }
 
         value = StepString(data);
@@ -169,9 +188,8 @@ public class Parser
             String commandData = value.getKey();
             result[x] = Command.parse(commandData.toCharArray());
         }
-
-        return new Pair<Entity[], Command[]>(entities, result);
-    }*/
+        return new Tuple<Entity[], Command[]>(entities, result);
+    }
 
     /**
      * Create a collection of Entities from a formatted string.
@@ -180,7 +198,7 @@ public class Parser
      */
     public Entity[] DePerseEntities(String data)
     {
-        Entity[] entities = new Entity[CountChar(data, ',') / 4];
+        Entity[] entities = new Entity[CountChar(data, ',') / 5];
 
         for (int x = 0; x < entities.length; x++)
         {
@@ -190,7 +208,7 @@ public class Parser
 
             value = StepString(data);
             data = value.getValue();
-            entities[x].assignID(new GameID(value.getKey().toCharArray()[0]));
+            entities[x].assignID(new GameID(value.getKey()));
 
             value = StepString(data);
             data = value.getValue();
@@ -199,6 +217,10 @@ public class Parser
             value = StepString(data);
             data = value.getValue();
             entities[x].setYPos(Integer.parseInt(value.getKey()));
+
+            value = StepString(data);
+            data = value.getValue();
+            entities[x].setRotation(Integer.parseInt(value.getKey()));
         }
 
         return entities;
