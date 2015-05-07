@@ -62,7 +62,6 @@ public class VirusManager {
     private List queens;
     private List viruses;
     private GameLoop gameLoop;
-    private Position nullPosition;
     private ArrayList<Position> EntryPositions;
     private int entryCount;
     private int entryIndex;
@@ -82,7 +81,6 @@ public class VirusManager {
         viruses = new ArrayList();
         spawnAtEntry = 0;
         spawnAtQueen = 0;
-        nullPosition = new Position(0,0);
         EntryPositions = map.getVirusEntries();
         entryCount = map.getEntryCount();
         entryIndex = 0;
@@ -128,10 +126,10 @@ public class VirusManager {
     
     // respawn a virus queen if live entry found
     public Position respawnQueen (GameID asker) {
-        Position position = nullPosition;
+        Position position = Map.nullPosition;
         if (virusEntryCount > 0) {
             position = findEntry();
-            if (position != nullPosition) {
+            if (position != Map.nullPosition) {
                 // make queen live
                 virusQueenCount++;
             }
@@ -152,7 +150,7 @@ public class VirusManager {
     // finds the position of the next live virus entry
     public Position findEntry() {
         int i = spawnAtEntry;
-        Position position = nullPosition;
+        Position position = Map.nullPosition;
         do {
             // check if virus entry is live
             

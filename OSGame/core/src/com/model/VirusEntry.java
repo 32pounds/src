@@ -1,7 +1,7 @@
 /* VirusEntry.java
  * by Elizabeth Hernandez
  * developed from MonsterTowards by Michael
- * 4-29-15
+ * 5-6-15
  */
 package com.model;
 

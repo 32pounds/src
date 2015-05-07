@@ -1,7 +1,7 @@
 /* VirusEntry.java
  * by Elizabeth Hernandez
  * developed from MonsterTowards by Michael
- * 4-29-15
+ * 5-6-15
  */
 package com.model;
 
@@ -95,8 +95,11 @@ public class Virus extends Monster
                 myY = getXPos();
                 int playerX = closestPlayer.getXPos();
                 int playerY = closestPlayer.getYPos();
+                
+                int distance = Math.min(abs(relativeY), abs(relativeX));
 
-                if ( (abs(relativeY) < aggro) || (abs(relativeX) < aggro)){
+                
+                if (distance < aggro){
                     // player too close - attack
                     setBestDirections();
                     moveBest();
@@ -144,7 +147,7 @@ public class Virus extends Monster
            so these values might not seem to make sense.
            The directions are named by the movement observed during gameplay.
         */
-
+        Direction best;
         // they are closer horizontally
         if (abs(relativeX) > abs(relativeY)) {
             if(map.isWalkable(myX + xStep, myY))
@@ -162,7 +165,7 @@ public class Virus extends Monster
                 
         super.move(best);
     }
-    
+
     private void wander() {
         rotation = super.getRotation();
         int dir=randomGen.nextInt(4);

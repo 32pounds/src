@@ -1,6 +1,10 @@
 {
   "data": [
     {
+      "code": "Blank",
+      "path": "top-down/Blank.png"
+    },
+    {
       "code": " ",
       "path": "top-down/floorings/BeigeTile.png"
     },

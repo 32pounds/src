@@ -15,14 +15,24 @@ public class Map extends Drawable {
     public static final int XDIMENSION = 32;
     public static final int YDIMENSION = 32;
 
-    public final int mapWidth;
-    public final int cyberStartY;
-    public final int mapHeight;
+    private final int mapWidth;
+    private final int cyberStartY;
+    private final int mapHeight;
 
-    public int entryTotal;
+    // provides a common null position
+    public static final Position nullPosition = new Position(0,0);
+    
+    private Position position;
+    private Position playerStart;
+    private Position orangePad;
+    private Position greenPad;
+    private Position cyberIn;
+    private Position cyberOut;
+    private ArrayList<Position> EntryCoords;
+    private int entryTotal;
     private int entryCount;
-    public ArrayList<Position> EntryCoords;
-    public Position position;
+    
+    
     //public ArrayList xCoord;
     //public ArrayList yCoord;
 
@@ -35,15 +45,22 @@ public class Map extends Drawable {
         mapHeight = grid.length;
         cyberStartY = 170;
         
+        // references to position of landmarks on map
+        playerStart = findFirstInstance('@');
+        orangePad = findFirstInstance('o');
+        greenPad = findFirstInstance('g');
+        cyberIn = findFirstInstance('E');
+        cyberOut = findFirstInstance('^');
+        
         // tracks placement of cyberspace virus entries
+        EntryCoords= new ArrayList();
         entryTotal = 6;
         entryCount = 0;
-        EntryCoords= new ArrayList();
         //xCoord = new ArrayList<Integer>();
         //yCoord = new ArrayList<Integer>();
     }
 
-    // specifies tile drawing instructions for all map symbols
+    // draws all tiles according to map symbols
     public void draw(SpriteBatch batch) {
         for (int y = 0; y < grid.length; ++y) {
             for (int x = 0; x < grid[y].length; ++x) {
@@ -59,6 +76,11 @@ public class Map extends Drawable {
                         break;
                     case 'g':
                         batch.draw(SpriteStorage.getInstance().getTexture("TransportDown"), x * XDIMENSION, y * YDIMENSION);
+                        break;
+                    case 'E':
+                        batch.draw(SpriteStorage.getInstance().getTexture("WhiteFloor"), x * XDIMENSION, y * YDIMENSION);
+                        batch.draw(SpriteStorage.getInstance().getTexture("BeigeDeskR"), x * XDIMENSION, y * YDIMENSION);
+                        batch.draw(SpriteStorage.getInstance().getTexture("Error"), x * XDIMENSION, y * YDIMENSION);
                         break;
                     case '@':
                         batch.draw(SpriteStorage.getInstance().getTexture("StartBeige"), x * XDIMENSION, y * YDIMENSION);
@@ -118,6 +140,8 @@ public class Map extends Drawable {
                         batch.draw(SpriteStorage.getInstance().getTexture("Stars"), x * XDIMENSION, y * YDIMENSION);
                         break;
                     case 'T':
+                        batch.draw(SpriteStorage.getInstance().getTexture("WhiteFloor"), x * XDIMENSION, y * YDIMENSION);
+                        batch.draw(SpriteStorage.getInstance().getTexture("BeigeDeskR"), x * XDIMENSION, y * YDIMENSION);
                         batch.draw(SpriteStorage.getInstance().getTexture("Terminal"), x * XDIMENSION, y * YDIMENSION);
                         break;
                     case '/':
@@ -129,10 +153,6 @@ public class Map extends Drawable {
                         break;
                     case '#':
                         batch.draw(SpriteStorage.getInstance().getTexture("CyberFloor"), x * XDIMENSION, y * YDIMENSION);
-                        // records location of '#' as a cyberspace virus entry
-                        position = new Position(y,x);  // remember: this parser swapped 'y' and 'x'
-                        EntryCoords.add(position);
-                        entryCount++;
                         break;
                     case 'H':
                         batch.draw(SpriteStorage.getInstance().getTexture("CyberWall"), x * XDIMENSION, y * YDIMENSION);
@@ -148,9 +168,11 @@ public class Map extends Drawable {
                         break;
                     case '^':
                         batch.draw(SpriteStorage.getInstance().getTexture("CyberUp"), x * XDIMENSION, y * YDIMENSION);
+                        cyberOut = new Position(y,x);
                         break;
                     case 'v':
                         batch.draw(SpriteStorage.getInstance().getTexture("CyberDown"), x * XDIMENSION, y * YDIMENSION);
+                        //cyberIn = new Position(y,x);
                         break;
                     case '<':
                         batch.draw(SpriteStorage.getInstance().getTexture("CyberLeft"), x * XDIMENSION, y * YDIMENSION);
@@ -171,6 +193,7 @@ public class Map extends Drawable {
             }
         }
     }
+
 
     // gives horizontal bound for all map areas
     public int getXBound()
@@ -205,7 +228,27 @@ public class Map extends Drawable {
     public int getEntryCount() {
         return entryCount;
     }
-
+    
+    // gives the position of the orange transport pad
+    public Position getPadToStation() {
+        return orangePad;
+    }
+    
+    // gives the position of the green transport pad
+    public Position getPadToGround() {
+        return greenPad;
+    }
+    
+    // gives the position of the 
+    public Position getCyberEntry() {
+        return cyberIn;
+    }
+    
+    // gives the position of the 
+    public Position getCyberExit() {
+        return cyberOut;
+    }
+    
     @Override
     public int getZIndex() {
         return 0;
@@ -233,6 +276,7 @@ public class Map extends Drawable {
             case 'v':
             case '<':
             case '>':
+            case 'E':
                 return true;
             default:
                 return false;
@@ -248,11 +292,27 @@ public class Map extends Drawable {
 
 
    public int isMove(int x, int y) {
-        if (grid[y][x] == 'o')
+        switch(grid[y][x]) {
+            case 'o':  // orange pad, to station
+                return 1;
+            case 'g':  // green pad, to ground
+                return 2;
+            case 'E':  // cyber entry, to cyber
+                return 3;
+            case '^':  // cyber exit, to entry
+                return 4;
+            default:
+                return 0;
+        }/*
+       if (grid[y][x] == 'o')
             return 1;
         else if (grid[y][x] == 'g')
             return 2;
-        return 0;
+        else if (grid[y][x] == 'E')
+            return 3;
+        else if (grid[y][x] == '^')
+            return 4;
+        return 0;*/
     }
 
     public boolean isMove(Position pos){

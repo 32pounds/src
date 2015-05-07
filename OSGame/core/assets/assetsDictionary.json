@@ -197,6 +197,10 @@
       "path": "top-down/floorings/CautionStripes-yellow.png"
     },
     {
+      "code": "Error",
+      "path": "top-down/objects/Terminal-error.png"
+    },
+    {
       "code": "CyberFloor",
       "path": "top-down/cyberspace/Floor.png"
     },
