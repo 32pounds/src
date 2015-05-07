@@ -8,8 +8,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Event;
-import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -21,7 +19,7 @@ import com.multi.*;
 
 public class PopupMenu extends com.renderer.Drawable implements InputProcessor {
 
-    private Stage stage;
+    private final Stage stage;
     private boolean visible = false;
     public ServerThread serverUDP = null;
     public ClientThread clientUDP = null;
@@ -76,6 +74,7 @@ public class PopupMenu extends com.renderer.Drawable implements InputProcessor {
 
         // TODO make server/client a seperate thread.
         clientButton.addListener(new ClickListener() {
+            @Override
             public void clicked(InputEvent event, float x, float y) {
                 try{
                     // start client
@@ -99,6 +98,7 @@ public class PopupMenu extends com.renderer.Drawable implements InputProcessor {
         // hostButton simply launches a new serverThread.
         // TODO: Possible bug of clicking the button more than once?
         hostButton.addListener(new ClickListener() {
+            @Override
             public void clicked(InputEvent event, float x, float y) {
                 try{
                     MessageHandler handler = new MessageHandler(){
@@ -119,6 +119,7 @@ public class PopupMenu extends com.renderer.Drawable implements InputProcessor {
         });
 
         textButton.addListener(new ClickListener() {
+            @Override
             public void clicked(InputEvent event, float x, float y) {
                 visible = !visible;
 
@@ -128,6 +129,7 @@ public class PopupMenu extends com.renderer.Drawable implements InputProcessor {
         // Click listener for exit button, will exit whole game.
         // So initialize click listener and get it ready to exit.
         exitButton.addListener(new ClickListener() {
+            @Override
             public void clicked(InputEvent event, float x, float y) {
                Gdx.app.exit();
 

@@ -13,10 +13,10 @@ import java.util.concurrent.*;
  */
 public class GameState
 {
-    private Map gameMap;
-    private ConcurrentHashMap<GameID,Entity> idMap;
-    private List<Drawable>     drawables;//list to it can be sorted by Z-index
-    private Collection<Player> players;
+    private final Map gameMap;
+    private final ConcurrentHashMap<GameID,Entity> idMap;
+    private final List<Drawable>     drawables;//list to it can be sorted by Z-index
+    private final Collection<Player> players;
 
     public GameState(Map map){
         idMap     = new ConcurrentHashMap<GameID,Entity>();
@@ -28,12 +28,16 @@ public class GameState
     /**
      * Returns a reference to an Entity given its GameID
      * returns null if no reference is found
+     * @param id
+     * @return 
      */
     public Entity getByID(GameID id){
         return idMap.get(id);
     }
     /**
      * Adds an Entity to the map and returns its unique GameID
+     * @param obj
+     * @return 
      */
     public GameID register(Entity obj){
         //creates a new unique ID
@@ -43,6 +47,8 @@ public class GameState
     }
     /**
      * Registers an Entity with the given GameID as a key
+     * @param obj
+     * @param id
      */
     public void register(Entity obj, GameID id){
         idMap.put(id, obj);
@@ -52,6 +58,7 @@ public class GameState
     }
     /**
      * Removes the Entity with given GameID
+     * @param id
      */
     public void remove(GameID id){
         Entity removed = idMap.remove(id);
@@ -67,6 +74,7 @@ public class GameState
     }
     /**
      * returns a list of all drawables sorted by their Z index
+     * @return 
      */
     public List<Drawable> drawables(){
         return drawables;

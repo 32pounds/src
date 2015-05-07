@@ -28,12 +28,12 @@ public class Parser
         }
     }
 
-    private String splitChar = ",";
+    private final String splitChar = ",";
 
     /**
      * GameState necessary to create new instances of Entities
      */
-    private GameState gameState;
+    private final GameState gameState;
 
     /**
      * Constructor

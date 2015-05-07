@@ -4,8 +4,6 @@
 
 package com.multi;
 
-import com.multi.MessageHandler;
-
 import java.net.*;
 import java.io.*;
 import java.util.*;
@@ -39,6 +37,7 @@ public class ClientThread extends Thread{
         isUp = false;
     }
 
+    @Override
     public void run(){
         System.out.println("Hello from client thread!");
         ConnectToServer();

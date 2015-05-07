@@ -1,8 +1,6 @@
 package com.OSG;
 
 import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.GL20;
@@ -15,14 +13,9 @@ import com.gameloop.GameLoop;
 import com.map.Map;
 import com.model.Debugger;
 import com.model.Entity;
-import com.model.Monster;
-import com.model.Player;
 import com.model.PopupMenu;
 import com.renderer.Drawable;
 import com.renderer.SpriteStorage;
-import com.renderer.Updatable;
-import java.util.*;
-import com.multi.*;
 import java.io.*;
 
 public class OSGame extends ApplicationAdapter {

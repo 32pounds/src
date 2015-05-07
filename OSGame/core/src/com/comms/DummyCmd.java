@@ -1,10 +1,5 @@
 package com.comms;
 
-import com.comms.Command;
-import com.comms.GameID;
-import com.comms.GameState;
-import com.map.Direction;
-import com.model.Player;
 /**
  * This represents user commands for moving in a cardinal direction
  *
@@ -13,11 +8,14 @@ import com.model.Player;
 public class DummyCmd extends Command{
     public DummyCmd(){
     }
+    @Override
     public void execute(GameState state){
     }
+    @Override
     public char[] getData(){
         return (getClass().getName()+":test").toCharArray();
     }
+    @Override
     protected void   restore(char[] data){
 
     }

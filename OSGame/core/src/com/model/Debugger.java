@@ -15,7 +15,7 @@ import java.text.DecimalFormat;
 public class Debugger extends Drawable implements Updatable {
 
 
-    private BitmapFont font;
+    private final BitmapFont font;
     private double lastElapsedTime;
     private double lastTime;
     private double updateElapsedTime;

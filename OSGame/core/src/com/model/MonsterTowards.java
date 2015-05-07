@@ -7,7 +7,6 @@ package com.model;
 
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.utils.TimeUtils;
-import com.comms.GameID;
 import com.comms.GameState;
 import com.map.Direction;
 import com.map.Map;
@@ -31,9 +30,8 @@ public class MonsterTowards extends Monster
     {
         Map map=gameState.gameMap();
         closestPlayer=getClosestPlayer();
-        if(isDead()==true)
-            return;
-        else if(wasDead==true)
+        if(isDead()==true) {
+        } else if(wasDead==true)
         {
             //set image and rand X/Y
             wasDead=false;

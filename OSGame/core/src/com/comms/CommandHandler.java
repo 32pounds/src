@@ -8,7 +8,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 public class CommandHandler {
 
     //thread save queue
-    private ConcurrentLinkedQueue<Command> commands;
+    private final ConcurrentLinkedQueue<Command> commands;
 
     //singleton instance
     private static CommandHandler instance;
@@ -41,7 +41,7 @@ public class CommandHandler {
      * @return The first command of the queue
      */
     public Command remove() {
-        if (commands.size() != 0)
+        if (!commands.isEmpty())
             return commands.remove();
         //if there is no command return null
         return null;

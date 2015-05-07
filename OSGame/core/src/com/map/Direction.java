@@ -9,11 +9,12 @@ public enum Direction{
     EAST ((char) 1),
     SOUTH((char) 2),
     WEST ((char) 3);
-    private char i;
+    private final char i;
     Direction(char val){ this.i = val; }
     /**
      * This provides an easy way for the enum to describe itself to commands
      * and the comm system
+     * @return 
      */
     public char toChar(){ return i; }
     public static Direction getByChar(char in){

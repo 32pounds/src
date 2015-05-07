@@ -1,5 +1,4 @@
 package com.comms;
-import com.comms.GameState;
 
 /**
  * abstract class for abstract commands representing the users actions
@@ -12,6 +11,7 @@ public abstract class Command{
     /**
      * Returns all the data necessary to describe itself in a compact format
      * for the comms system.
+     * @param state GameState
      */
     abstract public void execute(GameState state);
 
@@ -37,8 +37,9 @@ public abstract class Command{
             Class commandSubclass = Class.forName(className);
             cmd = (Command) commandSubclass.newInstance();
             cmd.restore(data.toCharArray());
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+        } catch (InstantiationException e) {
+        } catch (IllegalAccessException e) {
         }
         return cmd;
     }

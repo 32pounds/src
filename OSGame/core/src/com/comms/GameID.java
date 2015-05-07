@@ -31,6 +31,7 @@ public class GameID{
 
     /**
      * Used to transmit the ID over the network
+     * @return 
      */
     public char toChar(){
         return id;
@@ -57,6 +58,7 @@ public class GameID{
      * "equals" function, so it is overridden to math equals'
      * use of the internally stored ID
      * see: https://docs.oracle.com/javase/7/docs/api/java/lang/Object.html#hashCode%28%29
+     * @return 
      */
     @Override
     public int hashCode(){

@@ -3,8 +3,7 @@ package com.comms;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.map.Direction;
-import com.comms.GameID;
-import com.comms.*;
+
 /**
  * Handle the player input
  */

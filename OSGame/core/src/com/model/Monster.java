@@ -5,14 +5,12 @@
  */
 package com.model;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.map.*;
 import com.comms.*;
 import com.renderer.Updatable;
 import static java.lang.Math.abs;
-import java.util.ArrayList;
 import java.util.Random;
 import java.util.Collection;
 
@@ -46,9 +44,7 @@ public class Monster extends Entity implements Updatable{
 
     public boolean isDead()
     {
-        if(TimeUtils.millis()-deathTime>WAIT_TIME)
-            return false;
-        return true;
+        return TimeUtils.millis()-deathTime <= WAIT_TIME;
     }
 
     public void changeDeath(String img)
@@ -60,9 +56,8 @@ public class Monster extends Entity implements Updatable{
     public void update()
     {
         Map map = gameState.gameMap();
-        if(isDead()==true)
-            return;
-        else if(wasDead==true)
+        if(isDead()==true) {
+        } else if(wasDead==true)
         {
             //set image and rand X/Y
             wasDead=false;

@@ -11,7 +11,7 @@ import java.util.ArrayList;
  */
 public class OSInputProcessor implements InputProcessor {
 
-    private ArrayList<InputProcessor> processors = new ArrayList<InputProcessor>();
+    private final ArrayList<InputProcessor> processors = new ArrayList<InputProcessor>();
 
     //singleton instance
     private static OSInputProcessor instance;

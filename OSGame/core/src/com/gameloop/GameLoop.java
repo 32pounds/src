@@ -1,29 +1,17 @@
 package com.gameloop;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.comms.*;
 import com.comms.GameID;
 import com.comms.GameState;
-import com.comms.InputHandler;
-import com.comms.OSInputProcessor;
-import com.gameloop.GameLoop;
 import com.map.Map;
-import com.model.Debugger;
 import com.model.Entity;
 import com.model.Monster;
 import com.model.MonsterDistance;
 import com.model.MonsterTowards;
 import com.model.Player;
-import com.model.PopupMenu;
-import com.renderer.Drawable;
-import com.renderer.SpriteStorage;
 import com.renderer.Updatable;
-import java.lang.InterruptedException;
 import java.util.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +21,7 @@ public class GameLoop extends Thread {
     private boolean running;
 
     //list that will be updated every thread loop
-    private List<Updatable> updatables;
+    private final List<Updatable> updatables;
 
     private GameState gameState;
 

@@ -1,8 +1,5 @@
 package com.comms;
 
-import com.comms.Command;
-import com.comms.GameID;
-import com.comms.GameState;
 import com.map.Direction;
 import com.model.Player;
 /**
@@ -16,6 +13,7 @@ public class MoveCmd extends Command{
     /**
      * This represents user commands for moving in a cardinal direction
      *
+     * @param target
      * @param direction     The directon the user wishes to move in
      *                      can take value NORTH, EAST, SOUTH, or WEST
      */
@@ -31,10 +29,12 @@ public class MoveCmd extends Command{
     public GameID getActorID(){
         return actor;
     }
+    @Override
     public void execute(GameState state){
         Player target = (Player) state.getByID(actor);
         target.setMovingDir(dir);
     }
+    @Override
     public char[] getData(){
         char[] out = new char[2];
         if(dir != null){
@@ -43,6 +43,7 @@ public class MoveCmd extends Command{
         }
         return out;
     }
+    @Override
     protected void restore(char[] data){
         actor = new GameID(data[0]);
         dir = Direction.getByChar(data[1]);

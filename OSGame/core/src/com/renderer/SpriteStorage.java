@@ -19,7 +19,7 @@ public class SpriteStorage
     private static SpriteStorage instance;
 
     //texture dictionary
-    private Map<String, Texture> textures;
+    private final Map<String, Texture> textures;
 
     /**
      * Private constructor, to make sure that will have only one instance of SpriteStorage.
