@@ -23,7 +23,7 @@ public class MonsterTowards extends Monster
     {
         super(state, img, splatSound);
         super.changeDeath("!");
-        UPDATE_INTERVAL=250;
+        UPDATE_INTERVAL=2;
     }
 
     @Override
