@@ -21,6 +21,7 @@ public class ClientThread{
     public boolean isUp;
     private InetAddress servAddress = null;
     private MessageHandler handler;
+    private GameID localPlayer;
 
     public ClientThread(int myPort,int servPort, MessageHandler handler){
         this.handler = handler;
@@ -31,13 +32,14 @@ public class ClientThread{
 
         try{
             udpSocket = new DatagramSocket(myPort);
+            udpSocket.setSoTimeout(500);
         }catch(Exception e){e.printStackTrace();}
         isUp = false;
     }
 
     private class ReceiveThread extends Thread{
         public void run(){
-            while(isUp){
+            while(true){
                 try{
                     RecieveGameState();
                     sleep(5);
@@ -52,6 +54,9 @@ public class ClientThread{
     }
     private ReceiveThread receiveThread;
 
+    public void AddPlayer(){
+
+    }
 
     public GameID JoinGame(){
         return JoinGame("127.0.0.1");
@@ -62,43 +67,18 @@ public class ClientThread{
      *
      */
     public synchronized GameID JoinGame(String address){
-        isUp = false;
         serverAddress = address;
-        try{
-            servAddress = InetAddress.getByName(serverAddress);
-        }catch(Exception e){e.printStackTrace();}
 
-        if(receiveThread != null) {
-            receiveThread.interrupt();
-            while(receiveThread.isAlive());
+        if(localPlayer == null) localPlayer = new GameID((Number)0);
+
+        if(receiveThread == null) {
+            receiveThread = new ReceiveThread();
+            receiveThread.start();
         }
 
         ConnectToServer();
-        byte[] buff = new byte[64];
 
-        DatagramPacket gamePacket = new DatagramPacket(buff, buff.length, servAddress, remotePort);
-
-        int fails = 0;
-        //25 was chosen randomly for fail limit;
-        //5 was chosen lazily to differentiate packets with a single gameID
-        //and latent packets with the game state
-        while(gamePacket.getLength() >= 5 && fails < 25){
-            fails++;
-            try {
-                System.out.println("Listening for player assignment message from server");
-                udpSocket.setSoTimeout(500);
-                udpSocket.receive(gamePacket);
-            } catch (Exception e){
-
-            }
-        }
-
-        String temp = new String(gamePacket.getData(), 0, gamePacket.getLength());
-        GameID playerID = new GameID(temp);
-
-        receiveThread = new ReceiveThread();
-        receiveThread.start();
-        return playerID;
+        return localPlayer;
     }
 
     /* ConnectToServer() will setup a UDP socket and packet
@@ -153,10 +133,23 @@ public class ClientThread{
             DatagramPacket gamePacket = new DatagramPacket(buff, buff.length);
             udpSocket.receive(gamePacket);
 
-            if ( (gamePacket.getAddress()).equals(servAddress) ){
-                byte[] data = gamePacket.getData();
-                handler.process(new String(data));
+            if ( !(gamePacket.getAddress()).equals(servAddress) ) return;
+
+            byte[] data = gamePacket.getData();
+            String temp = new String(gamePacket.getData(), 0, gamePacket.getLength());
+
+
+            if(!GameID.isValidIDString(temp)){
+                handler.process(temp);
+                return;
             }
+            System.out.println( "GameID Connect Packet: " + new String(gamePacket.getData(), 0, gamePacket.getLength()) );
+            int nullIndex = temp.indexOf('\0');
+            if(nullIndex > 0) temp = temp.substring(0, nullIndex);
+            GameID playerID = new GameID(temp);
+
+            localPlayer.copy(playerID);
+
         }catch(SocketTimeoutException e){
         }catch(Exception e){e.printStackTrace();}
     }

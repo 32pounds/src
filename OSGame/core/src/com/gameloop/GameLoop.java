@@ -37,14 +37,13 @@ public class GameLoop extends Thread {
     private boolean running;
     private ServerThread serverThread;
     private ConcurrentLinkedQueue<Command> commands;
+    private boolean runGS;
 
-
-    public GameLoop() {
+    public GameLoop(){
         updatables = new ArrayList<Updatable>();
         commands = new ConcurrentLinkedQueue<Command>();
         running = true;
-        
-
+        runGS = true;
         MessageHandler handler = new MessageHandler(){
             @Override
             public void handle(String message){
@@ -71,15 +70,19 @@ public class GameLoop extends Thread {
         ScheduledExecutorService idleTimer =
                     Executors.newSingleThreadScheduledExecutor();
 
+        
         Runnable sendStateTask = new Runnable() {
             public void run() {
-                serverThread.SendString(getStateMessage());
+                String state = getStateMessage();
+                serverThread.SendString(state);
+                //System.out.println("Game state length: "+state.length());
             }
         };
 
+
         /* lowerIdleTime will work against idle players.
-         * decrementing thier "alive" variable every 
-         */ 
+         * decrementing thier "alive" variable every
+         */
         /*
         Runnable lowerIdleTime = new Runnable(){
             public void run(){
@@ -87,9 +90,11 @@ public class GameLoop extends Thread {
             }
         };
         */
-        executor.scheduleAtFixedRate(sendStateTask, 0, 25, TimeUnit.MILLISECONDS);
+
+        if(runGS){executor.scheduleAtFixedRate(sendStateTask, 0, 25, TimeUnit.MILLISECONDS);}
         //executor.scheduleAtFixedRate(lowerIdleTime, 10, 3000, TimeUnit.MILLISECONDS);
-    }
+    
+    }   
 
     public void initializeGameState(){
         gameState = new GameState(new Map());
@@ -176,5 +181,6 @@ public class GameLoop extends Thread {
             }
         }
     }
+    
 }
 

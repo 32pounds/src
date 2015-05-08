@@ -183,13 +183,13 @@ public class ServerThread extends Thread{
             }
             else{
                 handler.process(new String(data));
-                System.out.println("Recieved from client");
                 // We also start touching the client to make sure it's not idle.
                 clientList.TouchClient(clientPacket.getAddress());
             }
 
         }catch(Exception e){e.printStackTrace();}
     }
+
 
     /* LowerIdle() is called at an interval of 3
      * seconds from gameLoop in it's own thread.
@@ -217,6 +217,8 @@ public class ServerThread extends Thread{
 
     /* CloserServer() should be called when multiplayer is over. */
     public void CloseServer(){
+        if(!isUp) return;
+        
         // close socket and let others know the server is no longer up.
         udpSocket.close();
         isUp = false;

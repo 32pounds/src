@@ -35,6 +35,8 @@ public class MoveCmd extends Command{
     }
     public void execute(GameState state){
         Entity target = state.getByID(actor);
+        if(target == null) return;
+        if(dir == null) return;
         if(target.getClass() == Player.class){
             ((Player)target).setMovingDir(dir);
         } else {
@@ -53,7 +55,6 @@ public class MoveCmd extends Command{
     protected void restore(String data){
         String gameID = data.substring(1, data.length());
         gameID = gameID.substring(0, gameID.indexOf('\0'));
-        System.out.println(gameID.length()+":"+gameID+":");
         actor = new GameID(gameID);
         dir = Direction.getByChar(data.charAt(0));
     }

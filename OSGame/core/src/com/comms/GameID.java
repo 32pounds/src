@@ -18,7 +18,7 @@ public class GameID{
         return idGen;
     }
 
-    private final int id;
+    private int id;
     private GameID(int inputID){
         id = inputID;
     }
@@ -37,6 +37,17 @@ public class GameID{
      */
     public String toString(){
         return (""+id);
+    }
+
+    public static boolean isValidIDString(String str){
+        for(int i=0; i<str.length(); i++){
+            if(!Character.isDigit(str.charAt(i))) return false;
+        }
+        return true;
+    }
+
+    public void copy(GameID other){
+        this.id = other.id;
     }
 
     @Override

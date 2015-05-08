@@ -27,13 +27,13 @@ public class Map extends Drawable {
                     case ' ':
                         batch.draw(SpriteStorage.getInstance().getTexture("BeigeTile"), x * XDIMENSION, y * YDIMENSION);
                         break;
-                    case 'X':
+                    case 'B':
                         batch.draw(SpriteStorage.getInstance().getTexture("BlackCarpet"), x * XDIMENSION, y * YDIMENSION);
                         break;
-                    case '^':
+                    case 'o':
                         batch.draw(SpriteStorage.getInstance().getTexture("TransportUp"), x * XDIMENSION, y * YDIMENSION);
                         break;
-                    case 'v':
+                    case 'g':
                         batch.draw(SpriteStorage.getInstance().getTexture("TransportDown"), x * XDIMENSION, y * YDIMENSION);
                         break;
                     case '@':
@@ -99,6 +99,45 @@ public class Map extends Drawable {
                     case '/':
                         batch.draw(SpriteStorage.getInstance().getTexture("CautionStripe"), x * XDIMENSION, y * YDIMENSION);
                         break;
+                    case ',':
+                        batch.draw(SpriteStorage.getInstance().getTexture("CyberFloor"), x * XDIMENSION, y * YDIMENSION);
+                        break;
+                    case 'H':
+                        batch.draw(SpriteStorage.getInstance().getTexture("CyberWall"), x * XDIMENSION, y * YDIMENSION);
+                        break;
+                    case 'h':
+                        batch.draw(SpriteStorage.getInstance().getTexture("CorruptedWall"), x * XDIMENSION, y * YDIMENSION);
+                        break;
+                    case '#':
+                        batch.draw(SpriteStorage.getInstance().getTexture("CyberFloor"), x * XDIMENSION, y * YDIMENSION);
+                        break;
+                    case 'x':
+                        batch.draw(SpriteStorage.getInstance().getTexture("Xbox"), x * XDIMENSION, y * YDIMENSION);
+                        break;
+                    case 'X':
+                        batch.draw(SpriteStorage.getInstance().getTexture("Xboxes"), x * XDIMENSION, y * YDIMENSION);
+                        break;
+                    case '^':
+                        batch.draw(SpriteStorage.getInstance().getTexture("CyberUp"), x * XDIMENSION, y * YDIMENSION);
+                        break;
+                    case 'v':
+                        batch.draw(SpriteStorage.getInstance().getTexture("CyberDown"), x * XDIMENSION, y * YDIMENSION);
+                        break;
+                    case '<':
+                        batch.draw(SpriteStorage.getInstance().getTexture("CyberLeft"), x * XDIMENSION, y * YDIMENSION);
+                        break;
+                    case '>':
+                        batch.draw(SpriteStorage.getInstance().getTexture("CyberRight"), x * XDIMENSION, y * YDIMENSION);
+                        break;
+                    case '*':
+                        batch.draw(SpriteStorage.getInstance().getTexture("Asterisk"), x * XDIMENSION, y * YDIMENSION);
+                        break;
+                    case '!':
+                        batch.draw(SpriteStorage.getInstance().getTexture("Exclamation"), x * XDIMENSION, y * YDIMENSION);
+                        break;
+                    case '$':
+                        batch.draw(SpriteStorage.getInstance().getTexture("Funds"), x * XDIMENSION, y * YDIMENSION);
+                        break;
                 }
             }
         }
@@ -128,7 +167,7 @@ public class Map extends Drawable {
     }
 
     public boolean isWalkable(int x, int y) {
-        if (grid[y][x] == ' ' || grid[y][x] == '^' || grid[y][x] == 'v' || grid[y][x] == '.' || grid[y][x] == '@')
+        if (grid[y][x] == ' ' || grid[y][x] == 'o' || grid[y][x] == 'g' || grid[y][x] == '^' || grid[y][x] == 'v' || grid[y][x] == '.' || grid[y][x] == '@' || grid[y][x] == ',' || grid[y][x] == '#')
             return true;
         return false;
     }
@@ -143,9 +182,9 @@ public class Map extends Drawable {
 
 
    public int isMove(int x, int y) {
-        if (grid[y][x] == '^')
+        if (grid[y][x] == 'o')
             return 1;
-        else if (grid[y][x] == 'v')
+        else if (grid[y][x] == 'g')
             return 2;
         return 0;
     }

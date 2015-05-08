@@ -50,7 +50,6 @@ public class OSGame extends ApplicationAdapter implements CommandHandler {
                 }*/
             }
         };
-        clientThread = new ClientThread(5050,5051,handler);
 
         float w = Gdx.graphics.getWidth();
         float h = Gdx.graphics.getHeight();
@@ -69,6 +68,7 @@ public class OSGame extends ApplicationAdapter implements CommandHandler {
         gameLoop.start();
 
         //This will be a call to comms in the future
+        clientThread = new ClientThread(5050,5051,handler);
         localPlayer = clientThread.JoinGame(); //blocking call
         System.out.println("Got playerID "+localPlayer.toString());
 
@@ -87,7 +87,9 @@ public class OSGame extends ApplicationAdapter implements CommandHandler {
             public void run(){
                 localPlayer = clientThread.JoinGame(ipAddr);
                 System.out.println("Got playerID "+localPlayer.toString());
-                gameState = new GameState(new Map());
+                synchronized(gameState){
+                    gameState = new GameState(new Map());
+                }
                 input.setLocalPlayer(localPlayer);
             }
         };
