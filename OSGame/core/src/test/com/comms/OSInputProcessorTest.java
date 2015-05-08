@@ -5,17 +5,11 @@ import com.comms.OSInputProcessor;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 /**
  * OSInputProcessor Tester.
- *
- * @author <Authors name>
- * @version 1.0
- * @since <pre>Apr 15, 2015</pre>
  */
 public class OSInputProcessorTest implements InputProcessor
 {
@@ -25,11 +19,6 @@ public class OSInputProcessorTest implements InputProcessor
     public void before() throws Exception
     {
         count = 0;
-    }
-
-    @After
-    public void after() throws Exception
-    {
     }
 
     /**

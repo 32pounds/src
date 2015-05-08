@@ -120,8 +120,7 @@ public class ParserTest
 
         String result = new Parser(new GameState(new Map())).Parse(entities);
 
-        org.junit.Assert.assertEquals(resultString, result);
-
+        assertEquals(resultString, result);
     }
 
     /**
