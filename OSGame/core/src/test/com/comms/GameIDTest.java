@@ -43,12 +43,12 @@ public class GameIDTest
     @Test
     public void testCharTranslation() throws Exception{
         GameID origin = new GameID();
-        char   idChar = origin.toChar();
+        String idChar = origin.toString();
         GameID result = new GameID(idChar);
         assertTrue("Test GameID translation", result.equals(origin));
 
         origin = new GameID((Number)42);
-        idChar = origin.toChar();
+        idChar = origin.toString();
         result = new GameID(idChar);
         assertTrue("Test GameID translation", result.equals(origin));
     }

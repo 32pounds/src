@@ -1,135 +1,138 @@
-package test.com.comms; 
+package test.com.comms;
 
-import org.junit.Test; 
-import org.junit.Before; 
-import org.junit.After; 
+import com.badlogic.gdx.InputProcessor;
+import com.comms.OSInputProcessor;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
-/** 
-* OSInputProcessor Tester. 
-* 
-* @author <Authors name> 
-* @since <pre>Apr 15, 2015</pre> 
-* @version 1.0 
-*/ 
-public class OSInputProcessorTest { 
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
-@Before
-public void before() throws Exception { 
-} 
+/**
+ * OSInputProcessor Tester.
+ *
+ * @author <Authors name>
+ * @version 1.0
+ * @since <pre>Apr 15, 2015</pre>
+ */
+public class OSInputProcessorTest implements InputProcessor
+{
+    int count = 0;
 
-@After
-public void after() throws Exception { 
-} 
+    @Before
+    public void before() throws Exception
+    {
+        count = 0;
+    }
 
-/** 
-* 
-* Method: getInstance() 
-* 
-*/ 
-@Test
-public void testGetInstance() throws Exception { 
-//TODO: Test goes here... 
-} 
+    @After
+    public void after() throws Exception
+    {
+    }
 
-/** 
-* 
-* Method: addInputPorcessor(InputProcessor inputProcessor) 
-* 
-*/ 
-@Test
-public void testAddInputPorcessor() throws Exception { 
-//TODO: Test goes here... 
-} 
+    /**
+     * Method: getInstance()
+     */
+    @Test
+    public void testGetInstance() throws Exception
+    {
+        assertNotNull(OSInputProcessor.getInstance());
+    }
 
-/** 
-* 
-* Method: removeInputPorcessor(InputProcessor inputProcessor) 
-* 
-*/ 
-@Test
-public void testRemoveInputPorcessor() throws Exception { 
-//TODO: Test goes here... 
-} 
+    /**
+     * Method: addInputPorcessor(InputProcessor inputProcessor)
+     */
+    @Test
+    public void testAddInputPorcessor() throws Exception
+    {
+        OSInputProcessor.getInstance().addInputPorcessor(this);
+        OSInputProcessor.getInstance().keyDown(0);
+        OSInputProcessor.getInstance().keyUp(0);
+        OSInputProcessor.getInstance().keyTyped(' ');
+        OSInputProcessor.getInstance().touchDown(0, 0, 0, 0);
+        OSInputProcessor.getInstance().touchUp(0, 0, 0, 0);
+        OSInputProcessor.getInstance().touchDragged(0, 0, 0);
+        OSInputProcessor.getInstance().mouseMoved(0, 0);
+        OSInputProcessor.getInstance().scrolled(0);
 
-/** 
-* 
-* Method: keyDown(int keycode) 
-* 
-*/ 
-@Test
-public void testKeyDown() throws Exception { 
-//TODO: Test goes here... 
-} 
+        assertEquals(8, count);
+    }
 
-/** 
-* 
-* Method: keyUp(int keycode) 
-* 
-*/ 
-@Test
-public void testKeyUp() throws Exception { 
-//TODO: Test goes here... 
-} 
+    /**
+     * Method: removeInputPorcessor(InputProcessor inputProcessor)
+     */
+    @Test
+    public void testRemoveInputPorcessor() throws Exception
+    {
+        OSInputProcessor.getInstance().addInputPorcessor(this);
+        OSInputProcessor.getInstance().removeInputPorcessor(this);
+        OSInputProcessor.getInstance().keyDown(0);
+        OSInputProcessor.getInstance().keyUp(0);
+        OSInputProcessor.getInstance().keyTyped(' ');
+        OSInputProcessor.getInstance().touchDown(0, 0, 0, 0);
+        OSInputProcessor.getInstance().touchUp(0, 0, 0, 0);
+        OSInputProcessor.getInstance().touchDragged(0, 0, 0);
+        OSInputProcessor.getInstance().mouseMoved(0, 0);
+        OSInputProcessor.getInstance().scrolled(0);
 
-/** 
-* 
-* Method: keyTyped(char character) 
-* 
-*/ 
-@Test
-public void testKeyTyped() throws Exception { 
-//TODO: Test goes here... 
-} 
+        assertEquals(0, count);
+    }
 
-/** 
-* 
-* Method: touchDown(int screenX, int screenY, int pointer, int button) 
-* 
-*/ 
-@Test
-public void testTouchDown() throws Exception { 
-//TODO: Test goes here... 
-} 
+    @Override
+    public boolean keyDown(int keycode)
+    {
+        count++;
+        return false;
+    }
 
-/** 
-* 
-* Method: touchUp(int screenX, int screenY, int pointer, int button) 
-* 
-*/ 
-@Test
-public void testTouchUp() throws Exception { 
-//TODO: Test goes here... 
-} 
+    @Override
+    public boolean keyUp(int keycode)
+    {
+        count++;
+        return false;
+    }
 
-/** 
-* 
-* Method: touchDragged(int screenX, int screenY, int pointer) 
-* 
-*/ 
-@Test
-public void testTouchDragged() throws Exception { 
-//TODO: Test goes here... 
-} 
+    @Override
+    public boolean keyTyped(char character)
+    {
+        count++;
+        return false;
+    }
 
-/** 
-* 
-* Method: mouseMoved(int screenX, int screenY) 
-* 
-*/ 
-@Test
-public void testMouseMoved() throws Exception { 
-//TODO: Test goes here... 
-} 
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button)
+    {
+        count++;
+        return false;
+    }
 
-/** 
-* 
-* Method: scrolled(int amount) 
-* 
-*/ 
-@Test
-public void testScrolled() throws Exception { 
-//TODO: Test goes here... 
-} 
+    @Override
+    public boolean touchUp(int screenX, int screenY, int pointer, int button)
+    {
+        count++;
+        return false;
+    }
 
+    @Override
+    public boolean touchDragged(int screenX, int screenY, int pointer)
+    {
+        count++;
+        return false;
+    }
 
-} 
+    @Override
+    public boolean mouseMoved(int screenX, int screenY)
+    {
+        count++;
+        return false;
+    }
+
+    @Override
+    public boolean scrolled(int amount)
+    {
+        count++;
+        return false;
+    }
+}

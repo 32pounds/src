@@ -8,12 +8,14 @@ import com.map.Map;
 import com.model.Entity;
 import static org.junit.Assert.assertEquals;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 public class ParserTest
 {
     LwjglApplication lwjglApplication;
 
+    @Before
     public void before() throws Exception
     {
         if (lwjglApplication == null)
@@ -89,28 +91,28 @@ public class ParserTest
         Entity[] entities = new Entity[4];
 
         Entity entity = new Entity(new GameState(new Map()), "0");
-        entity.assignID(new GameID(' '));
+        entity.assignID(new GameID(" "));
         entity.setXPos(0);
         entity.setYPos(2);
         entity.setRotation(90);
         entities[0] = entity;
 
         entity = new Entity(new GameState(new Map()), "2");
-        entity.assignID(new GameID('@'));
+        entity.assignID(new GameID("@"));
         entity.setXPos(0);
         entity.setYPos(2);
         entity.setRotation(90);
         entities[1] = entity;
 
         entity = new Entity(new GameState(new Map()), "3");
-        entity.assignID(new GameID('%'));
+        entity.assignID(new GameID("%"));
         entity.setXPos(0);
         entity.setYPos(2);
         entity.setRotation(90);
         entities[2] = entity;
 
         entity = new Entity(new GameState(new Map()), "#");
-        entity.assignID(new GameID('&'));
+        entity.assignID(new GameID("&"));
         entity.setXPos(0);
         entity.setYPos(2);
         entity.setRotation(90);
@@ -169,25 +171,25 @@ public class ParserTest
         Command[] result = pair.getValue2();
 
         assertEquals(entities[0].getSpriteString(), "0");
-        assertEquals(entities[0].getID().toChar(), ' ');
+        assertEquals(entities[0].getID().toString(), ' ');
         assertEquals(entities[0].getYPos(), 22);
         assertEquals(entities[0].getXPos(), 0);
         assertEquals(entities[0].getRotation(), 90);
 
         assertEquals(entities[1].getSpriteString(), "2");
-        assertEquals(entities[1].getID().toChar(), '@');
+        assertEquals(entities[1].getID().toString(), '@');
         assertEquals(entities[1].getYPos(), 2);
         assertEquals(entities[1].getXPos(), 0);
         assertEquals(entities[1].getRotation(), 90);
 
         assertEquals(entities[2].getSpriteString(), "3");
-        assertEquals(entities[2].getID().toChar(), '%');
+        assertEquals(entities[2].getID().toString(), '%');
         assertEquals(entities[2].getYPos(), 2);
         assertEquals(entities[2].getXPos(), 0);
         assertEquals(entities[2].getRotation(), 90);
 
         assertEquals(entities[3].getSpriteString(), "#");
-        assertEquals(entities[3].getID().toChar(), '&');
+        assertEquals(entities[3].getID().toString(), '&');
         assertEquals(entities[3].getYPos(), 2);
         assertEquals(entities[3].getXPos(), 0);
         assertEquals(entities[3].getRotation(), 90);
