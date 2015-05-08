@@ -38,7 +38,7 @@ public class DummyCmdTest
     public void testGetData() throws Exception
     {
         DummyCmd dummyCmd = new DummyCmd();
-        assertEquals("com.comms.DummyCmd:test", dummyCmd.getData());
+        assertEquals("com.comms.DummyCmd:test".toCharArray(), dummyCmd.getData());
     }
 
 

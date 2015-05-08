@@ -172,41 +172,26 @@ public class ParserTest
         Command[] result = pair.getValue2();
 
         assertEquals(entities[0].getSpriteString(), "0");
-<<<<<<< HEAD
-        assertEquals(entities[0].getID().toString(), ' ');
-=======
+
         assertEquals(entities[0].getID().toString(), " ");
->>>>>>> entityTransfer
         assertEquals(entities[0].getYPos(), 22);
         assertEquals(entities[0].getXPos(), 0);
         assertEquals(entities[0].getRotation(), 90);
 
         assertEquals(entities[1].getSpriteString(), "2");
-<<<<<<< HEAD
-        assertEquals(entities[1].getID().toString(), '@');
-=======
         assertEquals(entities[1].getID().toString(), "@");
->>>>>>> entityTransfer
         assertEquals(entities[1].getYPos(), 2);
         assertEquals(entities[1].getXPos(), 0);
         assertEquals(entities[1].getRotation(), 90);
 
         assertEquals(entities[2].getSpriteString(), "3");
-<<<<<<< HEAD
-        assertEquals(entities[2].getID().toString(), '%');
-=======
         assertEquals(entities[2].getID().toString(), "%");
->>>>>>> entityTransfer
         assertEquals(entities[2].getYPos(), 2);
         assertEquals(entities[2].getXPos(), 0);
         assertEquals(entities[2].getRotation(), 90);
 
         assertEquals(entities[3].getSpriteString(), "#");
-<<<<<<< HEAD
-        assertEquals(entities[3].getID().toString(), '&');
-=======
         assertEquals(entities[3].getID().toString(), "&");
->>>>>>> entityTransfer
         assertEquals(entities[3].getYPos(), 2);
         assertEquals(entities[3].getXPos(), 0);
         assertEquals(entities[3].getRotation(), 90);
