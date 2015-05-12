@@ -31,14 +31,17 @@ public class MonsterTowards extends Monster
     {
         Map map=gameState.gameMap();
         closestPlayer=getClosestPlayer();
+        //if dead do nothing
         if(isDead()==true)
             return;
+        //if just came to life
         else if(wasDead==true)
         {
             //set image and rand X/Y
-            wasDead=false;
-            changeSprite(alive);
+            wasDead=false; //The monster is now alive
+            changeSprite(alive); //change sprite back to which type of bug it was
             int x,y;
+            //find random X,Y spot on the map
             do
             {
                 x=randomGen.nextInt(map.getXBound());
@@ -48,6 +51,7 @@ public class MonsterTowards extends Monster
         }
         else
         {
+            //is there a player on the monster
             if(squished()==true)
             {
                 deathTime=TimeUtils.millis();
@@ -58,8 +62,10 @@ public class MonsterTowards extends Monster
             else if(TimeUtils.millis()-lastUpdateTime > UPDATE_INTERVAL)
             {
                 lastUpdateTime=TimeUtils.millis();
+                //if there is no players, do nothing
                 if(closestPlayer==null)
                     return;
+                //move towards the nearest player
                 if(closestPlayer.getXPos()>getXPos())
                     super.move(Direction.EAST);
                 else if(closestPlayer.getXPos()<getXPos())

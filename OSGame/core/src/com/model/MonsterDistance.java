@@ -34,13 +34,16 @@ public class MonsterDistance extends Monster
     {
         Map map=gameState.gameMap();
         closestPlayer=getClosestPlayer();
+        //if dead do thing
         if(isDead()==true)
             return;
+        //if respawning
         else if(wasDead==true)
         {
             //set image and rand X/Y
             wasDead=false;
             changeSprite(alive);
+            //get random X,Y spot to respawn
             int x,y;
             do
             {
@@ -51,6 +54,7 @@ public class MonsterDistance extends Monster
         }
         else
         {
+            //did the monster die
             if(squished()==true)
             {
                 deathTime=TimeUtils.millis();
@@ -58,11 +62,14 @@ public class MonsterDistance extends Monster
                 splat.play();
                 wasDead=true;
             }
+            //can the monster move
             else if(TimeUtils.millis()-lastUpdateTime > UPDATE_INTERVAL)
             {
                 lastUpdateTime=TimeUtils.millis();
+                //if no players, do nothing
                 if(closestPlayer==null) 
                     return;
+                //find the nearest player and move away to hide in a corner
                 if(closestPlayer.getXPos()>getXPos())
                 {
                     if(map.isWalkable(getXPos()-1,getYPos())==true)
